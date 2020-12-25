@@ -18,6 +18,7 @@ public class Product {
 
     /** id，會員編號 */
 	private String describe;
+	
 
     /**
      * 實例化（Instantiates）一個新的（new）Product 物件<br>
