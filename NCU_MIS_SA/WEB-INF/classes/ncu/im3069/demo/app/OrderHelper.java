@@ -38,7 +38,7 @@ public class OrderHelper {
             String sql = "INSERT INTO `missa`.`orders`(`last_name`, `first_name`, `email`, `address`, `phone`, `create`, `modify`)"
                     + " VALUES(?, ?, ?, ?, ?, ?, ?)";
             
-            /** 取得所需之參數 */
+            
             String first_name = order.getFirstName();
             String last_name = order.getLastName();
             String email = order.getEmail();

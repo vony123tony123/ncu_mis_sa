@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 
 import org.json.JSONObject;
 
+import com.sun.tools.sjavac.comp.dependencies.PublicApiCollector;
+
 public class InsurancePolicy {
 	
 	private int id;
@@ -35,9 +37,20 @@ public class InsurancePolicy {
 		this.beneficiary_address = beneficiary_address;
 		getMemberFromDB();
 		getInsuranceFromDB();
+		this.insurance_preimum = calInsurancePremium();
 	}
 	
-	public int calInsurancePremium(int gender, int birthyear, int height, int weight, int disease_id,int amount_insured) {
+	private int calInsurancePremium() {
+		int gender = member.getInt("gender");
+		int birthyear = member.getInt("birthday");
+		int height = member.getInt("height");
+		int weight = member.getInt("weight");
+		int disease_id = member.getInt("disease_id");
+		int amount_insured = insurance.getInt("amount_insured");
+		return calInsurancePremium(gender, birthyear, height, weight, disease_id, amount_insured);
+	}
+	
+	public static int calInsurancePremium(int gender, int birthyear, int height, int weight, int disease_id,int amount_insured) {
 		double premium_level = 0;//計算風險貼水
 		double bmi = weight/((height/100)^2);
 		int age = 0;
