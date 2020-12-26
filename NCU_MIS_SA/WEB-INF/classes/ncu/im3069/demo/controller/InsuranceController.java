@@ -9,13 +9,13 @@ import org.json.*;
 import ncu.im3069.demo.app.ProductHelper;
 import ncu.im3069.tools.JsonReader;
 
-@WebServlet("/api/product.do")
-public class ProductController extends HttpServlet {
+@WebServlet("/api/insurance.do")
+public class InsuranceController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private ProductHelper ph =  ProductHelper.getHelper();
+	private InsuranceHelper ih =  InsuranceHelper.getHelper();
 
-    public ProductController() {
+    public InsuranceController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,16 +30,16 @@ public class ProductController extends HttpServlet {
         JSONObject resp = new JSONObject();
         /** 判斷該字串是否存在，若存在代表要取回購物車內產品之資料，否則代表要取回全部資料庫內產品之資料 */
         if (!id_list.isEmpty()) {
-          JSONObject query = ph.getByIdList(id_list);
+          JSONObject query = ih.getByIdList(id_list);
           resp.put("status", "200");
-          resp.put("message", "所有購物車之商品資料取得成功");
+          resp.put("message", "所有購物車之保險資料取得成功");
           resp.put("response", query);
         }
         else {
-          JSONObject query = ph.getAll();
+          JSONObject query = ih.getAll();
 
           resp.put("status", "200");
-          resp.put("message", "所有商品資料取得成功");
+          resp.put("message", "所有保險資料取得成功");
           resp.put("response", query);
         }
 
