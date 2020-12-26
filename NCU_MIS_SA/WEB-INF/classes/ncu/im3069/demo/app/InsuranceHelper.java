@@ -5,7 +5,8 @@ import java.sql.*;
 import org.json.*;
 
 import ncu.im3069.demo.util.DBMgr;
-import ncu.im3069.demo.app.Product;
+
+import ncu.im3069.demo.app.Insurance;
 
 public class InsuranceHelper 
 {
