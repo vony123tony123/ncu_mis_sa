@@ -3,6 +3,8 @@ package ncu.im3069.demo.app;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+import javax.print.event.PrintJobAttributeEvent;
+
 import org.json.JSONObject;
 
 import com.sun.tools.sjavac.comp.dependencies.PublicApiCollector;
@@ -16,10 +18,11 @@ public class InsurancePolicy {
 	private JSONObject insurance;
 	private int insurance_preimum;
 	private String beneficiary_name;
-	private String beneficiary_relation;
+	private String beneficiary_relationship;
 	private String beneficiary_phone_number;
 	private String beneficiary_address;
-	private Timestamp create=Timestamp.valueOf(LocalDateTime.now());
+	private Timestamp create_time = Timestamp.valueOf(LocalDateTime.now());
+	private Timestamp modify_time;
 	
 	private MemberHelper mh=MemberHelper.getHelper();
 	private InsuranceHelper ih = InsuranceHelper.getHelper();
@@ -27,20 +30,36 @@ public class InsurancePolicy {
 	
 
 	
-	public InsurancePolicy(int id, int memeber_id, int insurance_id, String beneficiary_name,
+	public InsurancePolicy(int memeber_id, int insurance_id, String beneficiary_name,
 			String beneficiary_relation, String beneficiary_phone_number, String beneficiary_address) 
 	{
-		this.id = id;
 		this.member_id = memeber_id;
 		this.insurance_id = insurance_id;
 		this.beneficiary_name = beneficiary_name;
-		this.beneficiary_relation = beneficiary_relation;
+		this.beneficiary_relationship = beneficiary_relation;
 		this.beneficiary_phone_number = beneficiary_phone_number;
 		this.beneficiary_address = beneficiary_address;
 		getMemberFromDB();
 		getInsuranceFromDB();
 		this.insurance_preimum = calInsurancePremium();
 	}
+
+	public InsurancePolicy(int id, int member_id, int insurance_id,
+			int insurance_preimum, String beneficiary_name, String beneficiary_relationship,
+			String beneficiary_phone_number, String beneficiary_address, Timestamp create_time, Timestamp modify_time) {
+		this.id = id;
+		this.member_id = member_id;
+		this.insurance_id = insurance_id;
+		this.insurance_preimum = insurance_preimum;
+		this.beneficiary_name = beneficiary_name;
+		this.beneficiary_relationship = beneficiary_relationship;
+		this.beneficiary_phone_number = beneficiary_phone_number;
+		this.beneficiary_address = beneficiary_address;
+		this.create_time = create_time;
+		this.modify_time = modify_time;
+	}
+
+
 
 	private int calInsurancePremium() {
 		int gender = member.getInt("gender");
@@ -103,8 +122,8 @@ public class InsurancePolicy {
 		return beneficiary_name;
 	}
 
-	public String getBeneficiary_relation() {
-		return beneficiary_relation;
+	public String getBeneficiary_relationship() {
+		return beneficiary_relationship;
 	}
 
 	public String getBeneficiary_phone_number() {
@@ -115,8 +134,8 @@ public class InsurancePolicy {
 		return beneficiary_address;
 	}
 
-	public Timestamp getCreate() {
-		return create;
+	public Timestamp getCreateTime() {
+		return create_time;
 	}
 
 	public void getMemberFromDB() {
@@ -141,7 +160,7 @@ public class InsurancePolicy {
 		jso.put("id", getID());
 		jso.put("insurance_preimum", getInsurance_preimum());
 		jso.put("beneficiary_name", getBeneficiary_name());
-		jso.put("beneficiary_relation", getBeneficiary_relation());
+		jso.put("beneficiary_relation", getBeneficiary_relationship());
 		jso.put("beneficiary_phone_number", getBeneficiary_phone_number());
 		jso.put("beneficiary_address", getBeneficiary_address());
 		return jso;
@@ -152,6 +171,7 @@ public class InsurancePolicy {
 		jso.put("InsuranceInfo", getInsuranceInfo());
 		jso.put("MemberInfo", getMemberInfo());
 		jso.put("InsurancePolicyInfo", getInsurancePolicyInfo());
+		return jso;
 	}
 	
 	public JSONObject update() {
