@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 
 import org.json.JSONObject;
 
+import com.sun.tools.sjavac.comp.dependencies.PublicApiCollector;
+
 public class InsurancePolicy {
 	
 	private int id;
@@ -37,6 +39,17 @@ public class InsurancePolicy {
 		this.beneficiary_address = beneficiary_address;
 		getMemberFromDB();
 		getInsuranceFromDB();
+		this.insurance_preimum = calInsurancePremium();
+	}
+
+	private int calInsurancePremium() {
+		int gender = member.getInt("gender");
+		int birthyear = member.getInt("birthday");
+		int height = member.getInt("height");
+		int weight = member.getInt("weight");
+		int disease_id = member.getInt("disease_id");
+		int amount_insured = insurance.getInt("amount_insured");
+		return calInsurancePremium(gender, birthyear, height, weight, disease_id, amount_insured);
 	}
 	
 	public static int calInsurancePremium(int gender, int birthyear, int height, int weight, int disease_id,int amount_insured) {
