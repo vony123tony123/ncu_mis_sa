@@ -31,6 +31,7 @@ public class InsurancePolicyHelper {
             int id = insurancePolicy.getID();
             int member_id = insurancePolicy.getMember_id();
             int insurance_id = insurancePolicy.getInsurance_id();
+            int 
             
 		} catch (Exception e) {
 			// TODO: handle exception

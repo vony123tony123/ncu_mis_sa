@@ -25,6 +25,8 @@ public class InsurancePolicy {
 	private InsuranceHelper ih = InsuranceHelper.getHelper();
 	private InsurancePolicyHelper iph = InsurancePolicyHelper.getHelper();
 	
+
+	
 	public InsurancePolicy(int id, int memeber_id, int insurance_id, String beneficiary_name,
 			String beneficiary_relation, String beneficiary_phone_number, String beneficiary_address) 
 	{
@@ -39,7 +41,7 @@ public class InsurancePolicy {
 		getInsuranceFromDB();
 		this.insurance_preimum = calInsurancePremium();
 	}
-	
+
 	private int calInsurancePremium() {
 		int gender = member.getInt("gender");
 		int birthyear = member.getInt("birthday");
