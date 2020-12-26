@@ -18,20 +18,20 @@ public class Insurance {
 	
 
     /**
-     * 實例化（Instantiates）一個新的（new）Product 物件<br>
-     * 採用多載（overload）方法進行，此建構子用於新增產品時
+     * 實例化（Instantiates）一個新的（new）Insurance 物件<br>
+     * 採用多載（overload）方法進行，此建構子用於新增保險時
      *
-     * @param id 產品編號
+     * @param id 保險編號
      */
-	public Product(int id) {
-		this.id = id;
+	public Insurance(int insurance_id) {
+		this.insurance_id = insurance_id;
 	}
 
     /**
-     * 實例化（Instantiates）一個新的（new）Product 物件<br>
-     * 採用多載（overload）方法進行，此建構子用於新增產品時
+     * 實例化（Instantiates）一個新的（new）Insurance 物件<br>
+     * 採用多載（overload）方法進行，此建構子用於新增保險時
      *
-     * @param name 產品名稱
+     * @param name 保險名稱
      * @param price 產品價格
      * @param image 產品圖片
      */
