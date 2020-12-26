@@ -6,7 +6,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import org.json.*;
 
-import ncu.im3069.demo.app.ProductHelper;
+import ncu.im3069.demo.app.InsuranceHelper;
 import ncu.im3069.tools.JsonReader;
 
 @WebServlet("/api/insurance.do")
