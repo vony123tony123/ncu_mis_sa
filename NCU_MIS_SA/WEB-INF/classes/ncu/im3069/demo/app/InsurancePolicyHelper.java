@@ -92,7 +92,7 @@ public class InsurancePolicyHelper {
         	/** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `missa`.`insurance_policy` WHERE `delete_key`=0";
+            String sql = "SELECT * FROM `missa`.`insurance_policy` WHERE `insurance_policy`.`delete_key`=0";
             
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
             pres = conn.prepareStatement(sql);
@@ -152,7 +152,7 @@ public class InsurancePolicyHelper {
         return response;
 	}
 	
-	public JSONObject getByID(int id) {
+	public JSONObject getByID(int insurancePolicyId) {
 		JSONObject data = new JSONObject();
 		InsurancePolicy ip = null;
 		/** 記錄實際執行之SQL指令 */
@@ -165,7 +165,43 @@ public class InsurancePolicyHelper {
         ResultSet rs = null;
         
         try {
-        	
+        	/** 取得資料庫之連線 */
+            conn = DBMgr.getConnection();
+            /** SQL指令 */
+            String sql = "SELECT * FROM `missa`.`insurance_policy` WHERE `insurance_policy`.`insurance_policy_id` = ? AND `insurance_policy`.`delete_key`=0";
+            
+            /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
+            pres = conn.prepareStatement(sql);
+            pres.setInt(1, insurancePolicyId);
+            /** 執行查詢之SQL指令並記錄其回傳之資料 */
+            rs = pres.executeQuery();
+            
+            /** 紀錄真實執行的SQL指令，並印出 **/
+            exexcute_sql = pres.toString();
+            System.out.println(exexcute_sql);
+            
+            /** 透過 while 迴圈移動pointer，取得每一筆回傳資料 */
+            while(rs.next()) {
+                /** 每執行一次迴圈表示有一筆資料 */
+                row += 1;
+                
+                /** 將 ResultSet 之資料取出 */
+                int id = rs.getInt("insurance_policy_id");
+                int member_id = rs.getInt("member_id");
+                int insurance_id = rs.getInt("insurance_id");
+                int insurance_preimum = rs.getInt("insurance_preimum");
+                String beneficiary_name = rs.getString("beneficiary_name");
+                String beneficiary_relationship = rs.getString("beneficiary_relationship");
+                String beneficiary_phone_number = rs.getString("beneficiary_phone_number");
+                String beneficiary_address = rs.getString("beneficiary_address");
+                Timestamp create = rs.getTimestamp("create_time");
+                Timestamp modify = rs.getTimestamp("modify_time");
+                
+                /** 將每一筆保險資料產生一名新Insurance物件 */
+                ip = new InsurancePolicy(id, member_id, insurance_id, insurance_preimum, beneficiary_name,beneficiary_relationship , beneficiary_phone_number,beneficiary_address , create, modify);
+                /** 取出該項保險之資料並封裝至 JSONsonArray 內 */
+                data = ip.getAllInfo();
+            }
         	
         }catch (SQLException e) {
             /** 印出JDBC SQL指令錯誤 **/
@@ -177,6 +213,8 @@ public class InsurancePolicyHelper {
             /** 關閉連線並釋放所有資料庫相關之資源 **/
             DBMgr.close(rs, pres, conn);
         }
+        
+        
 	}
 	
 	

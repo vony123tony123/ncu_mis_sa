@@ -5,7 +5,8 @@ import java.sql.*;
 import org.json.*;
 
 import ncu.im3069.demo.util.DBMgr;
-import ncu.im3069.demo.app.Product;
+
+import ncu.im3069.demo.app.Insurance;
 
 public class InsuranceHelper 
 {
@@ -64,10 +65,11 @@ public class InsuranceHelper
                 int insurance_id = rs.getInt("id");
                 String insurance_name = rs.getString("name");
                 String duration_period = rs.getString("period");
+                int amount_insured = rs.getInt("amount");
                 String details = rs.getString("details");
                 
                 /** 將每一筆保險資料產生一名新Insurance物件 */
-                i = new Insurance(insurance_id, insurance_name, duration_period, details);
+                i = new Insurance(insurance_id, insurance_name, duration_period, amount_insured, details);
                 /** 取出該項保險之資料並封裝至 JSONsonArray 內 */
                 jsa.put(i.getData());
             }
@@ -144,10 +146,11 @@ public class InsuranceHelper
               int insurance_id = rs.getInt("id");
               String insurance_name = rs.getString("name");
               String duration_period = rs.getString("period");
+              int amount_insured = rs.getInt("amount");
               String details = rs.getString("details");
               
               /** 將每一筆保險資料產生一名新Insurance物件 */
-              i = new Insurance(insurance_id, insurance_name, duration_period, details);
+              i = new Insurance(insurance_id, insurance_name, duration_period, amount_insured, details);
               /** 取出該項保險之資料並封裝至 JSONsonArray 內 */
               jsa.put(i.getData());
           }
@@ -190,7 +193,7 @@ public class InsuranceHelper
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `missa`.`products` WHERE `products`.`id` = ? LIMIT 1";
+            String sql = "SELECT * FROM `final_project`.`insurance` WHERE `insurance`.`id` = ? LIMIT 1";
             
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
             pres = conn.prepareStatement(sql);
@@ -208,10 +211,11 @@ public class InsuranceHelper
                 int insurance_id = rs.getInt("id");
                 String insurance_name = rs.getString("name");
                 String duration_period = rs.getString("period");
+                int amount_insured = rs.getInt("amount");
                 String details = rs.getString("details");
                 
                 /** 將每一筆商品資料產生一名新Product物件 */
-                i = new Insurance(insurance_id, insurance_name, duration_period, details);
+                i = new Insurance(insurance_id, insurance_name, duration_period, amount_insured, details);
             }
 
         } catch (SQLException e) {

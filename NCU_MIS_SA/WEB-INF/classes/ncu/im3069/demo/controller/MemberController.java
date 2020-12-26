@@ -1,6 +1,6 @@
 package ncu.im3069.demo.controller;
 
-import java.io.*;
+import java.io.IOException;
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
@@ -8,7 +8,7 @@ import org.json.*;
 import ncu.im3069.demo.app.Member;
 import ncu.im3069.demo.app.MemberHelper;
 import ncu.im3069.tools.JsonReader;
-
+import javax.servlet.annotation.WebServlet;
 
 
 // TODO: Auto-generated Javadoc
