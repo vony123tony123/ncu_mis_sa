@@ -36,7 +36,38 @@ public class InsurancePolicy {
 		getMemberFromDB();
 		getInsuranceFromDB();
 	}
+	
+	public int calInsurancePremium(int gender, int birthyear, int height, int weight, int disease_id,int amount_insured) {
+		double premium_level = 0;//計算風險貼水
+		double bmi = weight/((height/100)^2);
+		int age = 0;
+		int premium = 0;
+		
+		age = LocalDateTime.now().getYear()-birthyear;
+		
+		if(bmi>24) 
+			premium_level += bmi-24;
+				
+		if(bmi<18.5) 
+			premium_level += 18.5-bmi;
+		
+		if(age > 40) 
+			premium_level += age-40;
+		
+		if(age < 20) 
+			premium_level += 20-age;
+		
+		premium_level += (5 + disease_id * 5);
+		
+		if(gender == 1) 
+			premium_level *= 2;
+		
+		premium = (int) (amount_insured/ 2500 * premium_level);
+		
+		return premium;
+	}
 
+	
 	public int getID() {
 		return id;
 	}
