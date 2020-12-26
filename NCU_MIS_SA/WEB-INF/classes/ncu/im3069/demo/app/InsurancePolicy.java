@@ -23,6 +23,8 @@ public class InsurancePolicy {
 	private InsuranceHelper ih = InsuranceHelper.getHelper();
 	private InsurancePolicyHelper iph = InsurancePolicyHelper.getHelper();
 	
+
+	
 	public InsurancePolicy(int id, int memeber_id, int insurance_id, String beneficiary_name,
 			String beneficiary_relation, String beneficiary_phone_number, String beneficiary_address) 
 	{
@@ -37,7 +39,7 @@ public class InsurancePolicy {
 		getInsuranceFromDB();
 	}
 	
-	public int calInsurancePremium(int gender, int birthyear, int height, int weight, int disease_id,int amount_insured) {
+	public static int calInsurancePremium(int gender, int birthyear, int height, int weight, int disease_id,int amount_insured) {
 		double premium_level = 0;//計算風險貼水
 		double bmi = weight/((height/100)^2);
 		int age = 0;
