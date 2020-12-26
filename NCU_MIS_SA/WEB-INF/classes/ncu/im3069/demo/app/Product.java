@@ -7,17 +7,14 @@ public class Insurance {
     /** id，保險編號 */
     private int insurance_id;
 
-    /** id，會員編號 */
-    private String name;
+    /** name，保險名稱 */
+    private String insurance_name;
 
-    /** id，會員編號 */
-    private double price;
+    /** period，要保日期 */
+    private String duration_period;
 
-    /** id，會員編號 */
-    private String image;
-
-    /** id，會員編號 */
-	private String describe;
+    /** details，詳細資訊 */
+    private String details;
 	
 
     /**
