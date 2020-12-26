@@ -2,10 +2,10 @@ package ncu.im3069.demo.app;
 
 import org.json.*;
 
-public class Product {
+public class Insurance {
 
-    /** id，會員編號 */
-    private int id;
+    /** id，保險編號 */
+    private int insurance_id;
 
     /** id，會員編號 */
     private String name;
