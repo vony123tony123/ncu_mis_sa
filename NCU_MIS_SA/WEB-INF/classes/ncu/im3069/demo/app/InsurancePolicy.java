@@ -30,10 +30,10 @@ public class InsurancePolicy {
 	
 
 	
-	public InsurancePolicy(int memeber_id, int insurance_id, String beneficiary_name,
+	public InsurancePolicy(int member_id, int insurance_id, String beneficiary_name,
 			String beneficiary_relation, String beneficiary_phone_number, String beneficiary_address) 
 	{
-		this.member_id = memeber_id;
+		this.member_id = member_id;
 		this.insurance_id = insurance_id;
 		this.beneficiary_name = beneficiary_name;
 		this.beneficiary_relationship = beneficiary_relation;
@@ -177,7 +177,7 @@ public class InsurancePolicy {
 	public JSONObject update() {
 		JSONObject jso = new JSONObject();
 		if(this.id != 0) {
-			jso = iph.update(this);
+			jso = iph.Update(this);	
 		}
 		return jso;
 	}
