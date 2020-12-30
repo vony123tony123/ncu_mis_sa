@@ -1,128 +1,162 @@
 package ncu.im3069.demo.app;
 
+
 import org.json.*;
 
 public class Insurance {
 
-    /** id，保險編號 */
+    /** 保險編號,資料庫自動產生 */
     private int insurance_id;
-
-    /** name，保險名稱 */
-    private String insurance_name;
-
-    /** period，要保日期 */
-    private String duration_period;
     
-    /** amount，保額 */
+    /** 保險名稱 */
+    private String insurance_name;
+    
+    /** 保險有效期間 */
+    private int duration_period;
+    
+    /** 保費 */
     private int amount_insured;
-
-    /** details，詳細資訊 */
+    
+    /** 保險資訊 */
     private String details;
+
+    /** 刪除記錄欄 */
+	private int delete_key;
 	
-
+    /** ih，InsuranceHelper之物件與Insurance相關之資料庫方法（Sigleton） */
+    private InsuranceHelper ih =  InsuranceHelper.getHelper();
+    
     /**
-     * 實例化（Instantiates）一個新的（new）Insurance 物件<br>
-     * 採用多載（overload）方法進行，此建構子用於新增保險時
+     * 實例化（Instantiates）一個新的（new）Insurance物件<br>
+     * 採用多載（overload）方法進行，此建構子用於建立與更新保險品項
      *
-     * @param id 保險編號
+     * @param insurance_name 保險名稱
+     * @param duration_period 保險有效期間
+     * @param amount_insured 保額
+     * @param details 保險資訊
      */
-	public Insurance(int insurance_id) {
-		this.insurance_id = insurance_id;
-	}
-
+    public Insurance(String insurance_name, int duration_period, int amount_insured, String details) {
+        this.insurance_name = insurance_name;
+        this.duration_period = duration_period;
+        this.amount_insured = amount_insured;
+        this.details = details;
+        update();
+    }
+    
     /**
-     * 實例化（Instantiates）一個新的（new）Insurance 物件<br>
-     * 採用多載（overload）方法進行，此建構子用於新增保險時
+     * 實例化（Instantiates）一個新的（new）Insurance物件<br>
+     * 採用多載（overload）方法進行，此建構子用於刪除保險品項
      *
-     * @param name 保險名稱
-     * @param period 年限
-     * @param amount 保額
-     * @param details 資訊細節
+     * @param delete_key 刪除紀錄欄
      */
-	public Insurance(String name, String duration_period, int amount, String details) {
-		this.insurance_name = insurance_name;
-		this.duration_period = duration_period;
-		this.amount_insured = amount_insured;
-		this.details = details;
-	}
-
+    public Insurance(int delete_key) {
+        this.delete_key = delete_key;
+        update();
+    }
+    
     /**
-     * 實例化（Instantiates）一個新的（new）Insurance 物件<br>
-     * 採用多載（overload）方法進行，此建構子用於修改保險時
+     * 實例化（Instantiates）一個新的（new）Insurance物件<br>
+     * 採用多載（overload）方法進行，此建構子用於查詢保險資料時，將每一筆資料新增為一個保險物件
      *
-     * @param id 保險編號
-     * @param name 保險名稱
-     * @param period 保險年限
-     * @param amount 保額
-     * @param details 資訊細節
+     * @param insurance_id 保險編號
+     * @param insurance_name 保險名稱
+     * @param duration_period 保險有效期間
+     * @param amount_insured 保額
+     * @param details 保險資訊
+     * @param delete_key 刪除紀錄欄
      */
-	public Insurance(int id, String name, String period, int amount, String details) {
-		this.insurance_id = insurance_id;
-		this.insurance_name = insurance_name;
-		this.duration_period = period;
-		this.amount_insured = amount_insured;
-		this.details = details;
-	}
-
+    public Insurance(int insurance_id, String insurance_name, int duration_period, int amount_insured, String details, int delete_key) {
+        this.insurance_id = insurance_id;
+        this.insurance_name = insurance_name;
+        this.duration_period = duration_period;
+        this.amount_insured = amount_insured;
+        this.details = details;
+        this.delete_key = delete_key;
+    }
+    
     /**
      * 取得保險編號
      *
      * @return int 回傳保險編號
      */
-	public int getID() {
+	public int getInsuranceID() {
 		return this.insurance_id;
 	}
-
+	
     /**
      * 取得保險名稱
      *
      * @return String 回傳保險名稱
      */
-	public String getName() {
+	public String getInsuranceName() {
 		return this.insurance_name;
 	}
-
+	
     /**
-     * 取得保險年限
+     * 取得保險有效期間
      *
-     * @return double 回傳保險年限
+     * @return int 回傳保險有效期間
      */
-	public String getPeriod() {
+	public int getDurationPeriod() {
 		return this.duration_period;
 	}
-
-    /**
+	
+	/**
      * 取得保額
      *
-     * @return String 回傳保額
+     * @return int 回傳保額
      */
-	public int getAmount() {
+	public int getAmountInsured() {
 		return this.amount_insured;
-	}
-
+	}	
+	
     /**
-     * 取得保險資訊細節
+     * 取得保險資訊
      *
-     * @return String 回傳保險資訊細節
+     * @return int 回傳保險資訊
      */
 	public String getDetails() {
 		return this.details;
 	}
-
-    /**
-     * 取得保險資訊
+	
+	/**
+     * 取得刪除紀錄欄
      *
-     * @return JSONObject 回傳保險資訊
+     * @return int 回傳刪除紀錄欄
      */
-	public JSONObject getData() {
-        /** 透過JSONObject將該項保險所需之資料全部進行封裝*/
+	public int getDeleteKey() {
+		return this.delete_key;
+	}
+
+    public JSONObject update() {
+        /** 新建一個JSONObject用以儲存更新後之資料 */
+        JSONObject data = new JSONObject();
+        
+        /** 檢查該保險品項是否已經在資料庫 */
+        if(this.insurance_id != 0) {
+            /** 透過InsuranceHelper物件，更新目前之保險資料至資料庫中 */
+            data = ih.update(this);
+        }
+        
+        return data;
+    }
+    
+    /**
+     * 取得該保險所有資料
+     *
+     * @return the data 取得該保險之所有資料並封裝於JSONObject物件內
+     */
+    public JSONObject getData() {
+        /** 透過JSONObject將該保險所需之資料全部進行封裝*/ 
         JSONObject jso = new JSONObject();
-        jso.put("id", getID());
-        jso.put("name", getName());
-        jso.put("period", getPeriod());
-        jso.put("amount", getAmount());
+        jso.put("insurance_id", getInsuranceID());
+        jso.put("insurance_name", getInsuranceName());
+        jso.put("duration_period", getDurationPeriod());
+        jso.put("amount_insured", getAmountInsured());
         jso.put("details", getDetails());
+        jso.put("delete_key", getDeleteKey());
 
         return jso;
     }
+
 }
