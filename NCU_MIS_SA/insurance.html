@@ -81,7 +81,7 @@
         	
         	$("#insurance_panel").append(insurance_panel);
         	setButtonFunction();
-        	checkIfExistInCart();
+        	
           }
         },
         error: function () {
@@ -103,17 +103,18 @@
 		inner_html += '<p class="card-text">' + '保額 : $' + data.amount_insured + '</p>';
 		inner_html += '<p class="card-text">' + '有效期間 : ' + data.duration_period + '年' + '</p>';
 		inner_html += '<div class="d-flex justify-content-around align-items-center">';
-		inner_html += '<a id="calculation_button_'+ data.insurance_id +'" class = "btn btn-primary" href = "premium_calculate.html" type = "button">我要試算</a>';
-		inner_html += '<a id="insurancePolicy_button"'+ data.insurance_id +'" class = "btn btn-primary" href = "insurancePolicyCheck.html" type = "button">我要投保</a>';
+		inner_html += '<a id="calculation_'+ data.insurance_id +'" name = "calculation" class = "btn btn-primary" href = "premium_calculate.html" type = "button">我要試算</a>';
+		inner_html += '<a id="insurancePolicy_'+ data.insurance_id +'" name = "insurancePolicy" class = "btn btn-primary" href = "insurancePolicyCheck.html" type = "button">我要投保</a>';
 		inner_html += '</div></div></div>';
     	
 		return inner_html;
     }
     
     function setButtonFunction() {
-    	$('button[name="insured"]').click(function () {
-    		var id = (this.insurance_id).split('_')[1];
+    	$('a[name = "insurancePolicy"]').click(function () {
+    		var id = (this.id).split('_')[1];
     		sessionStorage.setItem("insurance_id", id);
+    		return false;
         });
     }
     
