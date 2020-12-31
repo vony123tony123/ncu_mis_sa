@@ -61,9 +61,13 @@ public class InsurancePolicyController extends HttpServlet {
 		JSONObject jso = jsr.getObject();
 
 		if (jso.getInt("status") == 1) {
-			JSONArray risk_level = jso.getJSONArray("risk_level");
-			int premium = InsurancePolicy.calInsurancePremium(risk_level.getInt(0), risk_level.getInt(1),
-					risk_level.getInt(2), risk_level.getInt(3), risk_level.getInt(4), risk_level.getInt(5));
+			int gender = jso.getInt("gender");
+			int birthyear = jso.getInt("birthday");
+			int height = jso.getInt("height");
+			int weight = jso.getInt("weight");
+			int disease_id = jso.getInt("disease_id");
+			int amount_insured = jso.getInt("amount_insured");
+			int premium = InsurancePolicy.calInsurancePremium(gender,birthyear, height, weight, disease_id, amount_insured);
 
 			/** 新建一個 JSONObject 用於將回傳之資料進行封裝 */
 			JSONObject resp = new JSONObject();

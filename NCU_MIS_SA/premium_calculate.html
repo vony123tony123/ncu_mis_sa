@@ -1,10 +1,194 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="BIG5">
-<title>Insert title here</title>
-</head>
-<body>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="">
 
+<title>保單試算</title>
+<!-- Bootstrap core CSS -->
+<link href="statics/css/bootstrap.min.css" rel="stylesheet">
+<link href="statics/css/font-awesome.min.css" rel="stylesheet">
+<link href="statics/icon/favicon.ico" type="image/x-icon" rel="icon">
+<link href="statics/icon/favicon.ico" type="image/x-icon" rel="shortcut icon">
+<style>
+    .bd-placeholder-img {
+      font-size: 1.125rem;
+      text-anchor: middle;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+    }
+
+    @media (min-width: 768px) {
+      .bd-placeholder-img-lg {
+        font-size: 3.5rem;
+      }
+    }
+    fieldset {
+      overflow: hidden
+    }
+    
+    .some-class {
+      float: left;
+      clear: none;
+    }
+    
+    label {
+      float: left;
+      clear: none;
+      display: block;
+      padding: 0px 1em 0px 8px;
+    }
+    
+    input[type=radio],
+    input.radio {
+      float: left;
+      clear: none;
+      margin: 2px 0 0 2px;
+    }
+</style>
+<!-- Custom styles for this template -->
+<link href="statics/css/product.css" rel="stylesheet">
+<link href="statics/css/jquery-confirm.css" rel="stylesheet">
+
+<script src="statics/js/jquery-3.4.1.min.js"></script>
+<script src="statics/js/jquery-confirm.js"></script>
+
+
+</head>
+
+<body>
+	<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+    <h5 class="my-0 mr-md-auto font-weight-normal">OOO保險公司</h5>
+    <nav class="my-2 my-md-0 mr-md-3">
+		<a class="p-2 text-dark" href="index.html">會員中心</a>
+		<a class="p-2 text-dark" href="product.html">保險瀏覽</a>
+		<a class="p-2 text-dark" href="order.html">訂單中心</a>
+    </nav>
+	</div>
+	<div class="col-md-8 order-md-1">
+		<h4 class="mb-3">保單試算</h4>
+		<hr class="mb-4">
+		<div class="row">
+		
+			<fieldset>
+				<div class="col-md-6 mb-2 gender_id">
+      			<label for="radio">性別</label>
+      			<label for="radio">男</label>
+     		    <input type="radio" name="gender" value="1" id="male" checked>
+    		    <label for="none">女</label>
+    		    <input type="radio" name="gender" value="0" id="female">
+    		  	</div>
+  			</fieldset>
+  			
+			<div class="col-md-6 mb-2">
+				<label for="birth_year">生日西元年</label>
+	            <input type="text" class="form-control" id="birth_year" maxlength="10" value="" required>
+			</div>
+	        
+	        <div class="col-md-6 mb-2">
+	            <label for="height">身高</label>
+	            <input type="text" class="form-control" id="height" maxlength="10" value="" required>
+			</div>
+
+			<div class="col-md-6 mb-4">
+	            <label for="weight">體重</label>
+	            <input type="text" class="form-control" id="weight" maxlength="10" value="" required>
+			</div>
+	        </div>
+	        
+	        
+			<fieldset>
+      			<div class="disease_id">
+      			<label for="radio">身體狀況</label>
+     		    <input type="radio" class="radio" name="id" value="0" id="none" checked>
+    		    <label for="none">無疾病</label>
+    		    <input type="radio" class="radio" name="id" value="1" id="innate">
+   		 	    <label for="innate">先天疾病</label>
+   	 		    <input type="radio" class="radio" name="id" value="2" id="major">
+ 		        <label for="major">重大傷病</label>
+        		<input type="radio" class="radio" name="id" value="3" id="others">
+    		    <label for="others">其他</label>
+    		  	</div>
+  			</fieldset>
+  			
+  			
+  			<div class="col-md-6 mb-2">
+  				<div id="output"></div>
+			</div>
+  			
+
+  			  			
+			<a class="btn btn-outline-primary calculate">開始試算</a>      
+			<a class="btn btn-outline-primary" href=insurance_policy_entry.html>立即投保</a>
+        	</div>
+ 
+		<script type="text/javascript">
+			
+			$('#calculate').click(function() {
+				var status = 1;
+				var birth_year = $('#birth_year').val();
+				var height = $('#height').val();
+				var weight = $('#weight').val();
+				
+				if(document.getElementById('male').checked) { 
+	                var gender = 1;
+	            } else{
+	            	var gender = 0;
+	            }
+				
+				if(document.getElementById('none').checked) { 
+	                var disease_id = 0;
+	            } else if(document.getElementById('innate').checked){
+	            	var disease_id = 1;
+	            }else if(document.getElementById('major').checked){
+	            	var disease_id = 2;
+	            }else{
+	            	var disease_id = 3;
+	            }
+				var amount_insured = 50000;
+                        
+			// 將資料組成JSON格式
+			var data_object = {
+				"status": 1,
+				"birth_year": birth_year,
+				"height": height,
+				"weight": weight,
+				"gender": gender,
+				"disease_id": disease_id,
+				"amount_insured": amount_insured
+				
+			};
+
+			// 將JSON格式轉換成字串
+			var risk_level = JSON(data_object);
+
+			// 發出POST的AJAX請求
+			$.ajax({
+				type: "POST",
+				url: "InsurancePolicyController",
+				data: risk_level,
+				crossDomain: true,
+				cache: false,
+				dataType: 'json',
+				timeout: 5000,
+				success: function (response) {
+					output.innerHTML = "年繳保費為"+response.data.premium+"新台幣(元)";
+				},
+				error: function () {
+					alert("無法連線到伺服器！");
+						}
+					});
+			});
+			
+			
+		</script>
+	
+	
+	
+	
 </body>
 </html>
