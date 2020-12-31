@@ -157,9 +157,10 @@ public class InsuranceHelper {
                 int amount_insured = rs.getInt("amount_insured");
                 String details = rs.getString("details");
                 int delete_key = rs.getInt("delete_key");
+                Date timestamp = rs.getDate("timestamp");
                 
                 /** 將每一筆保險資料產生一名新Insurance物件 */
-                i = new Insurance(insurance_id, insurance_name, duration_period, amount_insured, details, delete_key);
+                i = new Insurance(insurance_id, insurance_name, duration_period, amount_insured, details, delete_key, timestamp);
                 /** 取出該保險之資料並封裝至 JSONsonArray 內 */
                 jsa.put(i.getData());
             }
@@ -379,9 +380,10 @@ public class InsuranceHelper {
                 int amount_insured = rs.getInt("amount_insured");
                 String details = rs.getString("details");
                 int delete_key = rs.getInt("delete_key");
+                Time timestamp = rs.getTime("timestamp");
                 
                 /** 將每一筆保險資料產生一名新Insurance物件 */
-                i = new Insurance(insurance_id, insurance_name, duration_period, amount_insured, details, delete_key);
+                i = new Insurance(insurance_id, insurance_name, duration_period, amount_insured, details, delete_key, timestamp);
                 /** 取出該名保險之資料並封裝至 JSONsonArray 內 */
                 jsa.put(i.getData());
             }

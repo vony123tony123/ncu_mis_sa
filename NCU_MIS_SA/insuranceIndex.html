@@ -19,6 +19,8 @@
         <div id="content">
             <h2>保險資料一覽</h2>
             <a href="member.html">會員管理</a>
+            <a href="member.html">保單管理</a>
+            <a href="insuranceCreate.html">新增保險商品</a>
             <a href="insurance.html">回保險商品瀏覽</a>
 
             <div id="flashMessage" class="message" style="display: none;"></div>
@@ -57,7 +59,7 @@
                             timeout: 5000,
                             success: function (response) {
                                 if(response.status == 200){
-                                    $("#flashMessage").html("成功! 已經成功刪除會員...");
+                                    $("#flashMessage").html("成功! 已經成功刪除保險...");
                                     $("#flashMessage").show();
                                     getAllMember();
                                 }

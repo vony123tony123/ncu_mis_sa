@@ -1,6 +1,8 @@
 package ncu.im3069.demo.app;
 
 
+import java.util.Date;
+
 import org.json.*;
 
 public class Insurance {
@@ -24,6 +26,9 @@ public class Insurance {
      * 預設為0，若紀錄為1表示該保險已刪除
      * */
 	private int delete_key;
+	
+	/** 最後更新時間 */
+	private Date timestamp;
 	
     /** ih，InsuranceHelper之物件與Insurance相關之資料庫方法（Sigleton） */
     private InsuranceHelper ih =  InsuranceHelper.getHelper();
@@ -67,13 +72,14 @@ public class Insurance {
      * @param details 保險資訊
      * @param delete_key 刪除紀錄欄
      */
-    public Insurance(int insurance_id, String insurance_name, int duration_period, int amount_insured, String details, int delete_key) {
+    public Insurance(int insurance_id, String insurance_name, int duration_period, int amount_insured, String details, int delete_key, Date timestamp) {
         this.insurance_id = insurance_id;
         this.insurance_name = insurance_name;
         this.duration_period = duration_period;
         this.amount_insured = amount_insured;
         this.details = details;
         this.delete_key = delete_key;
+        this.timestamp = timestamp;
     }
     
     /**
@@ -129,6 +135,10 @@ public class Insurance {
 	public int getDeleteKey() {
 		return this.delete_key;
 	}
+	
+	public Date getTimestamp(){
+		return this.timestamp;
+	}
 
     public JSONObject update() {
         /** 新建一個JSONObject用以儲存更新後之資料 */
@@ -157,6 +167,7 @@ public class Insurance {
         jso.put("amount_insured", getAmountInsured());
         jso.put("details", getDetails());
         jso.put("delete_key", getDeleteKey());
+        jso.put("timestamp", getTimestamp());
 
         return jso;
     }
