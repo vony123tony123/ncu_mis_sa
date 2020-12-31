@@ -20,7 +20,7 @@ import ncu.im3069.tools.JsonReader;
  * @version 1.0.0
  * @since 1.0.0
  */
-@WebServlet("/api/Insurance.do")
+@WebServlet("/api/insurance.do")
 public class InsuranceController extends HttpServlet {
     
     /** The Constant serialVersionUID. */
@@ -84,7 +84,7 @@ public class InsuranceController extends HttpServlet {
         /** 若直接透過前端AJAX之data以key=value之字串方式進行傳遞參數，可以直接由此方法取回資料 */
         String insurance_id = jsr.getParameter("insurance_id");
         
-        /** 判斷該字串是否存在，若存在代表要取回個別會員之資料，否則代表要取回全部資料庫內會員之資料 */
+        /** 判斷該字串是否存在，若存在代表要取回個別保險之資料，否則代表要取回全部資料庫內保險之資料 */
         if (insurance_id.isEmpty()) {
             /** 透過InsuranceHelper物件之getAll()方法取回所有保險之資料，回傳之資料為JSONObject物件 */
             JSONObject query = ih.getAll();

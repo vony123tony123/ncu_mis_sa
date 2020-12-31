@@ -20,7 +20,9 @@ public class Insurance {
     /** 保險資訊 */
     private String details;
 
-    /** 刪除記錄欄 */
+    /** 刪除記錄欄 
+     * 預設為0，若紀錄為1表示該保險已刪除
+     * */
 	private int delete_key;
 	
     /** ih，InsuranceHelper之物件與Insurance相關之資料庫方法（Sigleton） */

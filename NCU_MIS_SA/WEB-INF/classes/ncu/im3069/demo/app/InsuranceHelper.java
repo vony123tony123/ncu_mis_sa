@@ -69,7 +69,7 @@ public class InsuranceHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "Update `missa_final`.`insurance` SET `delete_key` = 1 WHERE `insurance_id` = ?";
+            String sql = "Update `missa`.`insurance` SET `delete_key` = 1 WHERE `insurance_id` = ?";
             /** 取得所需之參數 */
             int insurance_id = i.getInsuranceID();
             
@@ -134,7 +134,7 @@ public class InsuranceHelper {
             /** SQL指令 
              * 只回傳delete_key為0者(表示未被刪除)
              * */
-            String sql = "SELECT * FROM `missa_fianl`.`insurance` WHERE `delete_key` LIKE 0";
+            String sql = "SELECT * FROM `missa`.`insurance` WHERE `delete_key` LIKE 0";
             
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
             pres = conn.prepareStatement(sql);
@@ -190,6 +190,139 @@ public class InsuranceHelper {
         return response;
     }
     
+    public JSONObject getByIdList(String data) {
+        /** 新建一個 Insurance 物件之 i 變數，用於紀錄每一位查詢回之保險資料 */
+        Insurance i = null;
+        /** 用於儲存所有檢索回之保險，以JSONArray方式儲存 */
+        JSONArray jsa = new JSONArray();
+        /** 記錄實際執行之SQL指令 */
+        String exexcute_sql = "";
+        /** 紀錄程式開始執行時間 */
+        long start_time = System.nanoTime();
+        /** 紀錄SQL總行數 */
+        int row = 0;
+        /** 儲存JDBC檢索資料庫後回傳之結果，以 pointer 方式移動到下一筆資料 */
+        ResultSet rs = null;
+
+        try {
+            /** 取得資料庫之連線 */
+            conn = DBMgr.getConnection();
+            String[] in_para = DBMgr.stringToArray(data, ",");
+            /** SQL指令 */
+            String sql = "SELECT * FROM `missa`.`insurance` WHERE `insurance`.`insurance_id`";
+            for (int j=0 ; j < in_para.length ; j++) {
+                sql += (j == 0) ? "in (?" : ", ?";
+                sql += (j == in_para.length-1) ? ")" : "";
+            }
+            
+            /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
+            pres = conn.prepareStatement(sql);
+            for (int j=0 ; j < in_para.length ; j++) {
+              pres.setString(j+1, in_para[j]);
+            }
+            /** 執行查詢之SQL指令並記錄其回傳之資料 */
+            rs = pres.executeQuery();
+
+            /** 紀錄真實執行的SQL指令，並印出 **/
+            exexcute_sql = pres.toString();
+            System.out.println(exexcute_sql);
+            
+            /** 透過 while 迴圈移動pointer，取得每一筆回傳資料 */
+            while(rs.next()) {
+                /** 每執行一次迴圈表示有一筆資料 */
+                row += 1;
+                
+                /** 將 ResultSet 之資料取出 */
+                String insurance_name = rs.getString("insurance_name");
+                int duration_period = rs.getInt("duration_period");
+                int amount_insured = rs.getInt("amount_insured");
+                String details = rs.getString("details");
+                
+                /** 將每一筆商品資料產生一個新保險物件 */
+                i = new Insurance(insurance_name, duration_period, amount_insured, details);
+                /** 取出該項商品之資料並封裝至 JSONsonArray 內 */
+                jsa.put(i.getData());
+            }
+
+        } catch (SQLException e) {
+            /** 印出JDBC SQL指令錯誤 **/
+            System.err.format("SQL State: %s\n%s\n%s", e.getErrorCode(), e.getSQLState(), e.getMessage());
+        } catch (Exception e) {
+            /** 若錯誤則印出錯誤訊息 */
+            e.printStackTrace();
+        } finally {
+            /** 關閉連線並釋放所有資料庫相關之資源 **/
+            DBMgr.close(rs, pres, conn);
+        }
+        
+        /** 紀錄程式結束執行時間 */
+        long end_time = System.nanoTime();
+        /** 紀錄程式執行時間 */
+        long duration = (end_time - start_time);
+        
+        /** 將SQL指令、花費時間、影響行數與所有保險資料之JSONArray，封裝成JSONObject回傳 */
+        JSONObject response = new JSONObject();
+        response.put("sql", exexcute_sql);
+        response.put("row", row);
+        response.put("time", duration);
+        response.put("data", jsa);
+
+        return response;
+    }
+   
+    /**
+     * 請注意此方法與getByID的區別，這裡是用作會員瀏覽保險
+     */
+    public Insurance getByIDViewing(String id) {
+        /** 新建一個 Insurance 物件之 i 變數，用於紀錄每一位查詢回之商品資料 */
+        Insurance i = null;
+        /** 記錄實際執行之SQL指令 */
+        String exexcute_sql = "";
+        /** 儲存JDBC檢索資料庫後回傳之結果，以 pointer 方式移動到下一筆資料 */
+        ResultSet rs = null;
+        
+        try {
+            /** 取得資料庫之連線 */
+            conn = DBMgr.getConnection();
+            /** SQL指令 */
+            String sql = "SELECT * FROM `missa`.`insurance` WHERE `insurance`.`insurance_id` = ? LIMIT 1";
+            
+            /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
+            pres = conn.prepareStatement(sql);
+            pres.setString(1, id);
+            /** 執行查詢之SQL指令並記錄其回傳之資料 */
+            rs = pres.executeQuery();
+
+            /** 紀錄真實執行的SQL指令，並印出 **/
+            exexcute_sql = pres.toString();
+            System.out.println(exexcute_sql);
+            
+            /** 透過 while 迴圈移動pointer，取得每一筆回傳資料 */
+            while(rs.next()) {
+                /** 將 ResultSet 之資料取出 */
+            	String insurance_name = rs.getString("insurance_name");
+                int duration_period = rs.getInt("duration_period");
+                int amount_insured = rs.getInt("amount_insured");
+                String details = rs.getString("details");
+                
+                /** 將每一筆商品資料產生一名新Insurance物件 */
+                i = new Insurance(insurance_name, duration_period, amount_insured, details);
+            }
+
+        } catch (SQLException e) {
+            /** 印出JDBC SQL指令錯誤 **/
+            System.err.format("SQL State: %s\n%s\n%s", e.getErrorCode(), e.getSQLState(), e.getMessage());
+        } catch (Exception e) {
+            /** 若錯誤則印出錯誤訊息 */
+            e.printStackTrace();
+        } finally {
+            /** 關閉連線並釋放所有資料庫相關之資源 **/
+            DBMgr.close(rs, pres, conn);
+        }
+
+        return i;
+    }
+    
     /**
      * 透過保險編號（insurance_id）取得保險資料
      *
@@ -199,7 +332,10 @@ public class InsuranceHelper {
      * 為了供controller使用isEmpty檢查是否有id，這裡把id指定為string
      * 若無id傳入則回傳所有資料(getAll)，反之若有id則傳該id所屬之資料(getByID)
      * 
+     * 請注意此方法與getByIDViewing的區別，此用作保險管理
+     * 
      */
+    
     public JSONObject getByID(String id) {
         /** 新建一個 Insurance 物件之 i 變數，用於紀錄每一位查詢回之保險資料 */
         Insurance i = null;
@@ -218,7 +354,7 @@ public class InsuranceHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "SELECT * FROM `missa_final`.`insurance` WHERE `insurance_id` = ? LIMIT 1";
+            String sql = "SELECT * FROM `missa`.`insurance` WHERE `insurance_id` = ? LIMIT 1";
             
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
@@ -294,7 +430,7 @@ public class InsuranceHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "INSERT INTO `missa_final`.`insurance`(`insurance_name`, `duration_period`, `amount_insured`, `details`)"
+            String sql = "INSERT INTO `missa`.`insurance`(`insurance_name`, `duration_period`, `amount_insured`, `details`)"
                     + " VALUES(?, ?, ?, ?)";
             
             /** 取得所需之參數 */
@@ -362,7 +498,7 @@ public class InsuranceHelper {
             /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             /** SQL指令 */
-            String sql = "Update `missa_final`.`insurance` SET `insurance_name` = ? ,`duration_period` = ? , `amount_insured` = ? , `details` = ? WHERE `insurance_id` = ?";
+            String sql = "Update `missa`.`insurance` SET `insurance_name` = ? ,`duration_period` = ? , `amount_insured` = ? , `details` = ? WHERE `insurance_id` = ?";
             /** 取得所需之參數 */
             String insurance_name = i.getInsuranceName();
             int duration_period = i.getDurationPeriod();
