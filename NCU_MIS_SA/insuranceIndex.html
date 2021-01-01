@@ -2,170 +2,189 @@
 <html>
 
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>CakePHP: the rapid development php framework: Members</title>
-    <link href="statics/icon/favicon.ico" type="image/x-icon" rel="icon">
-    <link href="statics/icon/favicon.ico" type="image/x-icon" rel="shortcut icon">
-    <link rel="stylesheet" type="text/css" href="statics/css/cake.generic.css">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>CakePHP: the rapid development php framework: Members</title>
+<link href="statics/icon/favicon.ico" type="image/x-icon" rel="icon">
+<link href="statics/icon/favicon.ico" type="image/x-icon"
+	rel="shortcut icon">
+<link rel="stylesheet" type="text/css"
+	href="statics/css/cake.generic.css">
 
-    <script src="statics/js/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+<script src="statics/js/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <div id="container">
-        <div id="header">
-            <h1><a href="http://cakephp.org/">CakePHP: the rapid development php framework</a></h1>
-        </div>
-        <div id="content">
-            <h2>保險資料一覽</h2>
-            <a href="member.html">會員管理</a>
-            <a href="insurancePolicyIndex.html">保單管理</a>
-            <a href="insuranceCreate.html">新增保險商品</a>
-            <a href="insurance.html">回保險商品瀏覽</a>
+	<div id="container">
+		<div id="header">
+			<h1>
+				<a href="http://cakephp.org/">CakePHP: the rapid development php
+					framework</a>
+			</h1>
+		</div>
+		<div id="content">
+			<h2>保險資料一覽</h2>
+			<a href="member.html">會員管理</a> <a href="insurancePolicyIndex.html">保單管理</a>
+			<a href="insuranceCreate.html">新增保險商品</a> <a href="insurance.html">回保險商品瀏覽</a>
 
-            <div id="flashMessage" class="message" style="display: none;"></div>
+			<div id="flashMessage" class="message" style="display: none;"></div>
 
-            <table id="table">
-                <thead>
-                    <tr>
-                        <th>編號</th>
-                        <th>保險名稱</th>
-                        <th>有效期間</th>
-                        <th>保費</th>
-                        <th>保險資訊</th>
-                        <th>最後更新時間</th>
-                        <th>功能</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-            <script type="text/javascript">
-                // 全域變數紀錄SQL指令下的次數
-                var sql_num = 0;
-                function deleteInsurance(id) {
-                	 var check = window.confirm("確認刪除保險？");
+			<table id="table">
+				<thead>
+					<tr>
+						<th>編號</th>
+						<th>保險名稱</th>
+						<th>有效期間</th>
+						<th>保費</th>
+						<th>保險資訊</th>
+						<th>最後更新時間</th>
+						<th>功能</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+			<script type="text/javascript">
+				// 全域變數紀錄SQL指令下的次數
+				var sql_num = 0;
+				function deleteInsurance(id) {
+					var check = window.confirm("確認刪除保險？");
+					
+					var data = {
+						"insurance_id" : id
+					}
+					
+					var data_string = JSON.stringify(data);
 
-                	 if (check == true) {
-                         console.log("You pressed OK!");
-                         var request = {'insurance_id': id};
-                         
-                         
-                         // 發出POST的PUT請求
-                         $.ajax({
-                                 type: "DELETE",
-                                 url: "api/insurance.do",
-                                 data: "insurance_id=" +id,
-                                 crossDomain: true,
-                                 cache: false,
-                                 dataType: 'json',
-                                 timeout: 5000,
-                                 success: function (response) {
-                                     $('#flashMessage').html(response.message);
-                                     $('#flashMessage').show();
-                                     if(response.status == 200){
-                                         updateSQLTable(response.response);
-                                         getInsurance();
-                                     }
-                                 },
-                                 error: function () {
-                                     alert("無法連線到伺服器！");
-                                 }
-                         });
-                     }
-                     else {
-                         console.log("You pressed Cancel!");
-                     }
-                    
-                }
-                     
+					if (check == true) {
+						console.log("You pressed OK!");
+						// 發出POST的PUT請求
+						$.ajax({
+							type : "DELETE",
+							url : "api/insurance.do",
+							data : data_string,
+							crossDomain : true,
+							cache : false,
+							dataType : 'json',
+							timeout : 5000,
+							success : function(response) {
+								$('#flashMessage').html(response.message);
+								$('#flashMessage').show();
+								if (response.status == 200) {
+									updateSQLTable(response.response);
+								}
+							},
+							error : function() {
+								alert("無法連線到伺服器！");
+							}
+						});
+					} else {
+						console.log("You pressed Cancel!");
+					}
 
+				}
 
-                function getAllInsurance() {
-                    // 發出POST的GET請求取得所有保險列表
-                    $.ajax({
-                            type: "GET",
-                            url: "api/insurance.do",
-                            crossDomain: true,
-                            cache: false,
-                            dataType: 'json',
-                            timeout: 5000,
-                            success: function (response) {
-                                if(response.status == 200){
-                                    updateTable(response.response.data);
-                                    updateSQLTable(response.response);
-                                }
-                                console.log(response);
-                            },
-                            error: function () {
-                                alert("無法連線到伺服器！");
-                            }
-                    });
-                }
-                
-                // 更新保險列表表格
-                function updateTable(data) {
-                    $("#table > tbody").empty();
-                    var table_html = '';
-                    $.each(data, function(index, value) {
-                        table_html += '<tr><td scope="row">' + value['insurance_id'] + '</td>';
-                        table_html += '<td>' + value['insurance_name'] + '</td>';
-                        table_html += '<td>' + value['duration_period'] + '</td>';
-                        table_html += '<td>' + value['amount_insured'] + '</td>';
-                        table_html += '<td>' + value['details'] + '</td>';
-                        table_html += '<td>' + value['timestamp'] + '</td>'
-                        table_html += '<td>' + '<a href="insuranceEdit.html?id=' + value['insurance_id'] + '">編輯</a> | ';
-                        table_html += '<a href="javascript: deleteInsurance(' + value['insurance_id'] + ');">刪除</a></td></tr>';
-                    })
+				function getAllInsurance() {
+					// 發出POST的GET請求取得所有保險列表
+					$.ajax({
+						type : "GET",
+						url : "api/insurance.do",
+						crossDomain : true,
+						cache : false,
+						dataType : 'json',
+						timeout : 5000,
+						success : function(response) {
+							if (response.status == 200) {
+								updateTable(response.response.data);
+								updateSQLTable(response.response);
+							}
+							console.log(response);
+						},
+						error : function() {
+							alert("無法連線到伺服器！");
+						}
+					});
+				}
 
-                    $("#table > tbody").append(table_html);
-                }
-                
-                // 更新SQL指令歷史表格
-                function updateSQLTable(data) {
-                    $("#sql_log > tbody").empty();
-                    var time = (data.time / 1000000).toFixed(2);
-                    var table_html = "";
-                    
-                    sql_num = 0;
-                    sql_num += 1
+				// 更新保險列表表格
+				function updateTable(data) {
+					$("#table > tbody").empty();
+					var table_html = '';
+					$.each(data, function(index, value) {
+						table_html += '<tr><td scope="row">'
+								+ value['insurance_id'] + '</td>';
+						table_html += '<td>' + value['insurance_name']
+								+ '</td>';
+						table_html += '<td>' + value['duration_period']
+								+ '</td>';
+						table_html += '<td>' + value['amount_insured']
+								+ '</td>';
+						table_html += '<td>' + value['details'] + '</td>';
+						table_html += '<td>' + value['timestamp'] + '</td>'
+						table_html += '<td>'
+								+ '<a href="insuranceEdit.html?id='
+								+ value['insurance_id'] + '">編輯</a> | ';
+						table_html += '<a href="javascript: deleteInsurance('
+								+ value['insurance_id']
+								+ ');">刪除</a></td></tr>';
+					})
 
-                    table_html += '<tr>';
-                    table_html += '<td>' + sql_num + '</td>';
-                    table_html += '<td>' + data.sql + '</td>';
-                    table_html += '<td style="text-align: right">' + '0' + '</td>';
-                    table_html += '<td style="text-align: right">' + data.row + '</td>';
-                    table_html += '<td style="text-align: right">' + data.row + '</td>';
-                    table_html += '<td style="text-align: right">' + time + '</td>';
-                    table_html += '</tr>';
-                    $("#sql_log > tbody").append(table_html);
-                    $("#sql_summary").html("(default) " + data.row + " queries took " + time + " ms");
-                }
-                $(document).ready(function() {
-                    getAllInsurance();
-                });
-            </script>
-        </div>
-        <div id="footer">
-            <a href="http://www.cakephp.org/" target="_blank" id="cake-powered"><img src="statics/img/cake.power.gif" alt="CakePHP: the rapid development php framework" border="0"></a>
-            <p>CakePHP 2.6.10</p>
-        </div>
-    </div>
-    <table class="cake-sql-log" id="sql_log" summary="Cake SQL Log" cellspacing="0">
-        <caption id="sql_summary">(default) 0 query took 0 ms</caption>
-        <thead>
-            <tr>
-                <th>Nr</th>
-                <th>Query</th>
-                <th>Error</th>
-                <th>Affected</th>
-                <th>Num. rows</th>
-                <th>Took (ms)</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+					$("#table > tbody").append(table_html);
+				}
+
+				// 更新SQL指令歷史表格
+				function updateSQLTable(data) {
+					$("#sql_log > tbody").empty();
+					var time = (data.time / 1000000).toFixed(2);
+					var table_html = "";
+
+					sql_num = 0;
+					sql_num += 1
+
+					table_html += '<tr>';
+					table_html += '<td>' + sql_num + '</td>';
+					table_html += '<td>' + data.sql + '</td>';
+					table_html += '<td style="text-align: right">' + '0'
+							+ '</td>';
+					table_html += '<td style="text-align: right">' + data.row
+							+ '</td>';
+					table_html += '<td style="text-align: right">' + data.row
+							+ '</td>';
+					table_html += '<td style="text-align: right">' + time
+							+ '</td>';
+					table_html += '</tr>';
+					$("#sql_log > tbody").append(table_html);
+					$("#sql_summary").html(
+							"(default) " + data.row + " queries took " + time
+									+ " ms");
+				}
+				$(document).ready(function() {
+					getAllInsurance();
+				});
+			</script>
+		</div>
+		<div id="footer">
+			<a href="http://www.cakephp.org/" target="_blank" id="cake-powered"><img
+				src="statics/img/cake.power.gif"
+				alt="CakePHP: the rapid development php framework" border="0"></a>
+			<p>CakePHP 2.6.10</p>
+		</div>
+	</div>
+	<table class="cake-sql-log" id="sql_log" summary="Cake SQL Log"
+		cellspacing="0">
+		<caption id="sql_summary">(default) 0 query took 0 ms</caption>
+		<thead>
+			<tr>
+				<th>Nr</th>
+				<th>Query</th>
+				<th>Error</th>
+				<th>Affected</th>
+				<th>Num. rows</th>
+				<th>Took (ms)</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
 </body>
 
 </html>

@@ -126,10 +126,10 @@ public class InsuranceController extends HttpServlet {
         throws ServletException, IOException {
         /** 透過JsonReader類別將Request之JSON格式資料解析並取回 */
         JsonReader jsr = new JsonReader(request);
-        String insurance_id = jsr.getParameter("insurance_id");
-        JSONObject data = ih.delete(insurance_id);
-        System.out.println(insurance_id);
-
+        JSONObject jso = jsr.getObject();
+        /** 若直接透過前端AJAX之data以key=value之字串方式進行傳遞參數，可以直接由此方法取回資料 */
+        int insurance_id = jso.getInt("insurance_id");
+        JSONObject data = ih.delete(String.valueOf(insurance_id));
         
         /** 新建一個JSONObject用於將回傳之資料進行封裝 */
         JSONObject resp = new JSONObject();
