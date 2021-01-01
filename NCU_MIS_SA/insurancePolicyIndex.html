@@ -3,7 +3,7 @@
 
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>CakePHP: the rapid development php framework: Members</title>
+<title>保單管理後台</title>
 <link href="statics/icon/favicon.ico" type="image/x-icon" rel="icon">
 <link href="statics/icon/favicon.ico" type="image/x-icon"
 	rel="shortcut icon">
@@ -52,6 +52,7 @@
 				$(document).ready(function() {
 					getAllInsurance();
 				});
+				
 				function deleteInsurancePolicy(id) {
 					var check = window.confirm("確認刪除保單？");
 					
@@ -76,7 +77,7 @@
 								$('#flashMessage').html(response.message);
 								$('#flashMessage').show();
 								if (response.status == 200) {
-									updateSQLTable(response.response);
+									getAllInsurance()
 								}
 							},
 							error : function() {
@@ -126,9 +127,9 @@
 						table_html += '<td>' + value['beneficiary_address'] + '</td>';
 						table_html += '<td>' + value['create_time'] + '</td>';
 						table_html += '<td>' + value['modify_time'] + '</td>';
-						table_html += '<td>'+ '<a href="insurancePolicyDetail_Manager.html?insurance_id='
+						table_html += '<td>'+ '<a href="insurancePolicyDetail.html?insurance_policy_id='
 											+ value['insurance_policy_id'] + '">詳情</a> | '
-						table_html += '<a href="insurancePolicyEdit.html?insurance_id='
+						table_html += '<a href="insurancePolicyEdit.html?insurance_policy_id='
 								+ value['insurance_policy_id'] + '">編輯</a> | ';
 						table_html += '<a href="javascript: deleteInsurancePolicy('+ value['insurance_policy_id']
 								+ ');">刪除</a></td></tr>';

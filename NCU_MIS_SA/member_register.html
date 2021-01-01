@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Member_Register</title>
+    <link href="statics/icon/favicon.ico" type="image/x-icon" rel="icon">
+    <link href="statics/icon/favicon.ico" type="image/x-icon" rel="shortcut icon">
+    <link rel="stylesheet" type="text/css" href="statics/css/cake.generic.css">
+    <script src="statics/js/jquery-3.4.1.min.js"></script>
+</head>
+<!--
+	//基本功能已完成
+	//選項無法正確傳回值、要提交完成才能回到中心、已登入，按"取消註冊"要回會員中心、確認密碼未實作
+-->
+<body>
+
+    <div id="container">
+    
+        <div id="content">
+            
+            <h2>歡迎註冊！</h2>
+            
+            
+            <!-- 按鈕：我要直接看保險！ / 帳戶登入 -->
+            <form id="form" accept-charset="utf-8">
+            
+            	<div class="submit">
+            		<input type="button" value="我要直接看保險！" onclick=
+            			"location.href='product.html'">
+            		<input type="button" value="帳戶登入" onclick=
+            			"location.href='login.html'">
+            	</div>
+            	
+            </form>
+            
+            
+            <!-- 提示 -->
+            <div id="flashMessage" class="message" 
+            style="display: none;"></div>
+
+            
+            <!-- 表單：建立帳戶之註冊表單 -->
+            <form id="form" accept-charset="utf-8">
+                
+                <div style="display:none;"><input type="hidden" name="_method" value="POST"></div>
+                
+                <div class="input id required">
+                    <label for="member_id">身分證字號</label>
+                    <input name="id" maxlength="10" type="text" id="member_id" required="required">
+                </div>
+                
+                <div class="input name required">
+                    <label for="member_name">姓名</label>
+                    <input name="name" maxlength="50" type="text" id="member_name" required="required">
+                </div>
+                
+                <div class="input email required">
+                    <label for="member_email">電郵</label>
+                    <input name="email" maxlength="50" type="email" id="member_email" required="required">
+                </div>
+                
+                <div class="input password required">
+                    <label for="member_password">密碼</label>
+                    <input name="password" maxlength="50" type="password" id="member_password" required="required">
+                </div>
+                
+                <div class="input password_check required">
+                    <label for="member_password_check">密碼確認</label>
+                    <input name="password_check" maxlength="50" type="password" id="member_password_check" required="required">
+                </div>
+                
+                <div class="input bank_account required">
+                    <label for="member_bank_account">銀行帳號</label>
+                    <input name="bank_account" maxlength="16" type="text" id="member_bank_account" required="required">
+                </div>
+                
+                <div class="input birthday required">
+                    <label for="member_birthday">生日</label>
+                    <input name="birthday" maxlength="8" type="text" id="member_birthday" required="required">
+                </div>
+                
+                <div class="input gender required">
+                    <label for="member_gender">性別</label>
+                    <div>
+                    <input name="gender" type="radio" id="member_gender" value="1" required="required">生理男
+                    </div>
+                    <div>
+                    <input name="gender" type="radio" id="member_gender" value="0" required="required">生理女
+                    </div>
+                </div>
+                
+                <div class="input height required">
+                    <label for="member_height">身高</label>
+                    <input name="height" maxlength="3" type="text" id="member_height" required="required">
+                </div>
+                
+                <div class="input weight required">
+                    <label for="member_weight">體重</label>
+                    <input name="weight" maxlength="3" type="text" id="member_weight" required="required">
+                </div>
+                
+                <div class="input disease_id required">
+                    <label for="member_disease_id">疾病</label>
+                    <div>
+                    <input name="disease_id" type="radio" id="member_disease_id" value="0" required="required">無
+                    </div>
+                    <div>
+                    <input name="disease_id" type="radio" id="member_disease_id" value="1" required="required">先天疾病
+                    </div>
+                    <div>
+                    <input name="disease_id" type="radio" id="member_disease_id" value="2" required="required">重大傷病
+                    </div>
+                    <div>
+                    <input name="disease_id" type="radio" id="member_disease_id" value="3" required="required">其他
+                    </div>
+                </div>
+                
+                <div class="input phone_number required">
+                    <label for="member_phone_number">電話</label>
+                    <input name="phone_number" maxlength="50" type="text" id="member_phone_number" required="required">
+                </div>
+                
+                <div class="input address required">
+                    <label for="member_address">地址</label>
+                    <input name="address" maxlength="50" type="text" id="member_address" required="required">
+                </div>
+                
+            </form>
+            
+            
+            <!-- 按鈕：取消註冊 / 建立帳戶 -->
+            <form id="form" accept-charset="utf-8">
+                
+            	<div class="submit">
+            		<input type="button" value="取消註冊" onclick=
+            			"location.href='home.html'">
+            		<input type="button" value="建立帳戶" id="submit"><!-- onclick=
+            			"location.href='member_center.html'" id="submit">-->
+            	</div>
+                
+            </form>
+            
+            
+            <!--程式：
+            	提交註冊資料
+            -->
+            <script type="text/javascript">
+         		// FUNCTIONS
+                	
+         		// 處理表單點擊事件
+                $(document).ready(function() {
+                var $form = $('#submit');
+                    $form.click(
+                    		function() {
+                        submit();
+                    }
+                    );
+                    
+                    
+                    //提交註冊資料
+                    function submit() {
+                        var id 				= $('#member_id').val();
+                    	var name 			= $('#member_name').val();
+                        var email 			= $('#member_email').val();
+                        var password 		= $('#member_password').val();
+                        var bank_account 	= $('#member_bank_account').val();
+                        var birthday 		= $('#member_birthday').val();
+                        var gender 			= $('#member_gender').val();
+                        var height 			= $('#member_height').val();
+                        var weight 			= $('#member_weight').val();
+                        var disease_id 		= $('#member_disease_id').val();
+                        var phone_number 	= $('#member_phone_number').val();
+                        var address 		= $('#member_address').val();
+                        
+                        
+                        var email_rule = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
+                        var password_rule = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+                        if (!email_rule.test(email)) {
+                            alert("Email格式不符！");
+                        }
+                        else if(!password_rule.test(password)) {
+                            alert("密碼格式不符，長度至少8，且至少包含一個數字和英文字母！");
+                        }
+                        else {
+                            // 將資料組成JSON格式
+                            var data_object = {
+                                "id":			id,
+                            	"name":			name,
+                                "email":		email,
+                                "password":		password,
+                                "bank_account":	bank_account,
+                                "birthday":		birthday,
+                                "gender":		gender,
+                                "height":		height,
+                                "weight":		weight,
+                                "disease_id":	disease_id,
+                                "phone_number":	phone_number,
+                                "address":		address
+                            };
+
+                            // 將JSON格式轉換成字串
+                            var data_string = JSON.stringify(data_object);
+
+                            // 發出POST的AJAX請求
+                            $.ajax({
+                                    type: "POST",
+                                    url: "api/member.do",
+                                    data: data_string,
+                                    crossDomain: true,
+                                    cache: false,
+                                    dataType: 'json',
+                                    timeout: 5000,
+                                    success: function (response) {
+                                        $('#flashMessage').html(response.message);
+                                        $('#flashMessage').show();
+                                        if(response.status == 200){
+                                            updateSQLTable(response.response);
+                                        }
+                                    },
+                                    error: function () {
+                                        alert("無法連線到伺服器！");
+                                    }
+                            });
+                        }
+                    }
+                });
+            </script>
+            
+        </div>
+        
+    </div>
+    
+
+</body>
+
+
+</html>

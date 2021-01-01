@@ -41,8 +41,8 @@ public class InsurancePolicyController extends HttpServlet {
 		// TODO Auto-generated method stub
 		JsonReader jsr = new JsonReader(request);
 
-		if (!jsr.getParameter("id").isEmpty()) {
-			JSONObject query = iph.getByID(Integer.valueOf(jsr.getParameter("id")));
+		if (!jsr.getParameter("insurance_policy_id").isEmpty()) {
+			JSONObject query = iph.getByID(jsr.getParameter("insurance_policy_id"));
 
 			JSONObject resp = new JSONObject();
 			resp.put("status", 200);
@@ -149,13 +149,13 @@ public class InsurancePolicyController extends HttpServlet {
 		JsonReader jsr = new JsonReader(request);
 		JSONObject jso = jsr.getObject();
 
-		int id = jso.getInt("id");
+		String insurance_policy_id = jso.getString("insurance_policy_id");
 		String beneficiary_name = jso.getString("beneficiary_name");
 		String beneficiary_relationship = jso.getString("beneficiary_relationship");
 		String beneficiary_phone_number = jso.getString("beneficiary_phone_number");
 		String beneficiary_address = jso.getString("beneficiary_address");
 
-		InsurancePolicy ip = new InsurancePolicy(id, beneficiary_name, beneficiary_relationship,
+		InsurancePolicy ip = new InsurancePolicy(insurance_policy_id, beneficiary_name, beneficiary_relationship,
 				beneficiary_phone_number, beneficiary_address);
 
 		JSONObject data = iph.update(ip);

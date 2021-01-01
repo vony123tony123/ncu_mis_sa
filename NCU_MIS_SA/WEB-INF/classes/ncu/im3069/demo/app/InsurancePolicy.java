@@ -13,7 +13,7 @@ import org.json.JSONObject;
 
 public class InsurancePolicy {
 	
-	private int id;
+	private String insurance_policy_id;
 	private String member_id;
 	private JSONObject member;
 	private int insurance_id;
@@ -33,9 +33,9 @@ public class InsurancePolicy {
 	
 	
 	
-	public InsurancePolicy(int id, String beneficiary_name, String beneficiary_relationship,
+	public InsurancePolicy(String id, String beneficiary_name, String beneficiary_relationship,
 			String beneficiary_phone_number, String beneficiary_address) {
-		this.id = id;
+		this.insurance_policy_id = id;
 		this.beneficiary_name = beneficiary_name;
 		this.beneficiary_relationship = beneficiary_relationship;
 		this.beneficiary_phone_number = beneficiary_phone_number;
@@ -58,10 +58,10 @@ public class InsurancePolicy {
 		this.insurance_premium = calInsurancePremium();
 	}
 
-	public InsurancePolicy(int id, String member_id, int insurance_id,
+	public InsurancePolicy(String id, String member_id, int insurance_id,
 			int insurance_premium, String beneficiary_name, String beneficiary_relationship,
 			String beneficiary_phone_number, String beneficiary_address, Timestamp create_time, Timestamp modify_time) {
-		this.id = id;
+		this.insurance_policy_id = id;
 		this.member_id = member_id;
 		this.insurance_id = insurance_id;
 		this.insurance_premium = insurance_premium;
@@ -124,8 +124,8 @@ public class InsurancePolicy {
 	}
 
 	
-	public int getID() {
-		return id;
+	public String getID() {
+		return insurance_policy_id;
 	}
 
 	public String getMember_id() {
@@ -159,11 +159,19 @@ public class InsurancePolicy {
 	public Timestamp getCreateTime() {
 		return create_time;
 	}
+	
+	public String getCreateTimeString() {
+		return create_time.toGMTString();
+	}
 
 	public Timestamp getModify_time() {
 		return modify_time;
 	}
 
+	public String getModify_timeString() {
+		return modify_time.toGMTString();
+	}
+	
 	public void setModify_time(Timestamp modify_time) {
 		this.modify_time = modify_time;
 	}
@@ -195,8 +203,8 @@ public class InsurancePolicy {
 		jso.put("beneficiary_relationship", getBeneficiary_relationship());
 		jso.put("beneficiary_phone_number", getBeneficiary_phone_number());
 		jso.put("beneficiary_address", getBeneficiary_address());
-		jso.put("create_time", getCreateTime());
-		jso.put("modify_time", getModify_time());
+		jso.put("create_time", getCreateTimeString());
+		jso.put("modify_time", getModify_timeString());
 		return jso;
 	}
 	
@@ -210,7 +218,7 @@ public class InsurancePolicy {
 	
 	public JSONObject update() {
 		JSONObject jso = new JSONObject();
-		if(this.id != 0) {
+		if(this.insurance_policy_id != null) {
 			jso = iph.update(this);	
 		}
 		return jso;

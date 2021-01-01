@@ -101,7 +101,7 @@
 		inner_html += '<p class="card-text">' + '保額 : $' + data.amount_insured + '</p>';
 		inner_html += '<p class="card-text">' + '有效期間 : ' + data.duration_period + '年' + '</p>';
 		inner_html += '<div class="d-flex justify-content-around align-items-center">';
-		inner_html += '<a id="calculation_'+ data.insurance_id +'" name = "calculation" class = "btn btn-primary" href = "premium_calculate.html" type = "button">我要試算</a>';
+		inner_html += '<a id="calculation_'+ data.insurance_id +'" name = "calculation" class = "btn btn-primary" href = "premium_calculate.html?insurance_id='+data.insurance_id+'" type = "button">我要試算</a>';
 		inner_html += '<a id="insurancePolicy_'+ data.insurance_id +'" name = "insurancePolicy" class = "btn btn-primary" href = "insurancePolicyCheck.html?insurance_id='+data.insurance_id+'" type = "button">我要投保</a>';
 		inner_html += '</div></div></div>';
     	
@@ -115,9 +115,13 @@
     		sessionStorage.setItem("insurance_id", id);
     		return false;
         });
+    	$('a[name = "calculation"]').click(function () {
+    		var amount_insured = (this.id).split('_')[1];
+    		sessionStorage.setItem("amount_insured", amount_insured);
+    		return false;
+        });
     }
     */
-    
     
   </script>
   <footer class="text-muted">

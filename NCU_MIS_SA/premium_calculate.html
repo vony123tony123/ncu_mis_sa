@@ -121,16 +121,48 @@
 			</div>
   			
 			<a class="btn btn-outline-primary" href=insurance.html>重新選擇險種</a>      
-			<a class="btn btn-outline-primary" href=insurance_policy_entry.html>立即投保</a>
+			<a  id="insurancePolicyCreate" class="btn btn-outline-primary" href=insurance_policy_entry.html>立即投保</a>
         	</div>
  
 		<script type="text/javascript">
 			
 		$(document).ready(function() {
+			
+			var amount_insured=0;
+			//取得網址參數
+			var url_string = window.location.href;
+			var url = new URL(url_string);
+			var insurance_id = url.searchParams.get("insurance_id");
+			getInsuranceData();
+			
+			$('#insurancePolicyCreate').attr("href","insurance_policy_entry.html?insurance_id="+ insurance_id +"");
+			
+			
 			var $form = $('#calculate');
             $form.click(function() {
                 submit();
             });
+            
+            function getInsuranceData() {
+    			$.ajax({
+    				type : "Get",
+    				url : "api/insurance.do",
+    				data : "insurance_id=" + insurance_id,
+    				crossDomain : true,
+    				cache : false,
+    				dataType : 'json',
+    				timeout : 5000,
+    				success : function(response) {
+    					if (response.status == 200) {
+    						amount_insured = response.response.data[0]['amount_insured'];
+    					}
+    				},
+    				error : function() {
+    					alert("無法連線到伺服器！");
+    				}
+    			})
+    		}
+            
 
             function submit() {
             	if ($('#birthday').val()==""|$('#height').val()==""|$('#weight').val()=="") {
@@ -156,9 +188,7 @@
     	            	var disease_id = 2;
     	            }else{
     	            	var disease_id = 3;
-    	            }
-    				var amount_insured = 50000;
-                            
+    	            }       
 					
 					var risk_level = {
     				"status": 1,

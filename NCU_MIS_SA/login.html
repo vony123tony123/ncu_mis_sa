@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>LogIn</title>
+    <link href="statics/icon/favicon.ico" type="image/x-icon" rel="icon">
+    <link href="statics/icon/favicon.ico" type="image/x-icon" rel="shortcut icon">
+    <link rel="stylesheet" type="text/css" href="statics/css/cake.generic.css">
+    <script src="statics/js/jquery-3.4.1.min.js"></script>
+</head>
+<!--
+	//程式未完成
+	//程式是驗證與顯示提示的部分
+-->
+<body>
+    
+    <div id="container">
+        
+        <div id="content">
+            
+            <h2>歡迎登入！</h2>
+            
+            
+            <!-- 按鈕：回到首頁 -->
+            <form id="form" accept-charset="utf-8">
+            
+            	<div class="submit">
+            		<input type="button" value="回到首頁" onclick=
+            			"location.href='home.html'">
+            	</div>
+            	
+            </form>
+            
+            
+            <!-- 提示 -->
+            <div id="flashMessage" class="message" 
+            style="display: none;"></div>
+            
+            
+            <!-- 表單：身分證字號與密碼輸入部分 -->
+            <form id="form" accept-charset="utf-8">
+                
+                <div style="display:none;"><input type="hidden" name="_method" value="POST"></div>
+                
+                <div class="input id required">
+                    <label for="member_id">您的身分證字號：</label>
+                    <input name="id" maxlength="10" type="text" id="member_id" required="required">
+                </div>
+                
+                <div class="input password required">
+                    <label for="member_password">您的密碼：</label>
+                    <input name="password" maxlength="50" type="password" id="member_password" required="required">
+                </div>
+                
+            </form>
+            
+            
+            <!-- 按鈕：建立帳戶 / 登入 -->
+            <form id="form" accept-charset="utf-8">
+            
+            	<div class="submit">
+            		<input type="button" value="建立帳戶" onclick=
+            			"location.href='member_register.html'">
+            		<input type="button" value="登入" onclick=
+            			"location.href='member_center.html'" id="submit">
+            	</div>
+            	
+            </form>
+            
+            
+            <!-- /*然後下面這裡要寫驗證程式*/ -->
+            
+        </div>
+        
+    </div>
+
+</body>
+
+
+</html>

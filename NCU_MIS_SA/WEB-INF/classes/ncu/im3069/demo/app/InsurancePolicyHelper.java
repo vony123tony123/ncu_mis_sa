@@ -110,7 +110,7 @@ public class InsurancePolicyHelper {
 				row += 1;
 
 				/** 將 ResultSet 之資料取出 */
-				int id = rs.getInt("insurance_policy_id");
+				String insurance_policy_id = rs.getString("insurance_policy_id");
 				String member_id = rs.getString("member_id");
 				int insurance_id = rs.getInt("insurance_id");
 				int insurance_premium = rs.getInt("insurance_premium");
@@ -122,7 +122,7 @@ public class InsurancePolicyHelper {
 				Timestamp modify = rs.getTimestamp("modify_time");
 
 				/** 將每一筆保險資料產生一名新Insurance物件 */
-				ip = new InsurancePolicy(id, member_id, insurance_id, insurance_premium, beneficiary_name,
+				ip = new InsurancePolicy(insurance_policy_id, member_id, insurance_id, insurance_premium, beneficiary_name,
 						beneficiary_relationship, beneficiary_phone_number, beneficiary_address, create, modify);
 				/** 取出該項保險之資料並封裝至 JSONsonArray 內 */
 				jsa.put(ip.getInsurancePolicyInfo());
@@ -154,7 +154,7 @@ public class InsurancePolicyHelper {
 		return response;
 	}
 
-	public JSONObject getByID(int insurancePolicyId) {
+	public JSONObject getByID(String insurancePolicyId) {
 		JSONObject data = new JSONObject();
 		InsurancePolicy ip = null;
 		/** 記錄實際執行之SQL指令 */
@@ -175,7 +175,7 @@ public class InsurancePolicyHelper {
 
 			/** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
 			pres = conn.prepareStatement(sql);
-			pres.setInt(1, insurancePolicyId);
+			pres.setString(1, insurancePolicyId);
 			/** 執行查詢之SQL指令並記錄其回傳之資料 */
 			rs = pres.executeQuery();
 
@@ -189,7 +189,7 @@ public class InsurancePolicyHelper {
 				row += 1;
 
 				/** 將 ResultSet 之資料取出 */
-				int id = rs.getInt("insurance_policy_id");
+				String insurance_policy_id = rs.getString("insurance_policy_id");
 				String member_id = rs.getString("member_id");
 				int insurance_id = rs.getInt("insurance_id");
 				int insurance_premium = rs.getInt("insurance_premium");
@@ -201,7 +201,7 @@ public class InsurancePolicyHelper {
 				Timestamp modify = rs.getTimestamp("modify_time");
 
 				/** 將每一筆保險資料產生一名新Insurance物件 */
-				ip = new InsurancePolicy(id, member_id, insurance_id, insurance_premium, beneficiary_name,
+				ip = new InsurancePolicy(insurance_policy_id, member_id, insurance_id, insurance_premium, beneficiary_name,
 						beneficiary_relationship, beneficiary_phone_number, beneficiary_address, create, modify);
 				/** 取出該項保險之資料並封裝至 JSONsonArray 內 */
 				data = ip.getAllInfo();
@@ -269,7 +269,7 @@ public class InsurancePolicyHelper {
 				row += 1;
 
 				/** 將 ResultSet 之資料取出 */
-				int id = rs.getInt("insurance_policy_id");
+				String insurance_policy_id = rs.getString("insurance_policy_id");
 				String member_id = rs.getString("member_id");
 				int insurance_id = rs.getInt("insurance_id");
 				int insurance_premium = rs.getInt("insurance_premium");
@@ -281,7 +281,7 @@ public class InsurancePolicyHelper {
 				Timestamp modify = rs.getTimestamp("modify_time");
 
 				/** 將每一筆保險資料產生一名新Insurance物件 */
-				ip = new InsurancePolicy(id, member_id, insurance_id, insurance_premium, beneficiary_name,
+				ip = new InsurancePolicy(insurance_policy_id, member_id, insurance_id, insurance_premium, beneficiary_name,
 						beneficiary_relationship, beneficiary_phone_number, beneficiary_address, create, modify);
 				/** 取出該項保險之資料並封裝至 JSONsonArray 內 */
 				jsa.put(ip.getAllInfo());
@@ -331,7 +331,7 @@ public class InsurancePolicyHelper {
 					+ "`beneficiary_relationship`= ?,`beneficiary_phone_number`= ?,"
 					+ "`beneficiary_address`= ? WHERE `insurance_policy_id` =? " + "AND `delete_key`=0";
 			/** 取得所需之參數 */
-			int id = insurancePolicy.getID();
+			String insurance_policy_id = insurancePolicy.getID();
 			String beneficiary_name = insurancePolicy.getBeneficiary_name();
 			String beneficiary_relationship = insurancePolicy.getBeneficiary_relationship();
 			String beneficiary_phone_number = insurancePolicy.getBeneficiary_phone_number();
@@ -343,7 +343,7 @@ public class InsurancePolicyHelper {
 			pres.setString(2, beneficiary_relationship);
 			pres.setString(3, beneficiary_phone_number);
 			pres.setString(4, beneficiary_address);
-			pres.setInt(5, id);
+			pres.setString(5, insurance_policy_id);
 
 			/** 執行新增之SQL指令並記錄影響之行數 */
 			row = pres.executeUpdate();
@@ -379,7 +379,7 @@ public class InsurancePolicyHelper {
 		return response;
 	}
 	
-	public JSONObject deleteById(int id) {
+	public JSONObject deleteById(int insurance_policy_id) {
 		/** 記錄實際執行之SQL指令 */
         String exexcute_sql = "";
         /** 紀錄程式開始執行時間 */
@@ -397,7 +397,7 @@ public class InsurancePolicyHelper {
             
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
-            pres.setInt(1, id);
+            pres.setInt(1, insurance_policy_id);
             /** 執行刪除之SQL指令並記錄影響之行數 */
             row = pres.executeUpdate();
             

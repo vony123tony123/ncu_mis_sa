@@ -169,28 +169,32 @@
 					</div>
 					<div class="col media text-muted pt-3">
 						<p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
-							<strong class="d-block text-gray-dark">受益人姓名 </strong> <span
-								id="beneficiary_name">{{beneficiary_name}}</span>
+							<strong class="d-block text-gray-dark">受益人姓名 </strong> <input
+								id="beneficiary_name" type="text" class="form-control" maxlength="10" 
+							required>
 						</p>
 					</div>
 					<div class="col media text-muted pt-3">
 						<p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
-							<strong class="d-block text-gray-dark">受益人關係</strong> <span
-								id="beneficiary_relationship">{{beneficiary_relationship}}</span>
+							<strong class="d-block text-gray-dark">受益人關係</strong> <input
+								id="beneficiary_relationship" type="text" class="form-control" maxlength="10" 
+							required>
 						</p>
 					</div>
 				</div>
 				<div class="row">
 					<div class="col media text-muted pt-3">
 						<p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
-							<strong class="d-block text-gray-dark">受益人電話</strong> <span
-								id="beneficiary_phone_number">{{beneficiary_phone_number}}</span>
+							<strong class="d-block text-gray-dark">受益人電話</strong> <input
+								id="beneficiary_phone_number" type="text" class="form-control" maxlength="10" 
+							required>
 						</p>
 					</div>
 					<div class="col media text-muted pt-3">
 						<p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
-							<strong class="d-block text-gray-dark">受益人住址</strong> <span
-								id="beneficiary_address">{{beneficiary_address}}</span>
+							<strong class="d-block text-gray-dark">受益人住址</strong> <input
+								id="beneficiary_address" type="text" class="form-control" maxlength="10" 
+							required>
 						</p>
 					</div>
 				</div>
@@ -209,38 +213,77 @@
 					</div>
 				</div>
 			</div>
-
+			<div 
+				class="d-flex justify-content-center mx-auto align-items-center mt-3"
+				style="width: 500px; height: 50px;">
+				<a id="detail_button" class="btn btn-success" type="button"
+					href="insurancePolicyDetail.html">完成修改</a> 
+			</div>
 		</div>
 	</div>
 
 	<script>
-	var url_string = window.location.href;
-	var url = new URL(url_string);
-	var insurance_policy_id = url.searchParams.get("insurance_policy_id");
-	
-	
-	getInsurancePolicyData();
-			
+		var url_string = window.location.href;
+		var url = new URL(url_string);
+		var insurance_policy_id = url.searchParams.get("insurance_policy_id");
 		
-		/*
-		function getMemberData() {
+		$('#detail_button').attr('href','insurancePolicyDetail.html?insurance_policy_id='+ insurance_policy_id +'');
+
+		getInsurancePolicyData();
+		
+		$('#detail_button').click(function(){
+			
+			var data = {
+				"insurance_policy_id" : insurance_policy_id,
+				"beneficiary_name" : $("#beneficiary_name").val(),
+				"beneficiary_relationship" : $("#beneficiary_relationship").val(),
+				"beneficiary_phone_number" : $("#beneficiary_phone_number").val(),
+				"beneficiary_address" : $("#beneficiary_address").val(),
+			}
+			
+			var data_string = JSON.stringify(data);
+			
 			$.ajax({
-				type : "Get",
-				url : "api/member.do",
-				data : "id=" + member_id,
+				type : "Put",
+				url : "api/insurancePolicy.do",
+				data : data_string,
 				crossDomain : true,
 				cache : false,
 				dataType : 'json',
 				timeout : 5000,
 				success : function(response) {
 					if (response.status == 200) {
-						updateMemberHtml(response.response.data[0]);
+						alert("成功修改受益人資料!")
+						return true
 					}
 				},
-				error : function() {
+				error : function() { 
 					alert("無法連線到伺服器！");
+					return false
 				}
 			})
+			
+		});
+
+		function getInsurancePolicyData() {
+			$.ajax({
+						type : "Get",
+						url : "api/insurancePolicy.do",
+						data : "insurance_policy_id=" + insurance_policy_id,
+						crossDomain : true,
+						cache : false,
+						dataType : 'json',
+						timeout : 5000,
+						success : function(response) {
+							if (response.status == 200) {
+								updateInsuranceHtml(response.response.data['InsuranceInfo'].data[0]);
+								updateInsurancePolicyHtml(response.response.data['InsurancePolicyInfo'])
+							}
+						},
+						error : function() {
+							alert("無法連線到伺服器！");
+						}
+					})
 		}
 
 		function updateMemberHtml(data) {
@@ -279,32 +322,6 @@
 			}
 
 			$("#member_bank_account").html(data['bank_account']);
-			
-			var insurance_preimum = InsurancePolicy.calInsurancePremium(data["gender"], data["birthday"], data['height'], data['weight'], data['disease_id'], data['amount_insured']);
-			
-			$("#insurance_preimum").html(insurance_preimum);
-			
-		}
-		*/
-
-		function getInsuranceData() {
-			$.ajax({
-				type : "Get",
-				url : "api/insurance.do",
-				data : "insurance_id=" + insurance_id,
-				crossDomain : true,
-				cache : false,
-				dataType : 'json',
-				timeout : 5000,
-				success : function(response) {
-					if (response.status == 200) {
-						updateInsuranceHtml(response.response.data[0]);
-					}
-				},
-				error : function() {
-					alert("無法連線到伺服器！");
-				}
-			})
 		}
 
 		function updateInsuranceHtml(data) {
@@ -313,24 +330,19 @@
 			$("#amount_insured").html(data['amount_insured']);
 			$("#insurance_detail").html(data['details']);
 		}
-
-		$("#cancel_button").click(function() {
-			var a = confirm("警告:你將會回到商品瀏覽介面!!")
-			if (a == false) {
-				return false;
-			} else {
-				return true;
-			}
-		});
-
-		$('#change_button').click(function() {
-			var a = confirm("您將會前往會員修改介面")
-			if (a == false) {
-				return false;
-			} else {
-				return true;
-			}
-		});
+		
+		function updateInsurancePolicyHtml(data){
+			$("#insurance_policy_id").html(data['insurance_policy_id']);
+			$("#insurance_premium").html(data['insurance_premium']);
+			$("#beneficiary_name").attr('value',data['beneficiary_name']);
+			$("#beneficiary_relationship").attr('value',data['beneficiary_relationship']);
+			$("#beneficiary_phone_number").attr('value',data['beneficiary_phone_number']);
+			$("#beneficiary_address").attr('value',data['beneficiary_address']);
+			$("#create_time").html(data['create_time']);
+			$("#modify_time").html(data['modify_time']);
+		}
+		
+		
 	</script>
 </body>
 </html>

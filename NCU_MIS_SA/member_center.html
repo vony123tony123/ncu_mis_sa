@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Manager_Center</title>
+    <link href="statics/icon/favicon.ico" type="image/x-icon" rel="icon">
+    <link href="statics/icon/favicon.ico" type="image/x-icon" rel="shortcut icon">
+    <link rel="stylesheet" type="text/css" href="statics/css/cake.generic.css">
+    <script src="statics/js/jquery-3.4.1.min.js"></script>
+</head>
+<!--
+	//已完成，只差分成會員版本；但大概還要再增加註冊成功提示的部分；而且連結其實是給會員的
+	//啊會員的版本可能要好看一點，至少要把看保險的按鈕做的又大又漂票
+-->
+<body>
+    
+    <div id="container">
+        
+        <div id="content">
+            
+            <h2>會員中心</h2>
+            
+            
+            <!-- 按鈕：保險管理 / 保單管理 -->
+            <form id="form" accept-charset="utf-8">
+            
+            	<div class="submit">
+            		<input type="button" value="保險管理" onclick=
+            			"location.href='product.html'">
+                    <input type="button" value="保單管理" onclick=
+                    	"location.href='order.html'">
+                </div>
+            	
+            </form>
+            
+            
+            <!-- 提示 -->
+            <div id="flashMessage" class="message" 
+            style="display: none;"></div>
+            
+            
+            <!-- 表格：會員資料表：資料種類 -->
+            <table id="table">
+                <thead>
+                    <tr>
+                        <th>身份證字號</th>	<!-- 01. -->
+                        <th>姓名</th>		<!-- 02. -->
+                        <th>電郵</th>		<!-- 03.   ><	 04.是密碼 		 -->
+                        <th>銀行帳號</th>	<!-- 05. -->
+                        <th>生日</th>		<!-- 06. -->
+                        <th>性別</th>		<!-- 07. -->
+                        <th>身高</th>		<!-- 08. -->
+                        <th>體重</th>		<!-- 09. -->
+                        <th>疾病</th>		<!-- 10. -->
+                        <th>電話</th>		<!-- 11. -->
+                        <th>地址</th>		<!-- 12. -->
+                        <th>管理員</th>		<!-- 13.   ><	 14.是時間 		 -->
+                        <th>刪除</th>		<!-- 15. -->
+                        <th>功能</th>			<!-- 			功能：編輯、刪除	 -->
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            
+            
+            <!-- 按鈕：建立帳戶 / 帳戶登入 -->
+            <form id="form" accept-charset="utf-8">
+            
+            	<div class="submit">
+            		<input type="button" value="建立帳戶" onclick=
+            			"location.href='member_register.html'">
+            		<input type="button" value="帳戶登入" onclick=
+            			"location.href='login.html'">
+            	</div>
+            	
+            </form>
+            
+            
+            <!--程式：
+            	請求會員資料索取
+            	更新會員資料表
+            	刪除會員資料
+            -->
+            <script type="text/javascript">
+				// FUNCTIONS
+                // 發出POST的GET請求取得所有會員列表
+                function getAllMember() {
+                    $.ajax({
+                            type: "GET",
+                            url: "api/member.do",
+                            crossDomain: true,
+                            cache: false,
+                            dataType: 'json',
+                            timeout: 5000,
+                            success: function (response) {
+                                if(response.status == 200){
+                                    updateTable(response.response.data);
+                                    updateSQLTable(response.response);
+                                }
+                                console.log(response);
+                            },
+                            error: function () {
+                                alert("無法連線到伺服器！");
+                            }
+                    });
+                }
+                // 把會員資料全部丟上去！！！
+                $(document).ready(
+                	function() {
+                    	getAllMember();
+                	}
+                )
+                
+                
+                // 更新會員列表表格
+                function updateTable(data) {
+                    $("#table > tbody").empty();
+                    var table_html = '';
+                    $.each(
+                    		data, function(index, value) {
+                    	table_html += '<tr>					<!--輸出一列的會員資訊-->';
+                        
+                        
+                        table_html += '<td '
+                        table_html += 'scope="row">'+ value['id'] + 	  '</td>';
+                        table_html += '<td>' 		+ value['name'] + 		  '</td>';
+                        table_html += '<td>' 		+ value['email'] + 		  '</td>';
+                        table_html += '<td>' 		+ value['bank_account'] + '</td>';
+                        table_html += '<td>' 		+ value['birthday'] + 	  '</td>';
+                        table_html += '<td>' 		+ value['gender'] + 	  '</td>';
+                        table_html += '<td>' 		+ value['height'] + 	  '</td>';
+                        table_html += '<td>' 		+ value['weight'] + 	  '</td>';
+                        table_html += '<td>' 		+ value['disease_id'] +   '</td>';
+                        table_html += '<td>' 		+ value['phone_number'] + '</td>';
+                        table_html += '<td>' 		+ value['address'] + 	  '</td>';
+                        table_html += '<td>' 		+ value['manager'] + 	  '</td>';
+                        table_html += '<td>' 		+ value['delete_key'] +   '</td>';
+                        table_html += '<td>				<!--以下是編輯與刪除的部分-->';
+                       
+                        table_html += '<a href="member_editor.html';
+                        table_html += '?id=' 		+ value['id'] + 	 '">編輯</a>';
+                        table_html += 									 '</br></br>';
+                        table_html += '<a href="javascript: deleteMember('
+                        table_html += 				+ value['id'] + 	')">刪除</a>';
+                        table_html += '</td>';
+                        
+                        
+                        table_html += '</tr>';
+                    }
+                    )
+                    
+                    $("#table > tbody").append(table_html);
+                }
+                
+                
+                // 刪除會員資料
+                function deleteMember(id) {
+                    var check = window.confirm("確認刪除會員？");
+                    if (check == true) {
+                        console.log("You pressed OK!");
+                        var request = {'id': id};
+                        var data_string = JSON.stringify(request);
+                        $.ajax({
+                            type: "DELETE",
+                            url: "api/member.do",
+                            crossDomain: true,
+                            data: data_string,
+                            cache: false,
+                            dataType: 'json',
+                            timeout: 5000,
+                            success: function (response) {
+                                if(response.status == 200){
+                                    $("#flashMessage").html("成功! 已經成功刪除會員...");
+                                    $("#flashMessage").show();
+                                    getAllMember();
+                                }
+                                console.log(response);
+                            },
+                            error: function () {
+                                alert("無法連線到伺服器！");
+                            }
+                        });
+                    }
+                    else {
+                        console.log("You pressed Cancel!");
+                    }
+                }
+            </script>
+            
+            
+        </div>
+        
+    </div>
+    
+</body>
+
+
+</html>
