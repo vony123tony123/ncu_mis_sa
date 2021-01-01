@@ -21,7 +21,7 @@ import ncu.im3069.tools.JsonReader;
 /**
  * Servlet implementation class InsurancePolicyController
  */
-@WebServlet("/InsurancePolicyController")
+@WebServlet("/api/insurancePolicy.do")
 public class InsurancePolicyController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -94,16 +94,18 @@ public class InsurancePolicyController extends HttpServlet {
 
 			/** 透過 JsonReader 物件回傳到前端（以 JSONObject 方式） */
 			jsr.response(resp, response);
+			
 		} else if (jso.getInt("status") == 2) {
-			int member_id = jso.getInt("member_id");
+			String member_id = jso.getString("member_id");
 			int insurance_id = jso.getInt("insurance_id");
 			String beneficiary_name = jso.getString("beneficiary_name");
-			String beneficiary_relation = jso.getString("beneficiary_relation");
+			String beneficiary_relation = jso.getString("beneficiary_relationship");
 			String beneficiary_phone_number = jso.getString("beneficiary_phone_number");
 			String beneficiary_address = jso.getString("beneficiary_address");
 
 			InsurancePolicy ip = new InsurancePolicy(member_id, insurance_id, beneficiary_name, beneficiary_relation,
 					beneficiary_phone_number, beneficiary_address);
+			System.out.println("test");
 			JSONObject data = iph.create(ip);
 			JSONObject resp = new JSONObject();
 

@@ -12,7 +12,7 @@ import com.sun.tools.sjavac.comp.dependencies.PublicApiCollector;
 public class InsurancePolicy {
 	
 	private int id;
-	private int member_id;
+	private String member_id;
 	private JSONObject member;
 	private int insurance_id;
 	private JSONObject insurance;
@@ -28,9 +28,21 @@ public class InsurancePolicy {
 	private InsuranceHelper ih = InsuranceHelper.getHelper();
 	private InsurancePolicyHelper iph = InsurancePolicyHelper.getHelper();
 	
-
 	
-	public InsurancePolicy(int member_id, int insurance_id, String beneficiary_name,
+	
+	
+	public InsurancePolicy(int id, String beneficiary_name, String beneficiary_relationship,
+			String beneficiary_phone_number, String beneficiary_address) {
+		this.id = id;
+		this.beneficiary_name = beneficiary_name;
+		this.beneficiary_relationship = beneficiary_relationship;
+		this.beneficiary_phone_number = beneficiary_phone_number;
+		this.beneficiary_address = beneficiary_address;
+		getMemberFromDB();
+		getInsuranceFromDB();
+	}
+
+	public InsurancePolicy(String member_id, int insurance_id, String beneficiary_name,
 			String beneficiary_relation, String beneficiary_phone_number, String beneficiary_address) 
 	{
 		this.member_id = member_id;
@@ -39,12 +51,10 @@ public class InsurancePolicy {
 		this.beneficiary_relationship = beneficiary_relation;
 		this.beneficiary_phone_number = beneficiary_phone_number;
 		this.beneficiary_address = beneficiary_address;
-		getMemberFromDB();
-		getInsuranceFromDB();
 		this.insurance_preimum = calInsurancePremium();
 	}
 
-	public InsurancePolicy(int id, int member_id, int insurance_id,
+	public InsurancePolicy(int id, String member_id, int insurance_id,
 			int insurance_preimum, String beneficiary_name, String beneficiary_relationship,
 			String beneficiary_phone_number, String beneficiary_address, Timestamp create_time, Timestamp modify_time) {
 		this.id = id;
@@ -57,6 +67,8 @@ public class InsurancePolicy {
 		this.beneficiary_address = beneficiary_address;
 		this.create_time = create_time;
 		this.modify_time = modify_time;
+		getMemberFromDB();
+		getInsuranceFromDB();
 	}
 
 
@@ -106,7 +118,7 @@ public class InsurancePolicy {
 		return id;
 	}
 
-	public int getMember_id() {
+	public String getMember_id() {
 		return member_id;
 	}
 
@@ -143,7 +155,7 @@ public class InsurancePolicy {
 	}
 	
 	public void getInsuranceFromDB() {
-		this.insurance = ih.getByID(getID());
+		this.insurance = ih.getByID(String.valueOf(getID()));
 	}
 	
 	
@@ -177,7 +189,7 @@ public class InsurancePolicy {
 	public JSONObject update() {
 		JSONObject jso = new JSONObject();
 		if(this.id != 0) {
-			jso = iph.Update(this);	
+			jso = iph.update(this);	
 		}
 		return jso;
 	}
