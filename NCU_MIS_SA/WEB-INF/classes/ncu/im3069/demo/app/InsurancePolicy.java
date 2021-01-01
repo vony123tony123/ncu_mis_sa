@@ -1,18 +1,20 @@
 package ncu.im3069.demo.app;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
 
-import javax.print.event.PrintJobAttributeEvent;
-
+import org.json.JSONException;
 import org.json.JSONObject;
-
-import com.sun.tools.sjavac.comp.dependencies.PublicApiCollector;
 
 public class InsurancePolicy {
 	
 	private int id;
-	private int member_id;
+	private String member_id;
 	private JSONObject member;
 	private int insurance_id;
 	private JSONObject insurance;
@@ -22,16 +24,28 @@ public class InsurancePolicy {
 	private String beneficiary_phone_number;
 	private String beneficiary_address;
 	private Timestamp create_time = Timestamp.valueOf(LocalDateTime.now());
-	private Timestamp modify_time;
+	private Timestamp modify_time = null;
 	
 	private MemberHelper mh=MemberHelper.getHelper();
 	private InsuranceHelper ih = InsuranceHelper.getHelper();
 	private InsurancePolicyHelper iph = InsurancePolicyHelper.getHelper();
 	
-
 	
-	public InsurancePolicy(int member_id, int insurance_id, String beneficiary_name,
-			String beneficiary_relation, String beneficiary_phone_number, String beneficiary_address) 
+	
+	
+	public InsurancePolicy(int id, String beneficiary_name, String beneficiary_relationship,
+			String beneficiary_phone_number, String beneficiary_address) {
+		this.id = id;
+		this.beneficiary_name = beneficiary_name;
+		this.beneficiary_relationship = beneficiary_relationship;
+		this.beneficiary_phone_number = beneficiary_phone_number;
+		this.beneficiary_address = beneficiary_address;
+		getMemberFromDB();
+		getInsuranceFromDB();
+	}
+
+	public InsurancePolicy(String member_id, int insurance_id, String beneficiary_name,
+			String beneficiary_relation, String beneficiary_phone_number, String beneficiary_address) throws JSONException, ParseException 
 	{
 		this.member_id = member_id;
 		this.insurance_id = insurance_id;
@@ -44,7 +58,7 @@ public class InsurancePolicy {
 		this.insurance_preimum = calInsurancePremium();
 	}
 
-	public InsurancePolicy(int id, int member_id, int insurance_id,
+	public InsurancePolicy(int id, String member_id, int insurance_id,
 			int insurance_preimum, String beneficiary_name, String beneficiary_relationship,
 			String beneficiary_phone_number, String beneficiary_address, Timestamp create_time, Timestamp modify_time) {
 		this.id = id;
@@ -57,25 +71,33 @@ public class InsurancePolicy {
 		this.beneficiary_address = beneficiary_address;
 		this.create_time = create_time;
 		this.modify_time = modify_time;
+		getMemberFromDB();
+		getInsuranceFromDB();
 	}
 
 
 
-	private int calInsurancePremium() {
+	private int calInsurancePremium() throws JSONException, ParseException {
 		int gender = member.getInt("gender");
-		int birthyear = member.getInt("birthday");
+		String birthday = member.getString("birthday");
 		int height = member.getInt("height");
 		int weight = member.getInt("weight");
 		int disease_id = member.getInt("disease_id");
 		int amount_insured = insurance.getInt("amount_insured");
-		return calInsurancePremium(gender, birthyear, height, weight, disease_id, amount_insured);
+		return calInsurancePremium(gender, birthday, height, weight, disease_id, amount_insured);
 	}
 	
-	public static int calInsurancePremium(int gender, int birthyear, int height, int weight, int disease_id,int amount_insured) {
+	public static int calInsurancePremium(int gender, String birthday, int height, int weight, int disease_id,int amount_insured) throws ParseException {
 		double premium_level = 0;//計算風險貼水
 		double bmi = weight/((height/100)^2);
 		int age = 0;
 		int premium = 0;
+		
+		DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss"); 
+		Date date = sdf.parse(birthday);
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		int birthyear = cal.get(Calendar.YEAR);
 		
 		age = LocalDateTime.now().getYear()-birthyear;
 		
@@ -106,7 +128,7 @@ public class InsurancePolicy {
 		return id;
 	}
 
-	public int getMember_id() {
+	public String getMember_id() {
 		return member_id;
 	}
 
@@ -139,11 +161,11 @@ public class InsurancePolicy {
 	}
 
 	public void getMemberFromDB() {
-		this.member = mh.getByID(getID());
+		this.member = mh.getByID(getMember_id());
 	}
 	
 	public void getInsuranceFromDB() {
-		this.insurance = ih.getByID(getID());
+		this.insurance = ih.getByID(String.valueOf(getInsurance_id()));
 	}
 	
 	
@@ -177,7 +199,7 @@ public class InsurancePolicy {
 	public JSONObject update() {
 		JSONObject jso = new JSONObject();
 		if(this.id != 0) {
-			jso = iph.Update(this);	
+			jso = iph.update(this);	
 		}
 		return jso;
 	}

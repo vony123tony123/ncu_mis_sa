@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author"
+	content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+<meta name="generator" content="Jekyll v3.8.5">
+
+<title>保險資訊確認</title>
+
+<!-- Bootstrap core CSS -->
+<link href="statics/css/bootstrap.min.css" rel="stylesheet">
+<link href="statics/css/font-awesome.min.css" rel="stylesheet">
+<link href="statics/icon/favicon.ico" type="image/x-icon" rel="icon">
+<link href="statics/icon/favicon.ico" type="image/x-icon"
+	rel="shortcut icon">
+
+<!-- Custom styles for this template -->
+<link href="statics/css/product.css" rel="stylesheet">
+<link href="statics/css/jquery-confirm.css" rel="stylesheet">
+
+<script src="statics/js/jquery-3.4.1.min.js"></script>
+<script src="statics/js/jquery-confirm.js"></script>
+</head>
+<body>
+
+	<div
+		class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom shadow-sm"
+		style="background-color: LightGray;">
+		<img src="./statics/img/youtbue.png"
+			style="width: 40px; height: 30px;">
+		<h5 class="my-0 mr-md-auto font-weight-normal">立即投保</h5>
+		<nav class="my-2 my-md-0 mr-md-3">
+			<a class="p-2 text-dark" href="index.html">會員管理模組</a> <a
+				class="p-2 text-dark" href="product.html">商品列表</a> <a
+				class="p-2 text-dark" href="order.html">訂單列表</a>
+		</nav>
+		<a class="btn btn-outline-primary" href="cart.html">購物車</a>
+	</div>
+
+	<div class="progress" style="height: 30px; border-radius: 20px">
+		<div class="progress-bar"
+			style="width: 30%; height: 30px; border-radius: 20px">
+			<h5 class="text-light-50" style="font-family: Microsoft JhengHei;">正在完成保險資訊確認</h5>
+		</div>
+	</div>
+
+	<div
+		class="pricing-header px-3 py-1 pt-md-2 pb-md-2 mx-auto text-center bg-light"
+		style="font-family: DFKai-sb;">
+		<h4 class="display-4">保險資訊確認</h4>
+		<p class="lead">請確認保單相關資訊無誤</p>
+	</div>
+
+	<div class="container" style="font-family: Microsoft JhengHei;">
+		<div class="py-2">
+			<div class="my-3 bg-white rounded box-shadow">
+				<h4 class="mb-3">保險資訊</h4>
+				<hr class="mb-2">
+				<div class="row">
+					<div class="col media text-muted pt-3">
+						<p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
+							<strong class="d-block text-gray-dark">保險名稱</strong> <span
+								id="insurace_name">{{insurace_name}}</span>
+						</p>
+					</div>
+					<div class="col media text-muted pt-3">
+						<p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
+							<strong class="d-block text-gray-dark">保險有效時間</strong> <span
+								id="duration_period">{{duration_period}}</span>
+						</p>
+					</div>
+					<div class="col media text-muted pt-3">
+						<p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
+							<strong class="d-block text-gray-dark">保險金額</strong> <span
+								id="amount_insured">{{amount_insured}}</span>
+						</p>
+					</div>
+				</div>
+				<div class="media text-muted pt-3">
+					<p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
+						<strong class="d-block text-gray-dark pre-wrap">保險敘述</strong> <span
+							id="insurance_detail">{{insurance_detail}}</span>
+					</p>
+				</div>
+			</div>
+
+			<div>
+				<h4 class="mb-3 mt-5">要保人資訊</h4>
+				<hr class="mb-4">
+				<div class="row">
+					<div class="col media text-muted pt-3">
+						<p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
+							<strong class="d-block text-gray-dark">要保人名稱</strong> <span
+								id="member_name">{{member_name}}</span>
+						</p>
+					</div>
+					<div class="col media text-muted pt-3">
+						<p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
+							<strong class="d-block text-gray-dark">要保人身份證字號</strong> <span
+								id="member_id">{{member_id}}</span>
+						</p>
+					</div>
+					<div class="col media text-muted pt-3">
+						<p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
+							<strong class="d-block text-gray-dark">要保人生日</strong> <span
+								id="member_birthday">{{member_birthday}}</span>
+						</p>
+					</div>
+					<div class="col media text-muted pt-3">
+						<p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
+							<strong class="d-block text-gray-dark">要保人性別</strong> <span
+								id="member_gender">{{member_gender}}</span>
+						</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col media text-muted pt-3">
+						<p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
+							<strong class="d-block text-gray-dark">要保人信箱</strong> <span
+								id="member_email">{{member_email}}</span>
+						</p>
+					</div>
+					<div class="col media text-muted pt-3">
+						<p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
+							<strong class="d-block text-gray-dark">要保人身高/體重</strong> <span
+								id="member_height">{{member_height}}</span> / <span
+								id="member_weight">{{member_weight}}</span>
+						</p>
+					</div>
+					<div class="col media text-muted pt-3">
+						<p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
+							<strong class="d-block text-gray-dark">要保人地址</strong> <span
+								id="member_address">{{member_address}}</span>
+						</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col media text-muted pt-3">
+						<p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
+							<strong class="d-block text-gray-dark">要保人電話</strong> <span
+								id="member_phone_number">{{member_phone_number}}</span>
+						</p>
+					</div>
+					<div class="col media text-muted pt-3">
+						<p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
+							<strong class="d-block text-gray-dark">要保人疾病</strong> <span
+								id="member_disease">{{member_disease}}</span>
+						</p>
+					</div>
+					<div class="col media text-muted pt-3">
+						<p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
+							<strong class="d-block text-gray-dark">銀行帳號</strong> <span
+								id="member_bank_account">{{member_bank_account}}</span>
+						</p>
+					</div>
+				</div>
+			</div>
+			<div
+				class="row bg-danger text-white d-flex justify-content-between mb-4 mt-5"
+				style="font-size: 25px;">
+				<strong class="d-block text-gray-dark">每年應繳金額</strong>
+				<div>
+					$ <span id="insurance_preimum" style="text-align: right">{{insurance_preimum}}</span>
+				</div>
+			</div>
+			<div class="d-flex flex-column">
+				<div class="my-1 d-flex justify-content-center">
+					<input id="checkbox_1" class="my-2" type="checkbox"> <label
+						for="checkbox_1">我已完成上述資料的確認並願意為此負責</label>
+				</div>
+				<div class="my-1 d-flex justify-content-center">
+					<input id="checkbox_2" class="my-2" type="checkbox"> <label
+						for="checkbox_2">我同意將此資料提供給OOO保險公司投保</label>
+				</div>
+			</div>
+			<div
+				class="d-flex justify-content-between mx-auto align-items-center"
+				style="width: 500px; height: 50px;">
+				<a id="cancel_button" class="btn btn-primary" href="insurance.html"
+					type="button">我要取消投保</a> <a id="change_button"
+					class="btn btn-primary" href="member.html" type="button">我要修改會員資料</a>
+				<a id="next_button" class="btn btn-success"
+					href="insurancePolicyEnter.html" type="button">我要投保</a>
+			</div>
+
+		</div>
+	</div>
+
+	<script>
+		var member_id = "A123456789";
+		//取得網址參數
+		var url_string = window.location.href;
+		var url = new URL(url_string);
+		var insurance_id = url.searchParams.get("insurance_id");
+
+		$("#next_button").attr("href",
+				"insurancePolicyEnter.html?insurance_id=" + insurance_id + "");
+		
+		getMemberData();
+		getInsuranceData();
+
+		function getMemberData() {
+			$.ajax({
+				type : "Get",
+				url : "api/member.do",
+				data : "id=" + member_id,
+				crossDomain : true,
+				cache : false,
+				dataType : 'json',
+				timeout : 5000,
+				success : function(response) {
+					if (response.status == 200) {
+						updateMemberHtml(response.response.data[0]);
+					}
+				},
+				error : function() {
+					alert("無法連線到伺服器！");
+				}
+			})
+		}
+
+		function updateMemberHtml(data) {
+			$("#member_name").html(data['name']);
+			$("#member_id").html(data['ID_number']);
+			$("#member_birthday").html(data['birthday']);
+
+			switch (data['gender']) {
+			case 0:
+				$("#member_gender").html("女");
+				break;
+			case 1:
+				$("#member_gender").html("男");
+				break;
+			}
+
+			$("#member_email").html(data['email']);
+			$("#member_height").html(data['height']);
+			$("#member_weight").html(data['weight']);
+			$("#member_address").html(data['address']);
+			$("#member_phone_number").html(data['phone_number']);
+
+			switch (data[disease_id]) {
+			case 0:
+				$("#member_disease").html("無疾病");
+				break;
+			case 1:
+				$("#member_disease").html("天生疾病");
+				break;
+			case 2:
+				$("#member_disease").html("重大傷病");
+				break;
+			case 3:
+				$("#member_disease").html("其他");
+				break;
+			}
+
+			$("#member_bank_account").html(data['bank_account']);
+			/*
+			var insurance_preimum = InsurancePolicy.calInsurancePremium(data["gender"], data["birthday"], data['height'], data['weight'], data['disease_id'], data['amount_insured']);
+			
+			$("#insurance_preimum").html(insurance_preimum);
+			*/
+		}
+
+		function getInsuranceData() {
+			$.ajax({
+				type : "Get",
+				url : "api/insurance.do",
+				data : "insurance_id=" + insurance_id,
+				crossDomain : true,
+				cache : false,
+				dataType : 'json',
+				timeout : 5000,
+				success : function(response) {
+					if (response.status == 200) {
+						updateInsuranceHtml(response.response.data[0]);
+					}
+				},
+				error : function() {
+					alert("無法連線到伺服器！");
+				}
+			})
+		}
+
+		function updateInsuranceHtml(data) {
+			$("#insurace_name").html(data['insurance_name']);
+			$("#duration_period").html(data['duration_period']);
+			$("#amount_insured").html(data['amount_insured']);
+			$("#insurance_detail").html(data['details']);
+		}
+
+		$("#cancel_button").click(function() {
+			var a = confirm("警告:你將會回到商品瀏覽介面!!")
+			if (a == false) {
+				return false;
+			} else {
+				return true;
+			}
+		});
+
+		$('#change_button').click(function() {
+			var a = confirm("您將會前往會員修改介面")
+			if (a == false) {
+				return false;
+			} else {
+				return true;
+			}
+		});
+	</script>
+</body>
+</html>
