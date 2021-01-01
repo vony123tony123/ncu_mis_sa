@@ -18,7 +18,7 @@ public class InsurancePolicy {
 	private JSONObject member;
 	private int insurance_id;
 	private JSONObject insurance;
-	private int insurance_preimum;
+	private int insurance_premium;
 	private String beneficiary_name;
 	private String beneficiary_relationship;
 	private String beneficiary_phone_number;
@@ -55,16 +55,16 @@ public class InsurancePolicy {
 		this.beneficiary_address = beneficiary_address;
 		getMemberFromDB();
 		getInsuranceFromDB();
-		this.insurance_preimum = calInsurancePremium();
+		this.insurance_premium = calInsurancePremium();
 	}
 
 	public InsurancePolicy(int id, String member_id, int insurance_id,
-			int insurance_preimum, String beneficiary_name, String beneficiary_relationship,
+			int insurance_premium, String beneficiary_name, String beneficiary_relationship,
 			String beneficiary_phone_number, String beneficiary_address, Timestamp create_time, Timestamp modify_time) {
 		this.id = id;
 		this.member_id = member_id;
 		this.insurance_id = insurance_id;
-		this.insurance_preimum = insurance_preimum;
+		this.insurance_premium = insurance_premium;
 		this.beneficiary_name = beneficiary_name;
 		this.beneficiary_relationship = beneficiary_relationship;
 		this.beneficiary_phone_number = beneficiary_phone_number;
@@ -136,8 +136,8 @@ public class InsurancePolicy {
 		return insurance_id;
 	}
 
-	public int getInsurance_preimum() {
-		return insurance_preimum;
+	public int getInsurance_premium() {
+		return insurance_premium;
 	}
 
 	public String getBeneficiary_name() {
@@ -160,6 +160,14 @@ public class InsurancePolicy {
 		return create_time;
 	}
 
+	public Timestamp getModify_time() {
+		return modify_time;
+	}
+
+	public void setModify_time(Timestamp modify_time) {
+		this.modify_time = modify_time;
+	}
+
 	public void getMemberFromDB() {
 		this.member = mh.getByID(getMember_id());
 	}
@@ -179,12 +187,16 @@ public class InsurancePolicy {
 	
 	public JSONObject getInsurancePolicyInfo() {
 		JSONObject jso = new JSONObject();
-		jso.put("id", getID());
-		jso.put("insurance_preimum", getInsurance_preimum());
+		jso.put("insurance_policy_id", getID());
+		jso.put("member_id", getMember_id());
+		jso.put("insurance_id", getInsurance_id());
+		jso.put("insurance_premium", getInsurance_premium());
 		jso.put("beneficiary_name", getBeneficiary_name());
-		jso.put("beneficiary_relation", getBeneficiary_relationship());
+		jso.put("beneficiary_relationship", getBeneficiary_relationship());
 		jso.put("beneficiary_phone_number", getBeneficiary_phone_number());
 		jso.put("beneficiary_address", getBeneficiary_address());
+		jso.put("create_time", getCreateTime());
+		jso.put("modify_time", getModify_time());
 		return jso;
 	}
 	

@@ -51,6 +51,16 @@
                 var url = new URL(url_string);
                 var id = url.searchParams.get("insurance_id");
                 var sql_num = 0;
+                
+                $('#submit').click(function() {
+                    updateInsurance(id)
+                });
+                
+                $(document).ready(function() {
+                	// 發出GET的AJAX請求取得原本該會員的資料
+                 	$("#sql_log > tbody").empty();
+                 	getInsurance();
+                });
 
                 function updateInsurance(id) {
                     var name = $('#insurance_name').val();
@@ -118,8 +128,8 @@
                     $.ajax({
                         type: "GET",
                         url: "api/insurance.do",
-                        crossDomain: true,
                         data: "insurance_id=" + id,
+                        crossDomain: true,
                         cache: false,
                         dataType: 'json',
                         timeout: 5000,
@@ -138,16 +148,6 @@
                         }
                     });
                 }
-
-                $('#submit').click(function() {
-                    updateInsurance(id)
-                });
-                
-                $(document).ready(function() {
-                	// 發出GET的AJAX請求取得原本該會員的資料
-                 	$("#sql_log > tbody").empty();
-                    getInsurance();
-                });
             </script>
         </div>
         <div id="footer">

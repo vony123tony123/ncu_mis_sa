@@ -41,18 +41,10 @@
 		<a class="btn btn-outline-primary" href="cart.html">購物車</a>
 	</div>
 
-	<div class="progress" style="height: 30px; border-radius: 20px">
-		<div class="progress-bar"
-			style="width: 30%; height: 30px; border-radius: 20px">
-			<h5 class="text-light-50" style="font-family: Microsoft JhengHei;">正在完成保險資訊確認</h5>
-		</div>
-	</div>
-
 	<div
 		class="pricing-header px-3 py-1 pt-md-2 pb-md-2 mx-auto text-center bg-light"
 		style="font-family: DFKai-sb;">
-		<h4 class="display-4">保險資訊確認</h4>
-		<p class="lead">請確認保單相關資訊無誤</p>
+		<h4 class="display-4">保險資訊</h4>
 	</div>
 
 	<div class="container" style="font-family: Microsoft JhengHei;">
@@ -159,67 +151,76 @@
 					</div>
 				</div>
 			</div>
-			<div
-				class="row bg-danger text-white d-flex justify-content-between mb-4 mt-5"
-				style="font-size: 25px;">
-				<strong class="d-block text-gray-dark">每年應繳金額</strong>
-				<div>
-					$ <span id="insurance_preimum" style="text-align: right">{{insurance_preimum}}</span>
+			<div>
+				<h4 class="mb-3 mt-5">保單資訊</h4>
+				<hr class="mb-4">
+				<div class="row">
+					<div class="col media text-muted pt-3">
+						<p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
+							<strong class="d-block text-gray-dark">保單編號</strong> <span
+								id="insurance_policy_id">{{insurance_policy_id}}</span>
+						</p>
+					</div>
+					<div class="col media text-muted pt-3">
+						<p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
+							<strong class="d-block text-gray-dark">年繳保費</strong> <span
+								id="insurance_premium">{{insurance_premium}}</span>
+						</p>
+					</div>
+					<div class="col media text-muted pt-3">
+						<p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
+							<strong class="d-block text-gray-dark">受益人姓名 </strong> <span
+								id="beneficiary_name">{{beneficiary_name}}</span>
+						</p>
+					</div>
+					<div class="col media text-muted pt-3">
+						<p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
+							<strong class="d-block text-gray-dark">受益人關係</strong> <span
+								id="beneficiary_relationship">{{beneficiary_relationship}}</span>
+						</p>
+					</div>
 				</div>
-			</div>
-			<div class="d-flex flex-column">
-				<div class="my-1 d-flex justify-content-center">
-					<input id="checkbox_1" class="my-2" type="checkbox"> <label
-						for="checkbox_1">我已完成上述資料的確認並願意為此負責</label>
+				<div class="row">
+					<div class="col media text-muted pt-3">
+						<p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
+							<strong class="d-block text-gray-dark">受益人電話</strong> <span
+								id="beneficiary_phone_number">{{beneficiary_phone_number}}</span>
+						</p>
+					</div>
+					<div class="col media text-muted pt-3">
+						<p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
+							<strong class="d-block text-gray-dark">受益人住址</strong> <span
+								id="beneficiary_address">{{beneficiary_address}}</span>
+						</p>
+					</div>
 				</div>
-				<div class="my-1 d-flex justify-content-center">
-					<input id="checkbox_2" class="my-2" type="checkbox"> <label
-						for="checkbox_2">我同意將此資料提供給OOO保險公司投保</label>
+				<div class="row">
+					<div class="col media text-muted pt-3">
+						<p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
+							<strong class="d-block text-gray-dark">保單建立日期</strong> <span
+								id="create_time">{{create_time}}</span>
+						</p>
+					</div>
+					<div class="col media text-muted pt-3">
+						<p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
+							<strong class="d-block text-gray-dark">保單上次修改日期</strong> <span
+								id="modify_time">{{modify_time}}</span>
+						</p>
+					</div>
 				</div>
-			</div>
-			<div
-				class="d-flex justify-content-between mx-auto align-items-center"
-				style="width: 500px; height: 50px;">
-				<a id="cancel_button" class="btn btn-primary" href="insurance.html"
-					type="button">我要取消投保</a> <a id="change_button"
-					class="btn btn-primary" href="member.html" type="button">我要修改會員資料</a>
-				<button id="next_button" class="btn btn-success" type="button" disabled>我要投保</button>
 			</div>
 
 		</div>
 	</div>
 
 	<script>
-	
-	var member_id = "A12345678";
-	//取得網址參數
 	var url_string = window.location.href;
 	var url = new URL(url_string);
-	var insurance_id = url.searchParams.get("insurance_id");
-
-	$("#next_button").click(function(){
-		window.location ="insurancePolicyEnter.html?insurance_id=" + insurance_id + "";
-	});
+	var insurance_policy_id = url.searchParams.get("insurance_policy_id");
 	
 	
-	getInsuranceData();
-	
-	if(member_id == null){
-		alert("您尚未登入會員!");
-		window.location ="http://localhost:8090/NCU_MIS_SA/login.html";
-	}
+	getInsurancePolicyData();
 			
-	$(document).ready(function () {
-		
-	  $("#checkbox_1").click(function () {
-			 $("#next_button").prop("disabled", !$("#checkbox_2:checked").length || !$("#checkbox_1:checked").length);
-	  });
-	  
-	  $("#checkbox_2").click(function () {
-			 $("#next_button").prop("disabled", !$("#checkbox_2:checked").length || !$("#checkbox_1:checked").length);
-		});
-		  
-	});
 		
 		/*
 		function getMemberData() {

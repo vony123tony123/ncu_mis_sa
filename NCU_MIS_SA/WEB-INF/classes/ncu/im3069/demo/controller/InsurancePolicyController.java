@@ -51,7 +51,7 @@ public class InsurancePolicyController extends HttpServlet {
 
 			jsr.response(resp, response);
 		} else if (!jsr.getParameter("member_id").isEmpty()) {
-			JSONObject query = iph.getByMember_id(Integer.valueOf(jsr.getParameter("member_id")));
+			JSONObject query = iph.getByMember_id(jsr.getParameter("member_id"));
 
 			JSONObject resp = new JSONObject();
 			resp.put("status", 200);
@@ -182,10 +182,10 @@ public class InsurancePolicyController extends HttpServlet {
 		JSONObject jso = jsr.getObject();
 		
 		/** 取出經解析到JSONObject之Request參數 */
-        int id = jso.getInt("id");
+        int insurancePolicy_id = jso.getInt("insurancePolicy_id");
         
         /** 透過MemberHelper物件的deleteByID()方法至資料庫刪除該名會員，回傳之資料為JSONObject物件 */
-		JSONObject query = iph.deleteById(id);
+		JSONObject query = iph.deleteById(insurancePolicy_id);
 		
 		 /** 新建一個JSONObject用於將回傳之資料進行封裝 */
         JSONObject resp = new JSONObject();

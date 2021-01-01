@@ -121,7 +121,7 @@
 						table_html += '<td>' + value['details'] + '</td>';
 						table_html += '<td>' + value['timestamp'] + '</td>'
 						table_html += '<td>'
-								+ '<a href="insuranceEdit.html?id='
+								+ '<a href="insuranceEdit.html?insurance_id='
 								+ value['insurance_id'] + '">編輯</a> | ';
 						table_html += '<a href="javascript: deleteInsurance('
 								+ value['insurance_id']
@@ -131,32 +131,6 @@
 					$("#table > tbody").append(table_html);
 				}
 
-				// 更新SQL指令歷史表格
-				function updateSQLTable(data) {
-					$("#sql_log > tbody").empty();
-					var time = (data.time / 1000000).toFixed(2);
-					var table_html = "";
-
-					sql_num = 0;
-					sql_num += 1
-
-					table_html += '<tr>';
-					table_html += '<td>' + sql_num + '</td>';
-					table_html += '<td>' + data.sql + '</td>';
-					table_html += '<td style="text-align: right">' + '0'
-							+ '</td>';
-					table_html += '<td style="text-align: right">' + data.row
-							+ '</td>';
-					table_html += '<td style="text-align: right">' + data.row
-							+ '</td>';
-					table_html += '<td style="text-align: right">' + time
-							+ '</td>';
-					table_html += '</tr>';
-					$("#sql_log > tbody").append(table_html);
-					$("#sql_summary").html(
-							"(default) " + data.row + " queries took " + time
-									+ " ms");
-				}
 				$(document).ready(function() {
 					getAllInsurance();
 				});
@@ -169,22 +143,7 @@
 			<p>CakePHP 2.6.10</p>
 		</div>
 	</div>
-	<table class="cake-sql-log" id="sql_log" summary="Cake SQL Log"
-		cellspacing="0">
-		<caption id="sql_summary">(default) 0 query took 0 ms</caption>
-		<thead>
-			<tr>
-				<th>Nr</th>
-				<th>Query</th>
-				<th>Error</th>
-				<th>Affected</th>
-				<th>Num. rows</th>
-				<th>Took (ms)</th>
-			</tr>
-		</thead>
-		<tbody>
-		</tbody>
-	</table>
+	
 </body>
 
 </html>

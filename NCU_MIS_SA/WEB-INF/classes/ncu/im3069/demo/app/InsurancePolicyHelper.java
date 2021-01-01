@@ -24,12 +24,12 @@ public class InsurancePolicyHelper {
 			/** 取得資料庫之連線 */
 			conn = DBMgr.getConnection();
 			/** SQL指令 */
-			String sql = "INSERT INTO `missa`.`insurance_policy`( `member_id`, `insurance_id`, `insurance_premium`, `beneficiary_name`, `beneficiary_relationship`, `beneficiary_phone_number`, `beneficiary address`, `create_time`)"
+			String sql = "INSERT INTO `missa`.`insurance_policy`( `member_id`, `insurance_id`, `insurance_premium`, `beneficiary_name`, `beneficiary_relationship`, `beneficiary_phone_number`, `beneficiary_address`, `create_time`)"
 					+ " VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 			/** 取得所需之參數 */
 			String member_id = insurancePolicy.getMember_id();
 			int insurance_id = insurancePolicy.getInsurance_id();
-			int insurance_preimum = insurancePolicy.getInsurance_preimum();
+			int insurance_premium = insurancePolicy.getInsurance_premium();
 			String beneficiary_name = insurancePolicy.getBeneficiary_name();
 			String beneficiary_relationship = insurancePolicy.getBeneficiary_relationship();
 			String beneficiary_phone_number = insurancePolicy.getBeneficiary_phone_number();
@@ -40,7 +40,7 @@ public class InsurancePolicyHelper {
 			pres = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			pres.setString(1, member_id);
 			pres.setInt(2, insurance_id);
-			pres.setInt(3, insurance_preimum);
+			pres.setInt(3, insurance_premium);
 			pres.setString(4, beneficiary_name);
 			pres.setString(5, beneficiary_relationship);
 			pres.setString(6, beneficiary_phone_number);
@@ -93,7 +93,7 @@ public class InsurancePolicyHelper {
 			/** 取得資料庫之連線 */
 			conn = DBMgr.getConnection();
 			/** SQL指令 */
-			String sql = "SELECT * FROM `missa`.`insurance_policy` WHERE `insurance_policy`.`delete_key`=0";
+			String sql = "SELECT * FROM `missa`.`insurance_policy` WHERE `delete_key` = 0 ";
 
 			/** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
 			pres = conn.prepareStatement(sql);
@@ -113,7 +113,7 @@ public class InsurancePolicyHelper {
 				int id = rs.getInt("insurance_policy_id");
 				String member_id = rs.getString("member_id");
 				int insurance_id = rs.getInt("insurance_id");
-				int insurance_preimum = rs.getInt("insurance_preimum");
+				int insurance_premium = rs.getInt("insurance_premium");
 				String beneficiary_name = rs.getString("beneficiary_name");
 				String beneficiary_relationship = rs.getString("beneficiary_relationship");
 				String beneficiary_phone_number = rs.getString("beneficiary_phone_number");
@@ -122,10 +122,10 @@ public class InsurancePolicyHelper {
 				Timestamp modify = rs.getTimestamp("modify_time");
 
 				/** 將每一筆保險資料產生一名新Insurance物件 */
-				ip = new InsurancePolicy(id, member_id, insurance_id, insurance_preimum, beneficiary_name,
+				ip = new InsurancePolicy(id, member_id, insurance_id, insurance_premium, beneficiary_name,
 						beneficiary_relationship, beneficiary_phone_number, beneficiary_address, create, modify);
 				/** 取出該項保險之資料並封裝至 JSONsonArray 內 */
-				jsa.put(ip.getAllInfo());
+				jsa.put(ip.getInsurancePolicyInfo());
 			}
 
 		} catch (SQLException e) {
@@ -192,7 +192,7 @@ public class InsurancePolicyHelper {
 				int id = rs.getInt("insurance_policy_id");
 				String member_id = rs.getString("member_id");
 				int insurance_id = rs.getInt("insurance_id");
-				int insurance_preimum = rs.getInt("insurance_preimum");
+				int insurance_premium = rs.getInt("insurance_premium");
 				String beneficiary_name = rs.getString("beneficiary_name");
 				String beneficiary_relationship = rs.getString("beneficiary_relationship");
 				String beneficiary_phone_number = rs.getString("beneficiary_phone_number");
@@ -201,7 +201,7 @@ public class InsurancePolicyHelper {
 				Timestamp modify = rs.getTimestamp("modify_time");
 
 				/** 將每一筆保險資料產生一名新Insurance物件 */
-				ip = new InsurancePolicy(id, member_id, insurance_id, insurance_preimum, beneficiary_name,
+				ip = new InsurancePolicy(id, member_id, insurance_id, insurance_premium, beneficiary_name,
 						beneficiary_relationship, beneficiary_phone_number, beneficiary_address, create, modify);
 				/** 取出該項保險之資料並封裝至 JSONsonArray 內 */
 				data = ip.getAllInfo();
@@ -234,7 +234,7 @@ public class InsurancePolicyHelper {
 		return response;
 	}
 
-	public JSONObject getByMember_id(int entered_member_id) {
+	public JSONObject getByMember_id(String entered_member_id) {
 		JSONArray jsa = new JSONArray();
 		InsurancePolicy ip = null;
 		/** 記錄實際執行之SQL指令 */
@@ -255,7 +255,7 @@ public class InsurancePolicyHelper {
 
 			/** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
 			pres = conn.prepareStatement(sql);
-			pres.setInt(1, entered_member_id);
+			pres.setString(1, entered_member_id);
 			/** 執行查詢之SQL指令並記錄其回傳之資料 */
 			rs = pres.executeQuery();
 
@@ -272,7 +272,7 @@ public class InsurancePolicyHelper {
 				int id = rs.getInt("insurance_policy_id");
 				String member_id = rs.getString("member_id");
 				int insurance_id = rs.getInt("insurance_id");
-				int insurance_preimum = rs.getInt("insurance_preimum");
+				int insurance_premium = rs.getInt("insurance_premium");
 				String beneficiary_name = rs.getString("beneficiary_name");
 				String beneficiary_relationship = rs.getString("beneficiary_relationship");
 				String beneficiary_phone_number = rs.getString("beneficiary_phone_number");
@@ -281,7 +281,7 @@ public class InsurancePolicyHelper {
 				Timestamp modify = rs.getTimestamp("modify_time");
 
 				/** 將每一筆保險資料產生一名新Insurance物件 */
-				ip = new InsurancePolicy(id, member_id, insurance_id, insurance_preimum, beneficiary_name,
+				ip = new InsurancePolicy(id, member_id, insurance_id, insurance_premium, beneficiary_name,
 						beneficiary_relationship, beneficiary_phone_number, beneficiary_address, create, modify);
 				/** 取出該項保險之資料並封裝至 JSONsonArray 內 */
 				jsa.put(ip.getAllInfo());
@@ -329,7 +329,7 @@ public class InsurancePolicyHelper {
 			/** SQL指令 */
 			String sql = "Update `missa`.`insurance_policy` SET `beneficiary_name`= ?,"
 					+ "`beneficiary_relationship`= ?,`beneficiary_phone_number`= ?,"
-					+ "`beneficiary address`= ? WHERE `insurance_policy_id` =? " + "AND `delete_key`=0";
+					+ "`beneficiary_address`= ? WHERE `insurance_policy_id` =? " + "AND `delete_key`=0";
 			/** 取得所需之參數 */
 			int id = insurancePolicy.getID();
 			String beneficiary_name = insurancePolicy.getBeneficiary_name();
@@ -393,7 +393,7 @@ public class InsurancePolicyHelper {
         	 /** 取得資料庫之連線 */
             conn = DBMgr.getConnection();
             
-            String sql = "DELETE FROM ‵`missa`.`insurance_policy` WHERE `insurance_policy_id` =? LIMIT 1";
+            String sql = "Update `missa`.`insurance_policy` SET `delete_key` = 1 WHERE `insurance_policy_id` = ?";
             
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);

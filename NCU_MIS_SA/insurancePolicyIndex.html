@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>CakePHP: the rapid development php framework: Members</title>
+<link href="statics/icon/favicon.ico" type="image/x-icon" rel="icon">
+<link href="statics/icon/favicon.ico" type="image/x-icon"
+	rel="shortcut icon">
+<link rel="stylesheet" type="text/css"
+	href="statics/css/cake.generic.css">
+
+<script src="statics/js/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+	<div id="container">
+		<div id="header">
+			<h1>
+				<a href="http://cakephp.org/">CakePHP: the rapid development php
+					framework</a>
+			</h1>
+		</div>
+		<div id="content">
+			<h2>保險資料一覽</h2>
+			<a href="member.html">會員管理</a> <a href="insuranceIndex.html">保險管理</a>
+
+			<div id="flashMessage" class="message" style="display: none;"></div>
+
+			<table id="table">
+				<thead>
+					<tr>
+						<th>保單編號</th>
+						<th>會員編號</th>
+						<th>保險編號</th>
+						<th>年繳保費</th>
+						<th>受益人名稱</th>
+						<th>與要保人關係</th>
+						<th>受益人電話</th>
+						<th>受益人住址</th>
+						<th>建立時間</th>
+						<th>上次修改時間</th>
+						<th>功能</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+			</table>
+			<script type="text/javascript">
+				// 全域變數紀錄SQL指令下的次數
+				var sql_num = 0;
+				$(document).ready(function() {
+					getAllInsurance();
+				});
+				function deleteInsurancePolicy(id) {
+					var check = window.confirm("確認刪除保單？");
+					
+					var data = {
+						"insurancePolicy_id" : id
+					}
+					
+					var data_string = JSON.stringify(data);
+
+					if (check == true) {
+						console.log("You pressed OK!");
+						// 發出POST的PUT請求
+						$.ajax({
+							type : "DELETE",
+							url : "api/insurancePolicy.do",
+							data : data_string,
+							crossDomain : true,
+							cache : false,
+							dataType : 'json',
+							timeout : 5000,
+							success : function(response) {
+								$('#flashMessage').html(response.message);
+								$('#flashMessage').show();
+								if (response.status == 200) {
+									updateSQLTable(response.response);
+								}
+							},
+							error : function() {
+								alert("無法連線到伺服器！");
+							}
+						});
+					} else {
+						console.log("You pressed Cancel!");
+					}
+
+				}
+
+				function getAllInsurance() {
+					// 發出POST的GET請求取得所有保險列表
+					$.ajax({
+						type : "GET",
+						url : "api/insurancePolicy.do",
+						crossDomain : true,
+						cache : false,
+						dataType : 'json',
+						timeout : 5000,
+						success : function(response) {
+							if (response.status == 200) {
+								updateTable(response.response.data);
+							}
+							console.log(response);
+						},
+						error : function() {
+							alert("無法連線到伺服器！");
+						}
+					});
+				}
+
+				// 更新保險列表表格
+				function updateTable(data) {
+					$("#table > tbody").empty();
+					var table_html = '';
+					$.each(data, function(index, value) {
+						table_html += '<tr><td scope="row">'
+								+ value['insurance_policy_id'] + '</td>';
+						table_html += '<td>' + value['member_id']+ '</td>';
+						table_html += '<td>' + value['insurance_id']+ '</td>';
+						table_html += '<td>' + value['insurance_premium']+ '</td>';
+						table_html += '<td>' + value['beneficiary_name'] + '</td>';
+						table_html += '<td>' + value['beneficiary_relationship'] + '</td>';
+						table_html += '<td>' + value['beneficiary_phone_number'] + '</td>';
+						table_html += '<td>' + value['beneficiary_address'] + '</td>';
+						table_html += '<td>' + value['create_time'] + '</td>';
+						table_html += '<td>' + value['modify_time'] + '</td>';
+						table_html += '<td>'+ '<a href="insurancePolicyDetail_Manager.html?insurance_id='
+											+ value['insurance_policy_id'] + '">詳情</a> | '
+						table_html += '<a href="insurancePolicyEdit.html?insurance_id='
+								+ value['insurance_policy_id'] + '">編輯</a> | ';
+						table_html += '<a href="javascript: deleteInsurancePolicy('+ value['insurance_policy_id']
+								+ ');">刪除</a></td></tr>';
+					})
+
+					$("#table > tbody").append(table_html);
+				}
+			</script>
+		</div>
+		<div id="footer">
+			<a href="http://www.cakephp.org/" target="_blank" id="cake-powered"><img
+				src="statics/img/cake.power.gif"
+				alt="CakePHP: the rapid development php framework" border="0"></a>
+			<p>CakePHP 2.6.10</p>
+		</div>
+	</div>
+</body>
+
+</html>

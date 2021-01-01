@@ -64,125 +64,139 @@
 	<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
     <h5 class="my-0 mr-md-auto font-weight-normal">OOO保險公司</h5>
     <nav class="my-2 my-md-0 mr-md-3">
-		<a class="p-2 text-dark" href="index.html">會員中心</a>
-		<a class="p-2 text-dark" href="product.html">保險瀏覽</a>
-		<a class="p-2 text-dark" href="order.html">訂單中心</a>
+		<a class="p-2 text-dark" href="insurance.html">會員中心</a>
+		<a class="p-2 text-dark" href="insurance.html">保險瀏覽</a>
+		<a class="p-2 text-dark" href="insurance.html">訂單中心</a>
     </nav>
 	</div>
 	<div class="col-md-8 order-md-1">
 		<h4 class="mb-3">保單試算</h4>
 		<hr class="mb-4">
 		<div class="row">
-		
-			<fieldset>
+		<form id="form" accept-charset="utf-8">
+			<div style="display:none;"><input type="hidden" name="_method" value="POST"></div>
+			
 				<div class="col-md-6 mb-2 gender_id">
       			<label for="radio">性別</label>
-      			<label for="radio">男</label>
      		    <input type="radio" name="gender" value="1" id="male" checked>
-    		    <label for="none">女</label>
+     		    <label for="radio">男</label>
     		    <input type="radio" name="gender" value="0" id="female">
+    		    <label for="none">女</label>
     		  	</div>
-  			</fieldset>
+  			
   			
 			<div class="col-md-6 mb-2">
-				<label for="birth_year">生日西元年</label>
-	            <input type="text" class="form-control" id="birth_year" maxlength="10" value="" required>
+				<label for="birth_year">生日</label>
+	            <input type="text" class="form-control" id="birthday" maxlength="10" value="" required="required">
 			</div>
 	        
 	        <div class="col-md-6 mb-2">
 	            <label for="height">身高</label>
-	            <input type="text" class="form-control" id="height" maxlength="10" value="" required>
+	            <input type="text" class="form-control" id="height" maxlength="10" value="" required="required">
 			</div>
 
 			<div class="col-md-6 mb-4">
 	            <label for="weight">體重</label>
-	            <input type="text" class="form-control" id="weight" maxlength="10" value="" required>
+	            <input type="text" class="form-control" id="weight" maxlength="10" value="" required="required">
 			</div>
-	        </div>
 	        
-	        
-			<fieldset>
       			<div class="disease_id">
       			<label for="radio">身體狀況</label>
-     		    <input type="radio" class="radio" name="id" value="0" id="none" checked>
+     		    <input type="radio" class="disease_id" name="id" value="0" id="none" checked>
     		    <label for="none">無疾病</label>
-    		    <input type="radio" class="radio" name="id" value="1" id="innate">
+    		    <input type="radio" class="disease_id" name="id" value="1" id="innate">
    		 	    <label for="innate">先天疾病</label>
-   	 		    <input type="radio" class="radio" name="id" value="2" id="major">
+   	 		    <input type="radio" class="disease_id" name="id" value="2" id="major">
  		        <label for="major">重大傷病</label>
-        		<input type="radio" class="radio" name="id" value="3" id="others">
+        		<input type="radio" class="disease_id" name="id" value="3" id="others">
     		    <label for="others">其他</label>
     		  	</div>
-  			</fieldset>
-  			
+    		  	<div class="calculate"><input type="button" value="開始試算" id="calculate"></div>
+  			</form>
+	        </div>
+
   			
   			<div class="col-md-6 mb-2">
-  				<div id="output"></div>
+  				<span id="premium"></span>
 			</div>
   			
-
-  			  			
-			<a class="btn btn-outline-primary calculate">開始試算</a>      
+			<a class="btn btn-outline-primary" href=insurance.html>重新選擇險種</a>      
 			<a class="btn btn-outline-primary" href=insurance_policy_entry.html>立即投保</a>
         	</div>
  
 		<script type="text/javascript">
 			
-			$('#calculate').click(function() {
-				var status = 1;
-				var birth_year = $('#birth_year').val();
-				var height = $('#height').val();
-				var weight = $('#weight').val();
-				
-				if(document.getElementById('male').checked) { 
-	                var gender = 1;
-	            } else{
-	            	var gender = 0;
-	            }
-				
-				if(document.getElementById('none').checked) { 
-	                var disease_id = 0;
-	            } else if(document.getElementById('innate').checked){
-	            	var disease_id = 1;
-	            }else if(document.getElementById('major').checked){
-	            	var disease_id = 2;
-	            }else{
-	            	var disease_id = 3;
-	            }
-				var amount_insured = 50000;
-                        
-			// 將資料組成JSON格式
-			var data_object = {
-				"status": 1,
-				"birth_year": birth_year,
-				"height": height,
-				"weight": weight,
-				"gender": gender,
-				"disease_id": disease_id,
-				"amount_insured": amount_insured
-				
-			};
+		$(document).ready(function() {
+			var $form = $('#calculate');
+            $form.click(function() {
+                submit();
+            });
 
-			// 將JSON格式轉換成字串
-			var risk_level = JSON(data_object);
-
-			// 發出POST的AJAX請求
-			$.ajax({
-				type: "POST",
-				url: "InsurancePolicyController",
-				data: risk_level,
-				crossDomain: true,
-				cache: false,
-				dataType: 'json',
-				timeout: 5000,
-				success: function (response) {
-					output.innerHTML = "年繳保費為"+response.data.premium+"新台幣(元)";
-				},
-				error: function () {
-					alert("無法連線到伺服器！");
-						}
+            function submit() {
+            	if ($('#birthday').val()==""|$('#height').val()==""|$('#weight').val()=="") {
+                    alert("不得有空值");
+                }
+                else {
+                	var status = 1;
+    				var birthday = $('#birthday').val().toString();
+    				var height = $('#height').val();
+    				var weight = $('#weight').val();
+    				
+    				if(document.getElementById('male').checked) { 
+    	                var gender = 1;
+    	            } else{
+    	            	var gender = 0;
+    	            }
+    				
+    				if(document.getElementById('none').checked) { 
+    	                var disease_id = 0;
+    	            } else if(document.getElementById('innate').checked){
+    	            	var disease_id = 1;
+    	            }else if(document.getElementById('major').checked){
+    	            	var disease_id = 2;
+    	            }else{
+    	            	var disease_id = 3;
+    	            }
+    				var amount_insured = 50000;
+                            
+					
+					var risk_level = {
+    				"status": 1,
+    				"birthday": birthday,
+    				"height": height,
+    				"weight": weight,
+    				"gender": gender,
+    				"disease_id": disease_id,
+    				"amount_insured": amount_insured};
+					
+					// 發出POST的AJAX請求
+					$.ajax({
+						type: "POST",
+						url: "/api/insurancePolicy.do",
+						data: risk_level,
+						crossDomain: true,
+						cache: false,
+						dataType: 'json',
+						timeout: 5000,
+						success: function (response) {
+							if(response.status == 200){
+								document.getElementById("premium").innerHTML="年繳保費為"+response.premium+"新台幣(元)";
+							}
+							
+						},
+						error: function (XMLHttpRequest, textStatus, errorThrown) {
+							alert(XMLHttpRequest.status);
+							alert(XMLHttpRequest.readyState);
+							alert(textStatus);
+								}
 					});
-			});
+					
+                };
+				
+            }})
+
+
+
 			
 			
 		</script>
