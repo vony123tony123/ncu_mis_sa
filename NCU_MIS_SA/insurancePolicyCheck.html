@@ -41,8 +41,7 @@
 		<a class="btn btn-outline-primary" href="cart.html">購物車</a>
 	</div>
 
-	<div class="progress"
-		style=" height: 30px; border-radius: 20px">
+	<div class="progress" style="height: 30px; border-radius: 20px">
 		<div class="progress-bar"
 			style="width: 30%; height: 30px; border-radius: 20px">
 			<h5 class="text-light-50" style="font-family: Microsoft JhengHei;">正在完成保險資訊確認</h5>
@@ -197,72 +196,75 @@
 		var url_string = window.location.href;
 		var url = new URL(url_string);
 		var insurance_id = url.searchParams.get("insurance_id");
+
+		$("#next_button").attr("href",
+				"insurancePolicyEnter.html?insurance_id=" + insurance_id + "");
 		
-		$("#next_button").attr("href","insurancePolicyEnter.html?insurance_id="+ insurance_id +"");
-
-		/*
-		function getMemberData() {
-		 $.ajax({
-		 type : "Get",
-		 url : "api/member.do",
-		 data : "id=" + member_id,
-		 crossDomain : true,
-		 cache : false,
-		 dataType : 'json',
-		 timeout : 5000,
-		 success : function(response) {
-		 if (response.status == 200) {
-		 updateMemberHtml(response.response.data);
-		 }
-		 },
-		 error : function() { 
-		 alert("無法連線到伺服器！");
-		 }
-		 })
-		 }
-
-		 function updateMemberHtml(data) {
-		 $("#member_name").html(data['name']);
-		 $("#member_id").html(data['ID_number']);
-		 $("#member_birthday").html(data['birthday']);
-
-		 switch (data['gender']) {
-		 case 0:
-		 $("#member_gender").html("女");
-		 break;
-		 case 1:
-		 $("#member_gender").html("男");
-		 break;
-		 }
-
-		 $("#member_email").html(data['email']);
-		 $("#member_height").html(data['height']);
-		 $("#member_weight").html(data['weight']);
-		 $("#member_address").html(data['address']);
-		 $("#member_phone_number").html(data['phone_number']);
-
-		 switch (data[disease_id]) {
-		 case 0:
-		 $("#member_disease").html("無疾病");
-		 break;
-		 case 1:
-		 $("#member_disease").html("天生疾病");
-		 break;
-		 case 2:
-		 $("#member_disease").html("重大傷病");
-		 break;
-		 case 3:
-		 $("#member_disease").html("其他");
-		 break;
-		 }
-
-		 $("#member_bank_account").html(data['bank_account']);
-		 }
-
-		 getMemberData()
-		 */
-
+		getMemberData();
 		getInsuranceData();
+
+		function getMemberData() {
+			$.ajax({
+				type : "Get",
+				url : "api/member.do",
+				data : "id=" + member_id,
+				crossDomain : true,
+				cache : false,
+				dataType : 'json',
+				timeout : 5000,
+				success : function(response) {
+					if (response.status == 200) {
+						updateMemberHtml(response.response.data[0]);
+					}
+				},
+				error : function() {
+					alert("無法連線到伺服器！");
+				}
+			})
+		}
+
+		function updateMemberHtml(data) {
+			$("#member_name").html(data['name']);
+			$("#member_id").html(data['ID_number']);
+			$("#member_birthday").html(data['birthday']);
+
+			switch (data['gender']) {
+			case 0:
+				$("#member_gender").html("女");
+				break;
+			case 1:
+				$("#member_gender").html("男");
+				break;
+			}
+
+			$("#member_email").html(data['email']);
+			$("#member_height").html(data['height']);
+			$("#member_weight").html(data['weight']);
+			$("#member_address").html(data['address']);
+			$("#member_phone_number").html(data['phone_number']);
+
+			switch (data[disease_id]) {
+			case 0:
+				$("#member_disease").html("無疾病");
+				break;
+			case 1:
+				$("#member_disease").html("天生疾病");
+				break;
+			case 2:
+				$("#member_disease").html("重大傷病");
+				break;
+			case 3:
+				$("#member_disease").html("其他");
+				break;
+			}
+
+			$("#member_bank_account").html(data['bank_account']);
+			/*
+			var insurance_preimum = InsurancePolicy.calInsurancePremium(data["gender"], data["birthday"], data['height'], data['weight'], data['disease_id'], data['amount_insured']);
+			
+			$("#insurance_preimum").html(insurance_preimum);
+			*/
+		}
 
 		function getInsuranceData() {
 			$.ajax({

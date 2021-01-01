@@ -1,13 +1,15 @@
 package ncu.im3069.demo.app;
 
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.Calendar;
+import java.util.Date;
 
-import javax.print.event.PrintJobAttributeEvent;
-
+import org.json.JSONException;
 import org.json.JSONObject;
-
-import com.sun.tools.sjavac.comp.dependencies.PublicApiCollector;
 
 public class InsurancePolicy {
 	
@@ -22,7 +24,7 @@ public class InsurancePolicy {
 	private String beneficiary_phone_number;
 	private String beneficiary_address;
 	private Timestamp create_time = Timestamp.valueOf(LocalDateTime.now());
-	private Timestamp modify_time;
+	private Timestamp modify_time = null;
 	
 	private MemberHelper mh=MemberHelper.getHelper();
 	private InsuranceHelper ih = InsuranceHelper.getHelper();
@@ -43,7 +45,7 @@ public class InsurancePolicy {
 	}
 
 	public InsurancePolicy(String member_id, int insurance_id, String beneficiary_name,
-			String beneficiary_relation, String beneficiary_phone_number, String beneficiary_address) 
+			String beneficiary_relation, String beneficiary_phone_number, String beneficiary_address) throws JSONException, ParseException 
 	{
 		this.member_id = member_id;
 		this.insurance_id = insurance_id;
@@ -51,6 +53,8 @@ public class InsurancePolicy {
 		this.beneficiary_relationship = beneficiary_relation;
 		this.beneficiary_phone_number = beneficiary_phone_number;
 		this.beneficiary_address = beneficiary_address;
+		getMemberFromDB();
+		getInsuranceFromDB();
 		this.insurance_preimum = calInsurancePremium();
 	}
 
@@ -73,21 +77,27 @@ public class InsurancePolicy {
 
 
 
-	private int calInsurancePremium() {
+	private int calInsurancePremium() throws JSONException, ParseException {
 		int gender = member.getInt("gender");
-		int birthyear = member.getInt("birthday");
+		String birthday = member.getString("birthday");
 		int height = member.getInt("height");
 		int weight = member.getInt("weight");
 		int disease_id = member.getInt("disease_id");
 		int amount_insured = insurance.getInt("amount_insured");
-		return calInsurancePremium(gender, birthyear, height, weight, disease_id, amount_insured);
+		return calInsurancePremium(gender, birthday, height, weight, disease_id, amount_insured);
 	}
 	
-	public static int calInsurancePremium(int gender, int birthyear, int height, int weight, int disease_id,int amount_insured) {
+	public static int calInsurancePremium(int gender, String birthday, int height, int weight, int disease_id,int amount_insured) throws ParseException {
 		double premium_level = 0;//計算風險貼水
 		double bmi = weight/((height/100)^2);
 		int age = 0;
 		int premium = 0;
+		
+		DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss"); 
+		Date date = sdf.parse(birthday);
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);
+		int birthyear = cal.get(Calendar.YEAR);
 		
 		age = LocalDateTime.now().getYear()-birthyear;
 		
