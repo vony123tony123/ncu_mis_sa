@@ -132,7 +132,7 @@ public class InsuranceHelper {
             /** SQL指令 
              * 只回傳delete_key為0者(表示未被刪除)
              * */
-            String sql = "SELECT * FROM `missa`.`insurance` WHERE `delete_key` LIKE 0";
+            String sql = "SELECT * FROM `missa`.`insurance` WHERE `delete_key` = 0";
             
             /** 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement */
             pres = conn.prepareStatement(sql);
