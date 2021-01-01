@@ -151,11 +151,11 @@ public class InsurancePolicy {
 	}
 
 	public void getMemberFromDB() {
-		this.member = mh.getByID(getID());
+		this.member = mh.getByID(getMember_id());
 	}
 	
 	public void getInsuranceFromDB() {
-		this.insurance = ih.getByID(String.valueOf(getID()));
+		this.insurance = ih.getByID(String.valueOf(getInsurance_id()));
 	}
 	
 	

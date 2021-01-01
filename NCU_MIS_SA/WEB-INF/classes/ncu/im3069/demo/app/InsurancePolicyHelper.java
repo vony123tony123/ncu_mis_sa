@@ -38,7 +38,7 @@ public class InsurancePolicyHelper {
 
 			/** 將參數回填至SQL指令當中 */
 			pres = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			pres.setInt(1, member_id);
+			pres.setString(1, member_id);
 			pres.setInt(2, insurance_id);
 			pres.setInt(3, insurance_preimum);
 			pres.setString(4, beneficiary_name);
@@ -111,7 +111,7 @@ public class InsurancePolicyHelper {
 
 				/** 將 ResultSet 之資料取出 */
 				int id = rs.getInt("insurance_policy_id");
-				int member_id = rs.getInt("member_id");
+				String member_id = rs.getString("member_id");
 				int insurance_id = rs.getInt("insurance_id");
 				int insurance_preimum = rs.getInt("insurance_preimum");
 				String beneficiary_name = rs.getString("beneficiary_name");
@@ -190,7 +190,7 @@ public class InsurancePolicyHelper {
 
 				/** 將 ResultSet 之資料取出 */
 				int id = rs.getInt("insurance_policy_id");
-				int member_id = rs.getInt("member_id");
+				String member_id = rs.getString("member_id");
 				int insurance_id = rs.getInt("insurance_id");
 				int insurance_preimum = rs.getInt("insurance_preimum");
 				String beneficiary_name = rs.getString("beneficiary_name");
@@ -270,7 +270,7 @@ public class InsurancePolicyHelper {
 
 				/** 將 ResultSet 之資料取出 */
 				int id = rs.getInt("insurance_policy_id");
-				int member_id = rs.getInt("member_id");
+				String member_id = rs.getString("member_id");
 				int insurance_id = rs.getInt("insurance_id");
 				int insurance_preimum = rs.getInt("insurance_preimum");
 				String beneficiary_name = rs.getString("beneficiary_name");
