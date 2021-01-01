@@ -331,14 +331,14 @@ public class InsuranceHelper {
      * 為了供controller使用isEmpty檢查是否有id，這裡把id指定為string
      * 若無id傳入則回傳所有資料(getAll)，反之若有id則傳該id所屬之資料(getByID)
      * 
-     * 請注意此方法與getByIDViewing的區別，此用作保險管理
+     * 請注意此方法與getByIDViewing的區別，此用作保險管理(編輯)
      * 
      */
     
     public JSONObject getByID(String id) {
         /** 新建一個 Insurance 物件之 i 變數，用於紀錄每一位查詢回之保險資料 */
         Insurance i = null;
-        /** 用於儲存所有檢索回之會員，以JSONArray方式儲存 */
+        /** 用於儲存所有檢索回之保險，以JSONArray方式儲存 */
         JSONArray jsa = new JSONArray();
         /** 記錄實際執行之SQL指令 */
         String exexcute_sql = "";

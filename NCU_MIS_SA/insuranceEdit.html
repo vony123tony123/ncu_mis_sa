@@ -3,7 +3,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>CakePHP: the rapid development php framework: Members</title>
+    <title>CakePHP: the rapid development php framework: Insurance</title>
     <link href="statics/icon/favicon.ico" type="image/x-icon" rel="icon">
     <link href="statics/icon/favicon.ico" type="image/x-icon" rel="shortcut icon">
     <link rel="stylesheet" type="text/css" href="statics/css/cake.generic.css">
@@ -63,7 +63,7 @@
                     var data_object = {
                         "insurance_id": id,
                         "insurance_name": name,
-                        "duration_period": period,
+                        "duration_period": duration,
                         "amount_insured": amount,
                         "details": insurance_details
                     };
@@ -119,17 +119,17 @@
                         type: "GET",
                         url: "api/insurance.do",
                         crossDomain: true,
-                        data: "id=" + id,
+                        data: "insurance_id=" + id,
                         cache: false,
                         dataType: 'json',
                         timeout: 5000,
                         success: function (response) {
                             if(response.status == 200){
                             	updateSQLTable(response.response);
-                            	document.getElementById('name').value = response['response']['data'][0]['insurance_name'];
-                            	document.getElementById('duration').value = response['response']['data'][0]['duration_period'];
-                            	document.getElementById('amount').value = response['response']['data'][0]['amount_insured'];
-                            	document.getElementById('insurance_details').value = response['response']['data'][0]['details'];
+                            	document.getElementById('insurance_name').value = response['response']['data'][0]['insurance_name'];
+                            	document.getElementById('duration_period').value = response['response']['data'][0]['duration_period'];
+                            	document.getElementById('amount_insured').value = response['response']['data'][0]['amount_insured'];
+                            	document.getElementById('details').value = response['response']['data'][0]['details'];
                             }
                             console.log(response);
                         },
