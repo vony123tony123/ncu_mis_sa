@@ -126,16 +126,10 @@ public class InsuranceController extends HttpServlet {
         throws ServletException, IOException {
         /** 透過JsonReader類別將Request之JSON格式資料解析並取回 */
         JsonReader jsr = new JsonReader(request);
-        JSONObject jso = jsr.getObject();
-        
-        /** 取出經解析到JSONObject之Request參數 */
-        int delete_key = jso.getInt("delete_key");
+        String insurance_id = jsr.getParameter("insurance_id");
+        JSONObject data = ih.delete(insurance_id);
+        System.out.println(insurance_id);
 
-        /** 透過傳入之參數，新建一個以這些參數之保險Insurance物件 */
-        Insurance i = new Insurance(delete_key);
-        
-        /** 透過Insurance物件的update()方法至資料庫更新該保險資料，回傳之資料為JSONObject物件 */
-        JSONObject data = i.update();
         
         /** 新建一個JSONObject用於將回傳之資料進行封裝 */
         JSONObject resp = new JSONObject();

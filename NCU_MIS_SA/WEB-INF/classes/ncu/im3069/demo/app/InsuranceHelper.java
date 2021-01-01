@@ -55,7 +55,7 @@ public class InsuranceHelper {
      * @param insurance_id 保險編號
      * @return the JSONObject 回傳SQL執行結果
      */
-    public JSONObject delete(Insurance i) {
+    public JSONObject delete(String insurance_id) {
         /** 紀錄回傳之資料 */
         JSONArray jsa = new JSONArray();
         /** 記錄實際執行之SQL指令 */
@@ -70,12 +70,10 @@ public class InsuranceHelper {
             conn = DBMgr.getConnection();
             /** SQL指令 */
             String sql = "Update `missa`.`insurance` SET `delete_key` = 1 WHERE `insurance_id` = ?";
-            /** 取得所需之參數 */
-            int insurance_id = i.getInsuranceID();
             
             /** 將參數回填至SQL指令當中 */
             pres = conn.prepareStatement(sql);
-            pres.setInt(1, insurance_id);
+            pres.setString(1, insurance_id);
             /** 執行更新之SQL指令並記錄影響之行數 */
             row = pres.executeUpdate();
 

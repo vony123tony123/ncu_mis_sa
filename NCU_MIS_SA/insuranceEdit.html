@@ -18,9 +18,8 @@
         </div>
         <div id="content">
             <h2>更新保險資料</h2>
-            <a href="member.html">會員管理</a>
-            <a href="insurancePolicyIndex.html">保單管理</a>
             <a href="insuranceIndex.html">回保險資料一覽</a>
+            <a href="insuranceCreate.html">新增保險</a>
             <a href="insurance.html">回保險商品瀏覽</a>
 
             <div id="flashMessage" class="message" style="display: none;"></div>
@@ -35,13 +34,13 @@
                     <label for="duraiotn_period">有效期間(年)</label>
                     <input name="duration" maxlength="50" type="number" id="duration_period" min="0">
                 </div>
-                <div class="input amount_insured>
+                <div class="input amount_insured">
                     <label for="amount_insured">保額(元)</label>
                     <input name="amount" type="number" id="amount_insured" min="0">
                 </div>
                 <div class="input details">
-                    <label for="insurance_details">保險資訊</label>
-                    <input name="details" type="text" id="insurance_details">
+                    <label for="details">保險資訊</label>
+                    <input name="insurance_details" type="text" id="details">
                 </div>
                 <div class="submit"><input type="button" value="更新" id="submit"></div>
             </form>
@@ -60,40 +59,40 @@
                     var insurance_details = $('#details').val();
 
 
-                        // 將資料組成JSON格式
-                        var data_object = {
-                            "insurance_id": id,
-                            "insurance_name": name,
-                            "duration_period": period,
-                            "amount_insured": amount,
-                            "insurance_details": details
-                        };
+                    // 將資料組成JSON格式
+                    var data_object = {
+                        "insurance_id": id,
+                        "insurance_name": name,
+                        "duration_period": period,
+                        "amount_insured": amount,
+                        "details": insurance_details
+                    };
 
-                        // 將JSON格式轉換成字串
-                        var data_string = JSON.stringify(data_object);
+                    // 將JSON格式轉換成字串
+                    var data_string = JSON.stringify(data_object);
 
-                        // 發出POST的PUT請求
-                        $.ajax({
-                                type: "PUT",
-                                url: "api/insurance.do",
-                                data: data_string,
-                                crossDomain: true,
-                                cache: false,
-                                dataType: 'json',
-                                timeout: 5000,
-                                success: function (response) {
-                                    $('#flashMessage').html(response.message);
-                                    $('#flashMessage').show();
-                                    if(response.status == 200){
-                                        updateSQLTable(response.response);
-                                        getMember();
+                    // 發出POST的PUT請求
+                    $.ajax({
+                           type: "PUT",
+                           url: "api/insurance.do",
+                           data: data_string,
+                           crossDomain: true,
+                           cache: false,
+                           dataType: 'json',
+                           timeout: 5000,
+                           success: function (response) {
+                               $('#flashMessage').html(response.message);
+                               $('#flashMessage').show();
+                               if(response.status == 200){
+                                  updateSQLTable(response.response);
+                                  getInsurance();
                                     }
-                                },
-                                error: function () {
-                                    alert("無法連線到伺服器！");
-                                }
-                        });
-                    }
+                               },
+                               error: function () {
+                                  alert("無法連線到伺服器！");
+                              }
+                    });
+            }
                 
 
                 // 更新SQL指令歷史表格

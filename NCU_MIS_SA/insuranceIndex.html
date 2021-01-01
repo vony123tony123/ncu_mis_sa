@@ -19,7 +19,7 @@
         <div id="content">
             <h2>保險資料一覽</h2>
             <a href="member.html">會員管理</a>
-            <a href="member.html">保單管理</a>
+            <a href="insurancePolicyIndex.html">保單管理</a>
             <a href="insuranceCreate.html">新增保險商品</a>
             <a href="insurance.html">回保險商品瀏覽</a>
 
@@ -44,36 +44,42 @@
                 // 全域變數紀錄SQL指令下的次數
                 var sql_num = 0;
                 function deleteInsurance(id) {
-                    var check = window.confirm("確認刪除保險？");
-                    if (check == true) {
-                        console.log("You pressed OK!");
-                        var request = {'insurance_id': id};
-                        var data_string = JSON.stringify(request);
-                        $.ajax({
-                            type: "DELETE",
-                            url: "api/insurance.do",
-                            crossDomain: true,
-                            data: data_string,
-                            cache: false,
-                            dataType: 'json',
-                            timeout: 5000,
-                            success: function (response) {
-                                if(response.status == 200){
-                                    $("#flashMessage").html("成功! 已經成功刪除保險...");
-                                    $("#flashMessage").show();
-                                    getAllMember();
-                                }
-                                console.log(response);
-                            },
-                            error: function () {
-                                alert("無法連線到伺服器！");
-                            }
-                        });
-                    }
-                    else {
-                        console.log("You pressed Cancel!");
-                    }
+                	 var check = window.confirm("確認刪除保險？");
+
+                	 if (check == true) {
+                         console.log("You pressed OK!");
+                         var request = {'insurance_id': id};
+                         
+                         
+                         // 發出POST的PUT請求
+                         $.ajax({
+                                 type: "DELETE",
+                                 url: "api/insurance.do",
+                                 data: "insurance_id=" +id,
+                                 crossDomain: true,
+                                 cache: false,
+                                 dataType: 'json',
+                                 timeout: 5000,
+                                 success: function (response) {
+                                     $('#flashMessage').html(response.message);
+                                     $('#flashMessage').show();
+                                     if(response.status == 200){
+                                         updateSQLTable(response.response);
+                                         getInsurance();
+                                     }
+                                 },
+                                 error: function () {
+                                     alert("無法連線到伺服器！");
+                                 }
+                         });
+                     }
+                     else {
+                         console.log("You pressed Cancel!");
+                     }
+                    
                 }
+                     
+
 
                 function getAllInsurance() {
                     // 發出POST的GET請求取得所有保險列表
