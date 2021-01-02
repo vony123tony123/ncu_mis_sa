@@ -187,11 +187,11 @@ public class MemberController extends HttpServlet {
 		/**
 		 * 若直接透過前端AJAX之data以key=value之字串方式進行傳遞參數， 可以直接由此方法取回資料
 		 */
-		String id = jsr.getParameter("id");
+		String ID_number = jsr.getParameter("ID_number");
 		/**
 		 * 判斷該字串是否存在，若存在代表要取回個別會員之資料， 否則代表要取回全部資料庫內會員之資料
 		 */
-		if (id.isEmpty()) {
+		if (ID_number.isEmpty()) {
 			/**
 			 * 透過MemberHelper物件之getAll()方法取回所有會員之資料， 回傳之資料為JSONObject物件
 			 */
@@ -211,7 +211,7 @@ public class MemberController extends HttpServlet {
 			/**
 			 * 透過MemberHelper物件的getByID()方法自資料庫取回該名會員之資料， 回傳之資料為JSONObject物件
 			 */
-			JSONObject query = mh.getByID(id);// 做事做事//
+			JSONObject query = mh.getByID(ID_number);// 做事做事//
 			/**
 			 * 新建一個JSONObject用於將回傳之資料進行封裝
 			 */
