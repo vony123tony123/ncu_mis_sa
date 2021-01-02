@@ -213,7 +213,7 @@
 				class="d-flex justify-content-center mx-auto align-items-center"
 				style="width: 500px; height: 50px;">
 				<a id="back_button" class="btn btn-success" type="button"
-					href="insurancePolicyIndex.html">回上一頁</a>
+					href="insurancePolicyView_Member.html">回上一頁</a>
 			</div>
 		</div>
 	</div>
@@ -222,8 +222,6 @@
 		var url_string = window.location.href;
 		var url = new URL(url_string);
 		var insurance_policy_id = url.searchParams.get("insurance_policy_id");
-		
-		$('#change_button').attr('href','insurancePolicyEdit.html?insurance_policy_id='+ insurance_policy_id +'');
 
 		getInsurancePolicyData();
 
