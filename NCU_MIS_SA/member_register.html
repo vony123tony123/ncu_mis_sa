@@ -90,7 +90,7 @@
                 
                 <div class="input birthday required">
                     <label for="member_birthday">生日</label>
-                    <input name="birthday" maxlength="8" type="text" id="member_birthday" required="required">
+                    <input name="birthday" maxlength="15" type="text" id="member_birthday" required="required">
                 </div>
                 
                 <div class="input gender required">
@@ -215,6 +215,7 @@
 
                             // 將JSON格式轉換成字串
                             var data_string = JSON.stringify(data_object);
+                            console.log(data_object);
 
                             // 發出POST的AJAX請求
                             $.ajax({
@@ -229,7 +230,7 @@
                                         $('#flashMessage').html(response.message);
                                         $('#flashMessage').show();
                                         if(response.status == 200){
-                                            updateSQLTable(response.response);
+                                            window.location = "login.html";
                                         }
                                     },
                                     error: function () {
