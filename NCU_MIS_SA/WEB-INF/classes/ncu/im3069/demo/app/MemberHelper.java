@@ -329,6 +329,7 @@ public class MemberHelper {
 				String ID_number = rs.getString("ID_number");
 				String name = rs.getString("name");
 				String email = rs.getString("email");
+				String password = rs.getString("password");
 				String bank_account = rs.getString("bank_account");
 				String birthday = rs.getString("birthday");
 				int gender = rs.getInt("gender");
@@ -342,7 +343,7 @@ public class MemberHelper {
 				/**
 				 * 將每一筆會員資料產生一名新Member物件
 				 */
-				m = new Member(ID_number, name, email, bank_account, birthday, gender, height, weight, disease_id,
+				m = new Member(ID_number, name, email, password, bank_account, birthday, gender, height, weight, disease_id,
 						phone_number, address, manager, delete_key);
 				/**
 				 * 取出該名會員之資料並封裝至 JSONArray 內
