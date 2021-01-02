@@ -22,7 +22,7 @@
 			</h1>
 		</div>
 		<div id="content">
-			<h2>保險資料一覽</h2>
+			<h2>保單一覽</h2>
 			<a href="member.html">會員管理</a> <a href="insuranceIndex.html">保險管理</a>
 
 			<div id="flashMessage" class="message" style="display: none;"></div>
@@ -50,7 +50,7 @@
 				// 全域變數紀錄SQL指令下的次數
 				var sql_num = 0;
 				$(document).ready(function() {
-					getAllInsurance();
+					getAllInsurancePolicy();
 				});
 				
 				function deleteInsurancePolicy(id) {
@@ -90,7 +90,7 @@
 
 				}
 
-				function getAllInsurance() {
+				function getAllInsurancePolicy() {
 					// 發出POST的GET請求取得所有保險列表
 					$.ajax({
 						type : "GET",

@@ -30,19 +30,19 @@
                 <div style="display:none;"><input type="hidden" name="_method" value="POST"></div>
                 <div class="input insurance_name required">
                     <label for="insurance_name">保險名稱</label>
-                    <input name="name" maxlength="30" type="text" id="insurance_name" required="required">
+                    <input name="name" maxlength="10" type="text" id="insurance_name" required="required">
                 </div>
                 <div class="input email required">
                     <label for="duration_period">有效期間(年)</label>
-                    <input name="duration" maxlength="50" type="number" id="duration_period" min="0" required="required">
+                    <input name="duration" maxlength="2" type="number" id="duration_period" min="0" required="required">
                 </div>
                 <div class="input amount_insured required">
                     <label for="amount_insured">保額(元)</label>
-                    <input name="amount" maxlength="30" type="number" id="amount_insured" min="0" required="required">
+                    <input name="amount" maxlength="7" type="number" id="amount_insured" min="0" required="required">
                 </div>
                 <div class="input details required">
                     <label for="details">保險資訊</label>
-                    <input name="insurance_details" maxlength="30" type="text" id="details" required="required">
+                    <input name="insurance_details" type="text" id="details" required="required">
                 </div>
                 <div class="submit"><input type="button" value="新增" id="submit"></div>
             </form>
