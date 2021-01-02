@@ -95,8 +95,8 @@
                                $('#flashMessage').show();
                                if(response.status == 200){
                                   updateSQLTable(response.response);
-                                  getInsurance();
-                                    }
+                                  window.location = "insuranceIndex.html";
+                                 }
                                },
                                error: function () {
                                   alert("無法連線到伺服器！");

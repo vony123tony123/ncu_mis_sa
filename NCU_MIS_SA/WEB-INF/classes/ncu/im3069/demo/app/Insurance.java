@@ -82,7 +82,53 @@ public class Insurance {
         this.timestamp = timestamp;
     }
     
-    /**
+    
+    
+    public Insurance(int insurance_id, String insurance_name, int duration_period, int amount_insured, String details) {
+		this.insurance_id = insurance_id;
+		this.insurance_name = insurance_name;
+		this.duration_period = duration_period;
+		this.amount_insured = amount_insured;
+		this.details = details;
+	}
+
+	public int getInsurance_id() {
+		return insurance_id;
+	}
+
+	public void setInsurance_id(int insurance_id) {
+		this.insurance_id = insurance_id;
+	}
+
+	public String getInsurance_name() {
+		return insurance_name;
+	}
+
+	public void setInsurance_name(String insurance_name) {
+		this.insurance_name = insurance_name;
+	}
+
+	public int getDuration_period() {
+		return duration_period;
+	}
+
+	public void setDuration_period(int duration_period) {
+		this.duration_period = duration_period;
+	}
+
+	public int getAmount_insured() {
+		return amount_insured;
+	}
+
+	public void setAmount_insured(int amount_insured) {
+		this.amount_insured = amount_insured;
+	}
+
+	public void setDetails(String details) {
+		this.details = details;
+	}
+
+	/**
      * 取得保險編號
      *
      * @return int 回傳保險編號

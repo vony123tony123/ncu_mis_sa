@@ -25,7 +25,6 @@
 				class="p-2 text-dark" href="insurance.html">保險列表</a> <a
 				class="p-2 text-dark" href="insurancePolicyView_Member.html">保單列表</a>
 		</nav>
-		<a class="btn btn-outline-primary" href="login.html">登出</a>
 	</div>
     
     <div id="container">
@@ -100,9 +99,15 @@
 					success : function(response) {
 						if (response.status == 200) {
 							localStorage.setItem("member_id",userEnterId);
-							localStorage.setItem("ismanager",response.response.data[0]['manager']);
-							alert("歡迎登入!");
-							window.location = "insurance.html";
+							localStorage.setItem("isManager",response.response.data[0]['manager']);
+							if(response.response.data[0]['manager'] == 0){
+								alert("歡迎登入!");
+								window.location = "insurance.html";
+							}else{
+								alert("歡迎管理員登入!");
+								window.location = "member_center.html";
+							}
+							
 						}else{
 							alert("驗證失敗\n請檢查您的資料有無錯誤");
 						}

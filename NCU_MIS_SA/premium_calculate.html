@@ -142,17 +142,17 @@
 			
 			$('#insurancePolicyCreate').attr("href","insurance_policy_entry.html?insurance_id="+ insurance_id +"");
 			
-			
 			var $form = $('#calculate');
-            $form.click(function() {
-                submit();
-            });
+	           $form.click(function() {
+	               submit();
+	           });
             
             function getInsuranceData() {
     			$.ajax({
     				type : "Get",
     				url : "api/insurance.do",
     				data : "insurance_id=" + insurance_id,
+    				async:false,
     				crossDomain : true,
     				cache : false,
     				dataType : 'json',
@@ -204,18 +204,22 @@
     				"disease_id": disease_id,
     				"amount_insured": amount_insured};
 					
+					var data_string = JSON.stringify(risk_level);
+					
+					console.log(risk_level);
+					
 					// 發出POST的AJAX請求
 					$.ajax({
 						type: "POST",
-						url: "/api/insurancePolicy.do",
-						data: risk_level,
+						url: "api/insurancePolicy.do",
+						data: data_string,
 						crossDomain: true,
 						cache: false,
 						dataType: 'json',
 						timeout: 5000,
 						success: function (response) {
 							if(response.status == 200){
-								document.getElementById("premium").innerHTML="年繳保費為"+response.premium+"新台幣(元)";
+								document.getElementById("premium").innerHTML="年繳保費為"+response.response+"新台幣(元)";
 							}
 							
 						},

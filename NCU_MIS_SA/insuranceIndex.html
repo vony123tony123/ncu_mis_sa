@@ -70,7 +70,7 @@
 								$('#flashMessage').html(response.message);
 								$('#flashMessage').show();
 								if (response.status == 200) {
-									updateSQLTable(response.response);
+									getAllInsurance();
 								}
 							},
 							error : function() {
@@ -95,7 +95,6 @@
 						success : function(response) {
 							if (response.status == 200) {
 								updateTable(response.response.data);
-								updateSQLTable(response.response);
 							}
 							console.log(response);
 						},

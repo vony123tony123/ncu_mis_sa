@@ -100,8 +100,12 @@
 	</div>
 
 	<script>
-	//	var member_id = localstorage.getItem("member_id");
-		var member_id = "A123456789";
+		var member_id = localStorage.getItem("member_id");
+			
+		if(member_id == null){
+			alert("您尚未登入會員!");
+			window.location ="login.html";
+		}
 		//取得網址參數
 		var url_string = window.location.href;
 		var url = new URL(url_string);

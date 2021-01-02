@@ -156,13 +156,14 @@ public class InsuranceController extends HttpServlet {
         JSONObject jso = jsr.getObject();
         
         /** 取出經解析到JSONObject之Request參數 */
+        int insurance_id = jso.getInt("insurance_id");
         String insurance_name = jso.getString("insurance_name");
         int duration_period = jso.getInt("duration_period");
         int amount_insured = jso.getInt("amount_insured");
         String details = jso.getString("details");
 
         /** 透過傳入之參數，新建一個以這些參數之保險Insurance物件 */
-        Insurance i = new Insurance(insurance_name, duration_period, amount_insured, details);
+        Insurance i = new Insurance(insurance_id,insurance_name, duration_period, amount_insured, details);
         
         /** 透過Insurance物件的update()方法至資料庫更新該保險資料，回傳之資料為JSONObject物件 */
         JSONObject data = i.update();
