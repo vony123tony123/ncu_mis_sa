@@ -24,7 +24,7 @@ public class InsurancePolicyHelper {
 			/** 取得資料庫之連線 */
 			conn = DBMgr.getConnection();
 			/** SQL指令 */
-			String sql = "INSERT INTO `missa`.`insurance_policy`( `member_id`, `insurance_id`, `insurance_premium`, `beneficiary_name`, `beneficiary_relationship`, `beneficiary_phone_number`, `beneficiary_address`, `create_time`)"
+			String sql = "INSERT INTO `missa`.`insurance_policy`(`member_id`, `insurance_id`, `insurance_premium`, `beneficiary_name`, `beneficiary_relationship`, `beneficiary_phone_number`, `beneficiary_address`, `create_time`)"
 					+ " VALUES(?, ?, ?, ?, ?, ?, ?, ?)";
 			/** 取得所需之參數 */
 			String member_id = insurancePolicy.getMember_id();

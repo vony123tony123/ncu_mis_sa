@@ -82,14 +82,14 @@ public class InsurancePolicyController extends HttpServlet {
 
 		if (jso.getInt("status") == 1) {
 			int gender = jso.getInt("gender");
-			String birthyear = jso.getString("birthday");
+			String birthday = jso.getString("birthday");
 			int height = jso.getInt("height");
 			int weight = jso.getInt("weight");
 			int disease_id = jso.getInt("disease_id");
 			int amount_insured = jso.getInt("amount_insured");
 			int premium=0;
 			try {
-				premium = InsurancePolicy.calInsurancePremium(gender,birthyear, height, weight, disease_id, amount_insured);
+				premium = InsurancePolicy.calInsurancePremium(gender,birthday, height, weight, disease_id, amount_insured);
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -99,7 +99,7 @@ public class InsurancePolicyController extends HttpServlet {
 			JSONObject resp = new JSONObject();
 			resp.put("status", 200);
 			resp.put("message", "成功試算金額...");
-			resp.put("premium", premium);
+			resp.put("response", premium);
 
 			/** 透過 JsonReader 物件回傳到前端（以 JSONObject 方式） */
 			jsr.response(resp, response);
@@ -107,6 +107,7 @@ public class InsurancePolicyController extends HttpServlet {
 		} else if (jso.getInt("status") == 2) {
 			String member_id = jso.getString("member_id");
 			int insurance_id = jso.getInt("insurance_id");
+			int insurance_premium = jso.getInt("insurance_premium");
 			String beneficiary_name = jso.getString("beneficiary_name");
 			String beneficiary_relation = jso.getString("beneficiary_relationship");
 			String beneficiary_phone_number = jso.getString("beneficiary_phone_number");
@@ -114,7 +115,7 @@ public class InsurancePolicyController extends HttpServlet {
 
 			InsurancePolicy ip=null;
 			try {
-				ip = new InsurancePolicy(member_id, insurance_id, beneficiary_name, beneficiary_relation,
+				ip = new InsurancePolicy(member_id, insurance_id, insurance_premium, beneficiary_name, beneficiary_relation,
 						beneficiary_phone_number, beneficiary_address);
 			} catch (JSONException | ParseException e) {
 				// TODO Auto-generated catch block

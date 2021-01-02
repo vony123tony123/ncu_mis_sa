@@ -32,13 +32,13 @@
 		style="background-color: LightGray;">
 		<img src="./statics/img/youtbue.png"
 			style="width: 40px; height: 30px;">
-		<h5 class="my-0 mr-md-auto font-weight-normal">立即投保</h5>
+		<h5 class="my-0 mr-md-auto font-weight-normal">OOO保險公司</h5>
 		<nav class="my-2 my-md-0 mr-md-3">
-			<a class="p-2 text-dark" href="index.html">會員管理模組</a> <a
-				class="p-2 text-dark" href="product.html">商品列表</a> <a
-				class="p-2 text-dark" href="order.html">訂單列表</a>
+			<a class="p-2 text-dark" href="myMember.html">會員中心</a> <a
+				class="p-2 text-dark" href="insurance.html">保險列表</a> <a
+				class="p-2 text-dark" href="insurancePolicyView_Member.html">保單列表</a>
 		</nav>
-		<a class="btn btn-outline-primary" href="cart.html">購物車</a>
+		<a class="btn btn-outline-primary" href="login.html">登出</a>
 	</div>
 
 	<div class="progress" style="height: 30px; border-radius: 20px">
@@ -164,7 +164,7 @@
 				style="font-size: 25px;">
 				<strong class="d-block text-gray-dark">每年應繳金額</strong>
 				<div>
-					$ <span id="insurance_preimum" style="text-align: right">{{insurance_preimum}}</span>
+					$ <span id="insurance_premium" style="text-align: right">{{insurance_premium}}</span>
 				</div>
 			</div>
 			<div class="d-flex flex-column">
@@ -191,23 +191,32 @@
 
 	<script>
 	
-	var member_id = "A12345678";
-	//取得網址參數
-	var url_string = window.location.href;
-	var url = new URL(url_string);
-	var insurance_id = url.searchParams.get("insurance_id");
-
-	$("#next_button").click(function(){
-		window.location ="insurancePolicyEnter.html?insurance_id=" + insurance_id + "";
-	});
-	
-	
-	getInsuranceData();
+	var member_id = "A123456789";
 	
 	if(member_id == null){
 		alert("您尚未登入會員!");
 		window.location ="login.html";
 	}
+	
+	//取得網址參數
+	var url_string = window.location.href;
+	var url = new URL(url_string);
+	var insurance_id = url.searchParams.get("insurance_id");
+	
+	var memberInfo = {};
+	var insuranceInfo = 0;
+	var insurance_premium = 0;
+	
+	getMemberData();
+	getInsuranceData();
+	console.log($('#member_gender').text());
+	calculateInusurance_premium();
+	
+	
+	$("#next_button").click(function(){
+		window.location ="insurancePolicyEnter.html?insurance_id=" + insurance_id + "&insurance_premium=" + insurance_premium;
+	});
+	
 			
 	$(document).ready(function () {
 		
@@ -220,20 +229,21 @@
 		});
 		  
 	});
+	
 		
-		/*
-		function getMemberData() {
+	function getMemberData() {
 			$.ajax({
 				type : "Get",
 				url : "api/member.do",
-				data : "id=" + member_id,
+				data : "ID_number=" + member_id,
 				crossDomain : true,
 				cache : false,
+				async:false,
 				dataType : 'json',
 				timeout : 5000,
 				success : function(response) {
 					if (response.status == 200) {
-						updateMemberHtml(response.response.data[0]);
+					 	updateMemberHtml(response.response.data[0]);
 					}
 				},
 				error : function() {
@@ -244,7 +254,7 @@
 
 		function updateMemberHtml(data) {
 			$("#member_name").html(data['name']);
-			$("#member_id").html(data['ID_number']);
+			$("#member_id").html(data['id']);
 			$("#member_birthday").html(data['birthday']);
 
 			switch (data['gender']) {
@@ -262,7 +272,7 @@
 			$("#member_address").html(data['address']);
 			$("#member_phone_number").html(data['phone_number']);
 
-			switch (data[disease_id]) {
+			switch (data['disease_id']) {
 			case 0:
 				$("#member_disease").html("無疾病");
 				break;
@@ -279,12 +289,48 @@
 
 			$("#member_bank_account").html(data['bank_account']);
 			
-			var insurance_preimum = InsurancePolicy.calInsurancePremium(data["gender"], data["birthday"], data['height'], data['weight'], data['disease_id'], data['amount_insured']);
-			
-			$("#insurance_preimum").html(insurance_preimum);
-			
+			memberInfo = {
+				"gender" : data['gender'],
+				"birthday" : data['birthday'],
+				"height" : data['height'],
+				"weight" : data['weight'],
+				"disease_id" : data['disease_id']
+			};
 		}
-		*/
+		
+		function calculateInusurance_premium(){
+			
+			var data = {
+					"gender": memberInfo['gender'],
+					"birthday" : memberInfo['birthday'],
+					"height" : memberInfo['height'],
+					"weight" : memberInfo['weight'],
+					"disease_id" : memberInfo['disease_id'],
+					"amount_insured" : insuranceInfo,
+					"status" : 1
+				}
+			var data_string = JSON.stringify(data);
+			
+			$.ajax({
+				type : "Post",
+				url : "api/insurancePolicy.do",
+				data : data_string,
+				crossDomain : true,
+				cache : false,
+				dataType : 'json',
+				timeout : 5000,
+				success : function(response) {
+					if (response.status == 200) {
+						$("#insurance_premium").html(response.response);
+						insurance_premium = response.response;
+					}
+				},
+				error : function() {
+					alert("無法連線到伺服器！");
+				}
+			})
+		}
+		
 
 		function getInsuranceData() {
 			$.ajax({
@@ -293,6 +339,7 @@
 				data : "insurance_id=" + insurance_id,
 				crossDomain : true,
 				cache : false,
+				async:false,
 				dataType : 'json',
 				timeout : 5000,
 				success : function(response) {
@@ -311,6 +358,7 @@
 			$("#duration_period").html(data['duration_period']);
 			$("#amount_insured").html(data['amount_insured']);
 			$("#insurance_detail").html(data['details']);
+			insuranceInfo = data['amount_insured'];
 		}
 
 		$("#cancel_button").click(function() {

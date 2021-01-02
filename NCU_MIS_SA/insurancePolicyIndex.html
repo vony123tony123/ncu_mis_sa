@@ -47,6 +47,14 @@
 				</tbody>
 			</table>
 			<script type="text/javascript">
+				var member_id = localStorage.getItem("member_id");
+				var isManager = localStorage.getItem("ismanager");
+				if(member_id==null || isManager!=1){
+					alert("您不是管理員!!");
+					window.location = "insurance.html";
+				}
+				
+				
 				// 全域變數紀錄SQL指令下的次數
 				var sql_num = 0;
 				$(document).ready(function() {

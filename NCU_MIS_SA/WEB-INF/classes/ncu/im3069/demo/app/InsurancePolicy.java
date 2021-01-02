@@ -44,18 +44,18 @@ public class InsurancePolicy {
 		getInsuranceFromDB();
 	}
 
-	public InsurancePolicy(String member_id, int insurance_id, String beneficiary_name,
+	public InsurancePolicy(String member_id, int insurance_id, int insurance_premium, String beneficiary_name,
 			String beneficiary_relation, String beneficiary_phone_number, String beneficiary_address) throws JSONException, ParseException 
 	{
 		this.member_id = member_id;
 		this.insurance_id = insurance_id;
+		this.insurance_premium = insurance_premium;
 		this.beneficiary_name = beneficiary_name;
 		this.beneficiary_relationship = beneficiary_relation;
 		this.beneficiary_phone_number = beneficiary_phone_number;
 		this.beneficiary_address = beneficiary_address;
 		getMemberFromDB();
 		getInsuranceFromDB();
-		this.insurance_premium = calInsurancePremium();
 	}
 
 	public InsurancePolicy(String id, String member_id, int insurance_id,
@@ -93,7 +93,7 @@ public class InsurancePolicy {
 		int age = 0;
 		int premium = 0;
 		
-		DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss"); 
+		DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); 
 		Date date = sdf.parse(birthday);
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);

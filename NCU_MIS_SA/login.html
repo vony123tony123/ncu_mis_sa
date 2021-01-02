@@ -13,6 +13,20 @@
 	//程式是驗證與顯示提示的部分
 -->
 <body>
+
+	<div
+		class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom shadow-sm"
+		style="background-color: LightGray;">
+		<img src="./statics/img/youtbue.png"
+			style="width: 40px; height: 30px;">
+		<h5 class="my-0 mr-md-auto font-weight-normal">OOO保險公司</h5>
+		<nav class="my-2 my-md-0 mr-md-3">
+			<a class="p-2 text-dark" href="myMember.html">會員中心</a> <a
+				class="p-2 text-dark" href="insurance.html">保險列表</a> <a
+				class="p-2 text-dark" href="insurancePolicyView_Member.html">保單列表</a>
+		</nav>
+		<a class="btn btn-outline-primary" href="login.html">登出</a>
+	</div>
     
     <div id="container">
         
@@ -61,8 +75,7 @@
             	<div class="submit">
             		<input type="button" value="建立帳戶" onclick=
             			"location.href='member_register.html'">
-            		<input type="button" value="登入" onclick=
-            			"location.href='member_center.html'" id="submit">
+            		<button type="button" id="submit">登入</button>
             	</div>
             	
             </form>
@@ -70,9 +83,38 @@
             
             <!-- /*然後下面這裡要寫驗證程式*/ -->
             
-        </div>
-        
-    </div>
+       <script type="text/javascript">
+       		localStorage.clear();
+       		$("#submit").click(function(){
+       			var userEnterId = $("#member_id").val();
+       			var userPassword = $("#member_password").val();
+       			
+       			$.ajax({
+					type : "GET",
+					url : "api/member.do",
+					data: "ID_number="+userEnterId+"&password="+userPassword,
+					crossDomain : true,
+					cache : false,
+					dataType : 'json',
+					timeout : 5000,
+					success : function(response) {
+						if (response.status == 200) {
+							localStorage.setItem("member_id",userEnterId);
+							localStorage.setItem("ismanager",response.response.data[0]['manager']);
+							alert("歡迎登入!");
+							window.location = "insurance.html";
+						}else{
+							alert("驗證失敗\n請檢查您的資料有無錯誤");
+						}
+						console.log(response);
+					},
+					error : function() {
+						alert("無法連線到伺服器！");
+					}
+				});
+       			
+       		});
+       </script>
 
 </body>
 

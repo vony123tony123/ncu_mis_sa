@@ -119,8 +119,8 @@
 					<div class="col media text-muted pt-3">
 						<p class="media-body pb-3 mb-0 lh-125 border-bottom border-gray">
 							<strong class="d-block text-gray-dark">要保人身高/體重</strong> <span
-								id="member_height">{{member_height}}</span> / <span
-								id="member_weight">{{member_weight}}</span>
+								id="member_height">{{member_height}}</span> cm/ <span
+								id="member_weight">{{member_weight}}</span> kg
 						</p>
 					</div>
 					<div class="col media text-muted pt-3">
@@ -239,8 +239,9 @@
 						timeout : 5000,
 						success : function(response) {
 							if (response.status == 200) {
+								updateMemberHtml(response.response.data['MemberInfo'].data[0]);
 								updateInsuranceHtml(response.response.data['InsuranceInfo'].data[0]);
-								updateInsurancePolicyHtml(response.response.data['InsurancePolicyInfo'])
+								updateInsurancePolicyHtml(response.response.data['InsurancePolicyInfo']);
 							}
 						},
 						error : function() {
@@ -251,7 +252,7 @@
 
 		function updateMemberHtml(data) {
 			$("#member_name").html(data['name']);
-			$("#member_id").html(data['ID_number']);
+			$("#member_id").html(data['id']);
 			$("#member_birthday").html(data['birthday']);
 
 			switch (data['gender']) {
@@ -269,7 +270,7 @@
 			$("#member_address").html(data['address']);
 			$("#member_phone_number").html(data['phone_number']);
 
-			switch (data[disease_id]) {
+			switch (data['disease_id']) {
 			case 0:
 				$("#member_disease").html("無疾病");
 				break;
@@ -283,7 +284,6 @@
 				$("#member_disease").html("其他");
 				break;
 			}
-
 			$("#member_bank_account").html(data['bank_account']);
 		}
 

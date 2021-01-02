@@ -13,6 +13,20 @@
 	//啊會員的版本可能要好看一點，至少要把看保險的按鈕做的又大又漂票
 -->
 <body>
+
+<div
+		class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom shadow-sm"
+		style="background-color: LightGray;">
+		<img src="./statics/img/youtbue.png"
+			style="width: 40px; height: 30px;">
+		<h5 class="my-0 mr-md-auto font-weight-normal">OOO保險公司</h5>
+		<nav class="my-2 my-md-0 mr-md-3">
+			<a class="p-2 text-dark" href="myMember.html">會員中心</a> <a
+				class="p-2 text-dark" href="insurance.html">保險列表</a> <a
+				class="p-2 text-dark" href="insurancePolicyView_Member.html">保單列表</a>
+		</nav>
+		<a class="btn btn-outline-primary" href="login.html">登出</a>
+	</div>
     
     <div id="container">
         
@@ -158,8 +172,10 @@
                     var check = window.confirm("確認刪除會員？");
                     if (check == true) {
                         console.log("You pressed OK!");
+                        
                         var request = {'id': id};
                         var data_string = JSON.stringify(request);
+                        
                         $.ajax({
                             type: "DELETE",
                             url: "api/member.do",
