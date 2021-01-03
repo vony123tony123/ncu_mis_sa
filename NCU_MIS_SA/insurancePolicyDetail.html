@@ -26,18 +26,36 @@
 </head>
 <body>
 
-	<div
-		class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom shadow-sm"
-		style="background-color: LightGray;">
-		<img src="./statics/img/youtbue.png"
-			style="width: 40px; height: 30px;">
-		<h5 class="my-0 mr-md-auto font-weight-normal">立即投保</h5>
-		<nav class="my-2 my-md-0 mr-md-3">
-			<a class="p-2 text-dark" href="index.html">會員管理模組</a> <a
-				class="p-2 text-dark" href="product.html">商品列表</a> <a
-				class="p-2 text-dark" href="order.html">訂單列表</a>
-		</nav>
-		<a class="btn btn-outline-primary" href="cart.html">購物車</a>
+	<div style="display:none;" id="manager_bar">
+		<div
+			class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom shadow-sm"
+			style="background-color: LightGray; " >
+			<img src="./statics/img/youtbue.png"
+				style="width: 40px; height: 30px;">
+			<h5 class="my-0 mr-md-auto font-weight-normal">OOO保險公司</h5>
+			<nav class="my-2 my-md-0 mr-md-3">
+				<a  class="p-2 text-dark" href="memberIndex.html">會員管理</a> <a
+					class="p-2 text-dark" href="insuranceIndex.html">保險管理</a> <a
+					class="p-2 text-dark" href="insurancePolicyIndex.html">保單管理</a>
+				<a class="btn btn-outline-primary" href="login.html">登出</a>
+			</nav>
+		</div>
+	</div>
+	
+	<div style=" display:none; "  id="member_bar">
+		<div
+			class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom shadow-sm"
+			style="background-color: LightGray;">
+			<img src="./statics/img/youtbue.png"
+				style="width: 40px; height: 30px;">
+			<h5 class="my-0 mr-md-auto font-weight-normal">OOO保險公司</h5>
+			<nav class="my-2 my-md-0 mr-md-3">
+				<a class="p-2 text-dark" href="myMember.html">我的資訊</a> <a
+					class="p-2 text-dark" href="insurance.html">保險列表</a> <a
+					class="p-2 text-dark" href="insurancePolicyView_Member.html">我的保單</a>
+			</nav>
+			<a class="btn btn-outline-primary" href="login.html">登出</a>
+		</div>
 	</div>
 
 	<div
@@ -222,6 +240,15 @@
 		var url_string = window.location.href;
 		var url = new URL(url_string);
 		var insurance_policy_id = url.searchParams.get("insurance_policy_id");
+		var isManager = localStorage.getItem("isManager");
+		
+		if(isManager == 0){
+			document.getElementById('member_bar').style.display = "block";
+    		document.getElementById('manager_bar').style.display = "none";
+		}else if(isManager == 1){
+			document.getElementById('manager_bar').style.display = "block";
+    		document.getElementById('member_bar').style.display = "none";
+		}
 		
 		$('#change_button').attr('href','insurancePolicyEdit.html?insurance_policy_id='+ insurance_policy_id +'');
 
