@@ -50,7 +50,7 @@
 				class="p-2 text-dark" href="insurance.html">保險列表</a> <a
 				class="p-2 text-dark" href="insurancePolicyView_Member.html">我的保單</a>
 		</nav>
-		<a class="btn btn-outline-primary" href="login.html">登出</a>
+		<a class="btn btn-outline-primary" href="login.html" id = "login">登出</a>
 	</div>
 
   <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
@@ -112,6 +112,12 @@
 		return inner_html;
     }
     
+    $(document).ready(function(){
+    	var member_id = localStorage.getItem("member_id");
+    	if(member_id == null){
+    		document.getElementById("login").text = "登入";
+    	}
+    })
     /*
     function setButtonFunction() {
     	$('a[name = "insurancePolicy"]').click(function () {

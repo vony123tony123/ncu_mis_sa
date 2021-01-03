@@ -11,41 +11,64 @@
 	href="statics/css/cake.generic.css">
 
 <script src="statics/js/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
+
+<!-- Bootstrap core CSS -->
+<link href="statics/css/bootstrap.min.css" rel="stylesheet">
+<link href="statics/css/font-awesome.min.css" rel="stylesheet">
+<link href="statics/icon/favicon.ico" type="image/x-icon" rel="icon">
+<link href="statics/icon/favicon.ico" type="image/x-icon"
+	rel="shortcut icon">
+
+<!-- Custom styles for this template -->
+<link href="statics/css/product.css" rel="stylesheet">
+<link href="statics/css/jquery-confirm.css" rel="stylesheet">
+
+<script src="statics/js/jquery-3.4.1.min.js"></script>
+<script src="statics/js/jquery-confirm.js"></script>
+
 </head>
 
 <body>
+<div
+		class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom shadow-sm"
+		style="background-color: LightGray;">
+		<img src="./statics/img/youtbue.png"
+			style="width: 40px; height: 30px;">
+		<h5 class="my-0 mr-md-auto font-weight-normal">OOO保險公司</h5>
+		<nav class="my-2 my-md-0 mr-md-3">
+			<a  class="p-2 text-dark" href="memberIndex.html">會員中心</a> <a
+				class="p-2 text-dark" href="insuranceIndex.html">保險管理</a> <a
+				class="p-2 text-dark" href="insurancePolicyIndex.html">保單管理</a>
+			<a class="btn btn-outline-primary" href="login.html">登出</a>
+		</nav>
+	</div>
 	<div id="container">
-		<div id="header">
-			<h1>
-				<a href="http://cakephp.org/">CakePHP: the rapid development php
-					framework</a>
-			</h1>
-		</div>
 		<div id="content">
-			<h2>保單一覽</h2>
-			<a href="member.html">會員管理</a> <a href="insuranceIndex.html">保險管理</a>
+			<h2>保單管理</h2>
 
 			<div id="flashMessage" class="message" style="display: none;"></div>
-
-			<table id="table">
-				<thead>
-					<tr>
-						<th>保單編號</th>
-						<th>會員編號</th>
-						<th>保險編號</th>
-						<th>年繳保費</th>
-						<th>受益人名稱</th>
-						<th>與要保人關係</th>
-						<th>受益人電話</th>
-						<th>受益人住址</th>
-						<th>建立時間</th>
-						<th>上次修改時間</th>
-						<th>功能</th>
-					</tr>
-				</thead>
-				<tbody>
-				</tbody>
+			
+			<div style="overflow-x: auto; white-space: nowrap;">
+				<table id="table">
+					<thead>
+						<tr>
+							<th>保單編號</th>
+							<th>會員編號</th>
+							<th>保險編號</th>
+							<th>年繳保費</th>
+							<th>受益人名稱</th>
+							<th>與要保人關係</th>
+							<th>受益人電話</th>
+							<th>受益人住址</th>
+							<th>建立時間</th>
+							<th>上次修改時間</th>
+							<th>功能</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
 			</table>
+			</div>
 			<script type="text/javascript">
 				var member_id = localStorage.getItem("member_id");
 				var isManager = localStorage.getItem("isManager");
@@ -146,12 +169,6 @@
 					$("#table > tbody").append(table_html);
 				}
 			</script>
-		</div>
-		<div id="footer">
-			<a href="http://www.cakephp.org/" target="_blank" id="cake-powered"><img
-				src="statics/img/cake.power.gif"
-				alt="CakePHP: the rapid development php framework" border="0"></a>
-			<p>CakePHP 2.6.10</p>
 		</div>
 	</div>
 </body>

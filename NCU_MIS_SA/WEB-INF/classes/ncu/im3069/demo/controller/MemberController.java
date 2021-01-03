@@ -136,6 +136,7 @@ public class MemberController extends HttpServlet {
 		/**
 		 * 取出經解析到JSONObject之Request參數
 		 */
+		String member_id = jso.getString("ID_number");
 		String name = jso.getString("name");
 		String email = jso.getString("email");
 		String password = jso.getString("password");
@@ -152,7 +153,7 @@ public class MemberController extends HttpServlet {
 		/**
 		 * 透過傳入之參數，新建一個以這些參數之會員Member物件
 		 */
-		Member m = new Member(name, email, password, bank_account, birthday, gender, height, weight, disease_id,
+		Member m = new Member(member_id,name, email, password, bank_account, birthday, gender, height, weight, disease_id,
 				phone_number, address, manager, delete_key);
 		/**
 		 * 透過Member物件的update()方法至資料庫更新該名會員資料， 回傳之資料為JSONObject物件

@@ -7,6 +7,21 @@
     <link href="statics/icon/favicon.ico" type="image/x-icon" rel="shortcut icon">
     <link rel="stylesheet" type="text/css" href="statics/css/cake.generic.css">
     <script src="statics/js/jquery-3.4.1.min.js"></script>
+    
+   <!-- Bootstrap core CSS -->
+<link href="statics/css/bootstrap.min.css" rel="stylesheet">
+<link href="statics/css/font-awesome.min.css" rel="stylesheet">
+<link href="statics/icon/favicon.ico" type="image/x-icon" rel="icon">
+<link href="statics/icon/favicon.ico" type="image/x-icon"
+	rel="shortcut icon">
+
+<!-- Custom styles for this template -->
+<link href="statics/css/product.css" rel="stylesheet">
+<link href="statics/css/jquery-confirm.css" rel="stylesheet">
+
+<script src="statics/js/jquery-3.4.1.min.js"></script>
+<script src="statics/js/jquery-confirm.js"></script>
+    
 </head>
 <!--
 	//基本功能已完成
@@ -14,17 +29,36 @@
 -->
 <body>
 
-<div
-		class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom shadow-sm"
-		style="background-color: LightGray;">
-		<img src="./statics/img/youtbue.png"
-			style="width: 40px; height: 30px;">
-		<h5 class="my-0 mr-md-auto font-weight-normal">OOO保險公司</h5>
-		<nav class="my-2 my-md-0 mr-md-3">
-			<a class="p-2 text-dark" href="myMember.html">我的資訊</a> <a
-				class="p-2 text-dark" href="insurance.html">保險列表</a> <a
-				class="p-2 text-dark" href="insurancePolicyView_Member.html">我的保單</a>
-		</nav>
+<div style=" display:none; "  id="member_bar">
+		<div
+			class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom shadow-sm"
+			style="background-color: LightGray;">
+			<img src="./statics/img/youtbue.png"
+				style="width: 40px; height: 30px;">
+			<h5 class="my-0 mr-md-auto font-weight-normal">OOO保險公司</h5>
+			<nav class="my-2 my-md-0 mr-md-3">
+				<a class="p-2 text-dark" href="myMember.html">我的資訊</a> <a
+					class="p-2 text-dark" href="insurance.html">保險列表</a> <a
+					class="p-2 text-dark" href="insurancePolicyView_Member.html">我的保單</a>
+			</nav>
+			<a class="btn btn-outline-primary" href="login.html">登出</a>
+		</div>
+	</div>
+	
+	<div style="display:none;" id="manager_bar">
+		<div
+			class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom shadow-sm"
+			style="background-color: LightGray; " >
+			<img src="./statics/img/youtbue.png"
+				style="width: 40px; height: 30px;">
+			<h5 class="my-0 mr-md-auto font-weight-normal">OOO保險公司</h5>
+			<nav class="my-2 my-md-0 mr-md-3">
+				<a  class="p-2 text-dark" href="memberIndex.html">會員管理</a> <a
+					class="p-2 text-dark" href="insuranceIndex.html">保險管理</a> <a
+					class="p-2 text-dark" href="insurancePolicyIndex.html">保單管理</a>
+				<a class="btn btn-outline-primary" href="login.html">登出</a>
+			</nav>
+		</div>
 	</div>
 
     <div id="container">
@@ -143,8 +177,8 @@
             <form id="form" accept-charset="utf-8">
                 
             	<div class="submit">
-            		<input type="button" value="取消註冊(回首頁)" onclick=
-            			"location.href='home.html'">
+            		<input type="button" value="取消註冊" onclick=
+            			"javascript: deleteMember">
             		<input type="button" value="註冊" id="submit"><!-- onclick=
             			"location.href='member_center.html'" id="submit">-->
             	</div>
@@ -157,15 +191,25 @@
             -->
             <script type="text/javascript">
          		// FUNCTIONS
-                	
+                var isManager = localStorage.getItem("isManager");
+         		
          		// 處理表單點擊事件
                 $(document).ready(function() {
-                var $form = $('#submit');
-                    $form.click(
-                    		function() {
-                        submit();
-                    }
-                    );
+                	
+                	if(isManager == 1){
+                		document.getElementById('manager_bar').style.display = "block";
+                		document.getElementById('member_bar').style.display = "none";
+                	}else{
+                		document.getElementById('member_bar').style.display = "block";
+                		document.getElementById('manager_bar').style.display = "none";
+                	}
+                	
+	                var $form = $('#submit');
+	                    $form.click(
+	                    		function() {
+	                        submit();
+	                    }
+	              );
                     
                     
                     //提交註冊資料
@@ -176,28 +220,32 @@
                         var password 		= $('#member_password').val();
                         var bank_account 	= $('#member_bank_account').val();
                         var birthday 		= $('#member_birthday').val();
-                        var gender 			= $('#member_gender').val();
+                        var gender 			= $('input[name=gender]:checked').val();
                         var height 			= $('#member_height').val();
                         var weight 			= $('#member_weight').val();
-                        var disease_id 		= $('#member_disease_id').val();
+                        var disease_id 		= $('input[name=disease_id]:checked').val();
                         var phone_number 	= $('#member_phone_number').val();
                         var address 		= $('#member_address').val();
                         
                         
                         var email_rule = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
                         var password_rule = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+                        
+                        birthday = checkDate(birthday);
 
                         if (!email_rule.test(email)) {
                             alert("Email格式不符！");
                         }
                         else if(!password_rule.test(password)) {
                             alert("密碼格式不符，長度至少8，且至少包含一個數字和英文字母！");
-                        }
-                        else {
+                        }else if(birthday == false){
+                        	alert("生日日期錯誤");
+                        }else {
                             // 將資料組成JSON格式
                             var data_object = {
                                 "id":			id,
                             	"name":			name,
+                            	"gender":       gender,
                                 "email":		email,
                                 "password":		password,
                                 "bank_account":	bank_account,
@@ -227,7 +275,8 @@
                                         $('#flashMessage').html(response.message);
                                         $('#flashMessage').show();
                                         if(response.status == 200){
-                                            window.location = "login.html";
+                                        	alert("註冊成功!")
+                                        	window.location = "javascript:history.go(-1)";
                                         }
                                     },
                                     error: function () {
@@ -235,6 +284,51 @@
                                     }
                             });
                         }
+                        
+                      /// 檢查輸入的日期是否是一個正確的日期格式:
+                      /// 支援 yyyy-M-d、yyyy-MM-dd、yyyy/M/d、yyyy/MM/dd 四種輸入格式。
+
+                      function checkDate(strInputDate) {
+                        // 定義一個月份天數常量陣列
+                        var DA = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+                        // 統一日期格式
+                        strDate = strInputDate.replace(/-/g, "/");
+
+                        //判斷日期是否是預期的格式
+                        if (strDate.indexOf("/") == -1) {
+                          alert("請輸入 yyyy-M-d、yyyy-MM-dd、yyyy/M/d、yyyy/MM/dd 格式。")
+                          return false;
+                        }
+
+                        // 分解出年月日
+                        arrD = strDate.split("/");
+                        if (arrD.length != 3) return false;
+                        y = parseInt(arrD[0], 10);
+                        m = parseInt(arrD[1], 10);
+                        d = parseInt(arrD[2], 10);
+
+                        //判斷年月日是否是數字
+                        if (isNaN(y) || isNaN(m) || isNaN(d)) return false;
+
+                        // 判斷月份是否在1-12之間
+                        if (m > 12 || m < 1) return false;
+                        //判斷是否是閏年
+                        if (isLoopYear(y)) DA[2] = 29;
+
+                        //判斷輸入的日是否超過了當月月份的總天數。
+                        if (d > DA[m]) return false;
+
+                        //各種條件都驗證了,則應該是一個合法的日期了。
+                        // 如果要對日期進行一次格式化,則可以在這裡進行處理了,下面格式化成資料庫識別的日期格式 yyyy-MM-dd
+                        // str = y + "-" + (m<10?"0":"") + m + "-" + (d<10?"0":"") + d;
+                        str = y + "-" + (m < 10 ? "0" : "") + m + "-" + (d < 10 ? "0" : "") + d;
+                        return str;
+                      }
+                      function isLoopYear(theYear) {
+                        return (new Date(theYear, 1, 29).getDate() == 29);
+                      }
+                        
                     }
                 });
             </script>

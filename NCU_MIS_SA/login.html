@@ -7,6 +7,21 @@
     <link href="statics/icon/favicon.ico" type="image/x-icon" rel="shortcut icon">
     <link rel="stylesheet" type="text/css" href="statics/css/cake.generic.css">
     <script src="statics/js/jquery-3.4.1.min.js"></script>
+    
+    <!-- Bootstrap core CSS -->
+<link href="statics/css/bootstrap.min.css" rel="stylesheet">
+<link href="statics/css/font-awesome.min.css" rel="stylesheet">
+<link href="statics/icon/favicon.ico" type="image/x-icon" rel="icon">
+<link href="statics/icon/favicon.ico" type="image/x-icon"
+	rel="shortcut icon">
+
+<!-- Custom styles for this template -->
+<link href="statics/css/product.css" rel="stylesheet">
+<link href="statics/css/jquery-confirm.css" rel="stylesheet">
+
+<script src="statics/js/jquery-3.4.1.min.js"></script>
+<script src="statics/js/jquery-confirm.js"></script>
+    
 </head>
 <!--
 	//程式未完成
@@ -74,7 +89,7 @@
             	<div class="submit">
             		<input type="button" value="建立帳戶" onclick=
             			"location.href='member_register.html'">
-            		<button type="button" id="submit">登入</button>
+            		<input type="button" id="submit" value="登入">
             	</div>
             	
             </form>
@@ -88,36 +103,40 @@
        			var userEnterId = $("#member_id").val();
        			var userPassword = $("#member_password").val();
        			
-       			$.ajax({
-					type : "GET",
-					url : "api/member.do",
-					data: "ID_number="+userEnterId+"&password="+userPassword,
-					crossDomain : true,
-					cache : false,
-					dataType : 'json',
-					timeout : 5000,
-					success : function(response) {
-						if (response.status == 200) {
-							localStorage.setItem("member_id",userEnterId);
-							localStorage.setItem("isManager",response.response.data[0]['manager']);
-							if(response.response.data[0]['manager'] == 0){
-								alert("歡迎登入!");
-								window.location = "insurance.html";
-							}else{
-								alert("歡迎管理員登入!");
-								window.location = "memberIndex.html";
-							}
-							
-						}else{
-							alert("驗證失敗\n請檢查您的資料有無錯誤");
-						}
-						console.log(response);
-					},
-					error : function() {
-						alert("無法連線到伺服器！");
-					}
-				});
-       			
+       			if(userEnterId == "" ||userPassword == ""){
+       				alert("欄位不能有空缺!");
+       			}else{
+       				$.ajax({
+    					type : "GET",
+    					url : "api/member.do",
+    					data: "ID_number="+userEnterId+"&password="+userPassword,
+    					crossDomain : true,
+    					cache : false,
+    					dataType : 'json',
+    					timeout : 5000,
+    					success : function(response) {
+    						if (response.status == 200) {
+    							localStorage.setItem("member_id",userEnterId);
+    							localStorage.setItem("isManager",response.response.data[0]['manager']);
+    							if(response.response.data[0]['manager'] == 0){
+    								alert("歡迎登入!");
+    								window.location = "insurance.html";
+    							}else{
+    								alert("歡迎管理員登入!");
+    								window.location = "memberIndex.html";
+    							}
+    							
+    						}else{
+    							alert("驗證失敗\n請檢查您的資料有無錯誤");
+    						}
+    						console.log(response);
+    					},
+    					error : function() {
+    						alert("無法連線到伺服器！");
+    					}
+    				});
+       			}
+
        		});
        </script>
 

@@ -213,9 +213,13 @@ public class MemberHelper {
 				String address = rs.getString("address");
 				int manager = rs.getInt("manager");
 				int delete_key = rs.getInt("delete_key");
+				
+				System.out.println(password);
+				
 				/**
 				 * 將每一筆會員資料產生一名新Member物件
 				 */
+				
 				m = new Member(id, name, email, password, bank_account, birthday, gender, height, weight, disease_id,
 						phone_number, address, manager, delete_key);
 				/**
@@ -479,8 +483,8 @@ public class MemberHelper {
 			 */
 			String sql = "INSERT INTO `missa`.`member`" + "(" + "`ID_number`, " + "`name`, " + "`email`, "
 					+ "`password`, " + "`bank_account`, " + "`birthday`, " + "`gender`, " + "`height`, " + "`weight`, "
-					+ "`disease_id`, " + "`phone_number`, " + "`address`, " + "`manager`, " + "`time_stamp`, "
-					+ "`delete_key`" + ")" + " VALUES(?, ?, ?, ?, ?, ?, " + "?, ?, ?, ?, ?, ?, ?, ?, ?)";
+					+ "`disease_id`, " + "`phone_number`, " + "`address`, " + "`manager`, " 
+					+ "`delete_key`" + ")" + " VALUES(?, ?, ?, ?, ?, ?, " + "?, ?, ?, ?, ?, ?, ?, ?)";
 			/**
 			 * 取得所需之參數
 			 */
@@ -517,8 +521,7 @@ public class MemberHelper {
 			pres.setString(11, phone_number);
 			pres.setString(12, address);
 			pres.setInt(13, manager);
-			pres.setTimestamp(14, Timestamp.valueOf(LocalDateTime.now()));
-			pres.setInt(15, delete_key);
+			pres.setInt(14, delete_key);
 			/**
 			 * 執行新增之SQL指令並記錄影響之行數
 			 */
@@ -594,7 +597,7 @@ public class MemberHelper {
 			String sql = " Update `missa`.`member` SET " + "`name` = ? , " + "`email` = ? , " + "`password` = ? , "
 					+ "`bank_account` = ? , " + "`birthday` = ? , " + "`gender` = ? , " + "`height` = ? , "
 					+ "`weight` = ? , " + "`disease_id` = ? , " + "`phone_number` = ? , " + "`address` = ? , "
-					+ "`manager` = ? , " + "`time_stamp` = ? , " + "`delete_key` = ? , " + " WHERE `ID_number` = ?";
+					+ "`manager` = ? , " + "`delete_key` = ? " + " WHERE `ID_number` = ?";
 			/**
 			 * 取得所需之參數
 			 */
@@ -610,26 +613,26 @@ public class MemberHelper {
 			String phone_number = m.getPhoneNumber();
 			String address = m.getAddress();
 			int manager = m.getManager();
-			// time_stamp = 下面那個;
 			int delete_key = m.getDeleteKey();
+			String member_id = m.getID();
 			/**
 			 * 將參數回填至SQL指令當中
 			 */
 			pres = conn.prepareStatement(sql);
-			pres.setString(2, name);
-			pres.setString(3, email);
-			pres.setString(4, password);
-			pres.setString(5, bank_account);
-			pres.setString(6, birthday);
-			pres.setInt(7, gender);
-			pres.setInt(8, height);
-			pres.setInt(9, weight);
-			pres.setInt(10, disease_id);
-			pres.setString(11, phone_number);
-			pres.setString(12, address);
-			pres.setInt(13, manager);
-			pres.setTimestamp(14, Timestamp.valueOf(LocalDateTime.now()));
-			pres.setInt(15, delete_key);
+			pres.setString(1, name);
+			pres.setString(2, email);
+			pres.setString(3, password);
+			pres.setString(4, bank_account);
+			pres.setString(5, birthday);
+			pres.setInt(6, gender);
+			pres.setInt(7, height);
+			pres.setInt(8, weight);
+			pres.setInt(9, disease_id);
+			pres.setString(10, phone_number);
+			pres.setString(11, address);
+			pres.setInt(12, manager);
+			pres.setInt(13, delete_key);
+			pres.setString(14, member_id);
 			/**
 			 * 執行更新之SQL指令並記錄影響之行數
 			 */

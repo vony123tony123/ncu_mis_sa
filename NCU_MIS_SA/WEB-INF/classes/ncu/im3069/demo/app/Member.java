@@ -173,15 +173,7 @@ public class Member {
 		 * 新建一個JSONObject用以儲存更新後之資料
 		 */
 		JSONObject data = new JSONObject();
-		/**
-		 * 檢查該名會員是否已經在資料庫
-		 */
-		if (this.id.isEmpty()) {
-			/**
-			 * 透過MemberHelper物件，更新目前之會員資料置資料庫中
-			 */
-			data = mh.update(this);
-		}
+		data = mh.update(this);
 		return data;
 	}
 
@@ -196,7 +188,7 @@ public class Member {
 		jso.put("id", getID());
 		jso.put("name", getName());
 		jso.put("email", getEmail());
-		jso.put("password", getPassword());// 這個是？
+		jso.put("password", getPassword());
 		jso.put("bank_account", getBankAccount());
 		jso.put("birthday", getBirthday());
 		jso.put("gender", getGender());
@@ -243,7 +235,6 @@ public class Member {
 		this.disease_id = disease_id;
 		this.phone_number = phone_number;
 		this.address = address;
-		update();
 	}
 
 	/**
@@ -279,7 +270,6 @@ public class Member {
 		this.address = address;
 		this.manager = manager;
 		this.delete_key = delete_key;
-		update();
 	}
 
 	/**
@@ -306,7 +296,7 @@ public class Member {
 		this.id = id;
 		this.name = name;
 		this.email = email;
-		// this.password = password;
+		this.password = password;
 		this.bank_account = bank_account;
 		this.birthday = birthday;
 		this.gender = gender;
