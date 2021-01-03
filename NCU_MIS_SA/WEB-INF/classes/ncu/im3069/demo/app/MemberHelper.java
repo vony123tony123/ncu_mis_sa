@@ -87,7 +87,7 @@ public class MemberHelper {
 			/**
 			 * SQL指令
 			 */
-			String sql = "DELETE FROM `missa`.`member` " + "WHERE `ID_number` = ? LIMIT 1";
+			String sql = " Update `missa`.`member` SET `delete_key` = 1 WHERE `ID_number` = ? LIMIT 1";
 			/**
 			 * 將參數回填至SQL指令當中
 			 */
@@ -174,7 +174,7 @@ public class MemberHelper {
 			/**
 			 * SQL指令
 			 */
-			String sql = "SELECT * FROM `missa`.`member`";
+			String sql = "SELECT * FROM `missa`.`member` WHERE `delete_key` = 0 ";
 			/**
 			 * 將參數回填至SQL指令當中，若無則不用只需要執行 prepareStatement
 			 */
@@ -301,7 +301,7 @@ public class MemberHelper {
 			/**
 			 * SQL指令
 			 */
-			String sql = "SELECT * FROM `missa`.`member` WHERE `ID_number` = ? LIMIT 1";
+			String sql = "SELECT * FROM `missa`.`member` WHERE `ID_number` = ? AND `delete_key` = 0  LIMIT 1";
 			/**
 			 * 將參數回填至SQL指令當中
 			 */
@@ -412,7 +412,7 @@ public class MemberHelper {
 			/**
 			 * SQL指令
 			 */
-			String sql = "SELECT count(*) FROM " + "`missa`.`member` " + "WHERE `email` = ?";
+			String sql = "SELECT count(*) FROM " + "`missa`.`member` " + "WHERE `email` = ? AND `delete_key` = 0 ";
 			/**
 			 * 取得所需之參數
 			 */
@@ -597,7 +597,7 @@ public class MemberHelper {
 			String sql = " Update `missa`.`member` SET " + "`name` = ? , " + "`email` = ? , " + "`password` = ? , "
 					+ "`bank_account` = ? , " + "`birthday` = ? , " + "`gender` = ? , " + "`height` = ? , "
 					+ "`weight` = ? , " + "`disease_id` = ? , " + "`phone_number` = ? , " + "`address` = ? , "
-					+ "`manager` = ? , " + "`delete_key` = ? " + " WHERE `ID_number` = ?";
+					+ "`manager` = ? , " + "`delete_key` = ? " + " WHERE `ID_number` = ? AND `delete_key` = 0 ";
 			/**
 			 * 取得所需之參數
 			 */
@@ -710,7 +710,7 @@ public class MemberHelper {
 			/**
 			 * SQL指令
 			 */
-			String sql = "SELECT * FROM `missa`.`member` WHERE `ID_number` = ? AND `password` = ? LIMIT 1";
+			String sql = "SELECT * FROM `missa`.`member` WHERE `ID_number` = ? AND `password` = ? AND `delete_key` = 0  LIMIT 1";
 			/**
 			 * 將參數回填至SQL指令當中
 			 */

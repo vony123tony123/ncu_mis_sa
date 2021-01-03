@@ -9,16 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.catalina.webresources.ClasspathURLStreamHandler;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import ncu.im3069.demo.app.Insurance;
 import ncu.im3069.demo.app.InsurancePolicy;
 import ncu.im3069.demo.app.InsurancePolicyHelper;
-import ncu.im3069.demo.app.Order;
-import ncu.im3069.demo.app.Product;
 import ncu.im3069.tools.JsonReader;
 
 /**
