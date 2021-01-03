@@ -87,7 +87,7 @@ public class MemberHelper {
 			/**
 			 * SQL指令
 			 */
-			String sql = " Update `missa`.`member` SET `delete_key` = 1 WHERE `ID_number` = ? LIMIT 1";
+			String sql = " Update `missa`.`member` SET `delete_key` = 1 WHERE `ID_number` = ? AND `delete_key` = 0 LIMIT 1";
 			/**
 			 * 將參數回填至SQL指令當中
 			 */
