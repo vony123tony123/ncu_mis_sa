@@ -81,11 +81,11 @@
 				<div class="input gender required">
 					<label for="gender">性別</label>
 					<div>
-						<input name="member_gender" type="radio" id="gender" value="1"
+						<input name="member_gender" type="radio" id="gender_1" value="1"
 							required="required">生理男
 					</div>
 					<div>
-						<input name="member_gender" type="radio" id="gender" value="0"
+						<input name="member_gender" type="radio" id="gender_0" value="0"
 							required="required">生理女
 					</div>
 				</div>
@@ -103,16 +103,20 @@
 				<div class="input disease_id required">
 					<label for="disease_id">疾病</label>
 					<div>
-						<input name="member_disease_id" type="radio" id="disease_id"
+						<input name="member_disease_id" type="radio" id="disease_id_0"
 							value="0" required="required">無
 					</div>
 					<div>
-						<input name="member_disease_id" type="radio" id="disease_id"
+						<input name="member_disease_id" type="radio" id="disease_id_1"
 							value="1" required="required">先天疾病
 					</div>
 					<div>
-						<input name="member_disease_id" type="radio" id="disease_id"
+						<input name="member_disease_id" type="radio" id="disease_id_2"
 							value="2" required="required">重大傷病
+					</div>
+					<div>
+						<input name="member_disease_id" type="radio" id="disease_id_3"
+							value="3x" required="required">其他
 					</div>
 				</div>
 
@@ -130,12 +134,12 @@
 				<div class="input manager required">
 					<label for="manager">此會員是否有管理員權限？</label>
 					<div>
-						<input name="member_manager" type="radio" id="manager" value="1"
+						<input name="member_manager" type="radio" id="manager_1" value="1"
 							required="required">是
 					</div>
 					<div>
-						<input name="member_manager" type="radio" id="manager" value="0"
-							required="required" checked>否
+						<input name="member_manager" type="radio" id="manager_0" value="0"
+							required="required">否
 					</div>
 				</div>
 
@@ -148,7 +152,7 @@
 
 				<div class="submit">
 					<input type="button" value="取消修改"
-						onclick="location.href='member_center.html'"> <input
+						onclick="location.href='memberIndex.html'"> <input
 						type="button" value="確定修改" id="submit">
 					<!--onclick=
             			"location.href='member_center.html'" id="submit">-->
@@ -263,13 +267,13 @@
                             	document.getElementById('password').value = response['response']['data'][0]['password'];
                             	document.getElementById('bank_account').value = response['response']['data'][0]['bank_account'];
                             	document.getElementById('birthday').value = response['response']['data'][0]['birthday'];
-                            	document.getElementById('gender').value = response['response']['data'][0]['gender'];
+                            	document.getElementById('gender_'+response['response']['data'][0]['gender']).checked = true;
                             	document.getElementById('height').value = response['response']['data'][0]['height'];
                             	document.getElementById('weight').value = response['response']['data'][0]['weight'];
-                            	document.getElementById('disease_id').value = response['response']['data'][0]['disease_id'];
+                            	document.getElementById('disease_id_'+response['response']['data'][0]['disease_id']).checked = true;
                             	document.getElementById('phone_number').value = response['response']['data'][0]['phone_number'];
                             	document.getElementById('address').value = response['response']['data'][0]['address'];
-                            	document.getElementById('manager').value = response['response']['data'][0]['manager'];
+                            	document.getElementById('manager_'+response['response']['data'][0]['manager']).checked = true;
 
                             }
                             console.log(response);
