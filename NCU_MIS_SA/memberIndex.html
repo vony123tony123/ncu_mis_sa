@@ -52,13 +52,14 @@
             <div id="flashMessage" class="message" 
             style="display: none;"></div>
             
-            
+            <div style="overflow-x: auto;">
             <!-- 表格：會員資料表：資料種類 -->
-            <table id="table">
+            <table id="table" style="white-space: nowrap;">
                 <thead>
                     <tr>
                         <th>身份證字號</th>	<!-- 01. -->
                         <th>姓名</th>		<!-- 02. -->
+                        <th>密碼</th>
                         <th>電郵</th>		<!-- 03.   ><	 04.是密碼 		 -->
                         <th>銀行帳號</th>	<!-- 05. -->
                         <th>生日</th>		<!-- 06. -->
@@ -69,14 +70,13 @@
                         <th>電話</th>		<!-- 11. -->
                         <th>地址</th>		<!-- 12. -->
                         <th>管理員</th>		<!-- 13.   ><	 14.是時間 		 -->
-                        <th>刪除</th>		<!-- 15. -->
                         <th>功能</th>			<!-- 			功能：編輯、刪除	 -->
                     </tr>
                 </thead>
                 <tbody>
                 </tbody>
             </table>
-            
+            </div>
             
             <!-- 按鈕：建立帳戶 / 帳戶登入 -->
             <form id="form" accept-charset="utf-8">
@@ -138,6 +138,7 @@
                         table_html += '<td '
                         table_html += 'scope="row">'+ value['id'] + 	  '</td>';
                         table_html += '<td>' 		+ value['name'] + 		  '</td>';
+                        table_html += '<td>' 		+ value['password'] + 		  '</td>';
                         table_html += '<td>' 		+ value['email'] + 		  '</td>';
                         table_html += '<td>' 		+ value['bank_account'] + '</td>';
                         table_html += '<td>' 		+ value['birthday'] + 	  '</td>';
@@ -148,7 +149,6 @@
                         table_html += '<td>' 		+ value['phone_number'] + '</td>';
                         table_html += '<td>' 		+ value['address'] + 	  '</td>';
                         table_html += '<td>' 		+ value['manager'] + 	  '</td>';
-                        table_html += '<td>' 		+ value['delete_key'] +   '</td>';
                         table_html += '<td>				<!--以下是編輯與刪除的部分-->';
                        
                         table_html += '<a href="member_editor.html';
