@@ -2,27 +2,15 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Manager_Editor</title>
-<link href="statics/icon/favicon.ico" type="image/x-icon" rel="icon">
-<link href="statics/icon/favicon.ico" type="image/x-icon"
-	rel="shortcut icon">
-<link rel="stylesheet" type="text/css"
-	href="statics/css/cake.generic.css">
-<script src="statics/js/jquery-3.4.1.min.js"></script>
+<title>Member_Editor</title>
+  <!-- Bootstrap core CSS -->
+  <link href="statics/css/bootstrap.min.css" rel="stylesheet">
+  <link href="statics/css/insurance.css" rel="stylesheet">
+  <link href="statics/icon/insurance.ico" type="image/x-icon" rel="shortcut icon">
+  <link href="statics/icon/insurance.ico" type="image/x-icon" rel="icon">
 
-   <!-- Bootstrap core CSS -->
-<link href="statics/css/bootstrap.min.css" rel="stylesheet">
-<link href="statics/css/font-awesome.min.css" rel="stylesheet">
-<link href="statics/icon/favicon.ico" type="image/x-icon" rel="icon">
-<link href="statics/icon/favicon.ico" type="image/x-icon"
-	rel="shortcut icon">
 
-<!-- Custom styles for this template -->
-<link href="statics/css/product.css" rel="stylesheet">
-<link href="statics/css/jquery-confirm.css" rel="stylesheet">
-
-<script src="statics/js/jquery-3.4.1.min.js"></script>
-<script src="statics/js/jquery-confirm.js"></script>
+  <script src="statics/js/jquery-3.4.1.min.js"></script>
 
 </head>
 <!--
@@ -33,38 +21,39 @@
 	<div style="display:none;" id="manager_bar">
 		<div
 			class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom shadow-sm"
-			style="background-color: LightGray; " >
-			<img src="./statics/img/youtbue.png"
-				style="width: 40px; height: 30px;">
+			style="background-color: rgb(214, 236, 243); " >
+			<img src="./statics/img/insurance.png" style="width: 40px; height: 30px;">
 			<h5 class="my-0 mr-md-auto font-weight-normal">OOO保險公司</h5>
 			<nav class="my-2 my-md-0 mr-md-3">
-				<a  class="p-2 text-dark" href="memberIndex.html">會員管理</a> <a
-					class="p-2 text-dark" href="insuranceIndex.html">保險管理</a> <a
-					class="p-2 text-dark" href="insurancePolicyIndex.html">保單管理</a>
+				<a  class="p-2 text-dark" href="memberIndex.html">會員管理</a> 
+				<a	class="p-2 text-dark" href="insuranceIndex.html">保險管理</a> 
+				<a	class="p-2 text-dark" href="insurancePolicyIndex.html">保單管理</a>
 				<a class="btn btn-outline-primary" href="login.html">登出</a>
 			</nav>
 		</div>
 	</div>
-	
-	<div style=" display:none; "  id="member_bar">
-		<div
-			class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom shadow-sm"
-			style="background-color: LightGray;">
-			<img src="./statics/img/youtbue.png"
-				style="width: 40px; height: 30px;">
-			<h5 class="my-0 mr-md-auto font-weight-normal">OOO保險公司</h5>
-			<nav class="my-2 my-md-0 mr-md-3">
-				<a class="p-2 text-dark" href="myMember.html">我的資訊</a> <a
-					class="p-2 text-dark" href="insurance.html">保險列表</a> <a
-					class="p-2 text-dark" href="insurancePolicyView_Member.html">我的保單</a>
-			</nav>
-			<a class="btn btn-outline-primary" href="login.html">登出</a>
-		</div>
+
+<div style=" display:none; "  id="member_bar">
+	<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom shadow-sm"
+		style="background-color: rgb(214, 236, 243);">
+		<img src="./statics/img/insurance.png" style="width: 40px; height: 40px;">
+		<h5 class="my-0 mr-md-auto font-weight-normal">OOO保險公司</h5>
+		<nav class="my-2 my-md-0 mr-md-3">
+			<a class="p-2 text-dark" href="myMember.html">我的資訊</a> 
+			<a	class="p-2 text-dark" href="insurance.html">保險列表</a> 
+			<a	class="p-2 text-dark" href="insurancePolicyView_Member.html">我的保單</a>
+		</nav>
+		<a class="btn btn-outline-primary" href="login.html" id = "login">登出</a>
 	</div>
+</div>
+	
+	
 	
 	<div id="container">
 
-		<div id="content">
+		<div class="col-md-12 order-md-1">
+		<h2 class="mb-4">保單試算</h2>
+		<hr class="mb-4">
 
 			<h2>會員資料修改</h2>
 			
@@ -80,113 +69,114 @@
 
 				</div>
 
-				<div class="input name required">
-					<label for="name">姓名</label> <input name="member_name"
+				<div class="row mx-auto mb-2 input name required">
+					<label for="name">姓名</label> <input name="member_name" class="form-control"
 						maxlength="30" type="text" id="name" required="required">
 				</div>
 
-				<div class="input email required">
-					<label for="email">電郵</label> <input name="member_email"
+				<div class="row mx-auto mb-2 input email required">
+					<label for="email">電郵</label> <input name="member_email" class="form-control"
 						maxlength="50" type="email" id="email" required="required">
 				</div>
 
-				<div class="input password required">
-					<label for="password">密碼</label> <input name="member_password"
+				<div class="row mx-auto mb-2 input password required">
+					<label for="password">密碼</label> <input name="member_password" class="form-control"
 						type="password" id="password" required="required">
 				</div>
 
-				<div class="input password_check required">
+				<div class="row mx-auto mb-2 input password_check required">
 					<label for="member_password_check">密碼確認</label> <input
-						name="password_check" maxlength="50" type="password"
+						name="password_check" maxlength="50" type="password" class="form-control"
 						id="member_password_check" required="required">
 				</div>
 
-				<div class="input bank_account required">
+				<div class="row mx-auto mb-2 input bank_account required">
 					<label for="bank_account">銀行帳號</label> <input
-						name="member_bank_account" maxlength="16" type="text"
+						name="member_bank_account" maxlength="16" type="text" class="form-control"
 						id="bank_account" required="required">
 				</div>
 
-				<div class="input birthday required">
-					<label for="birthday">生日</label> <input name="member_birthday"
+				<div class="row mx-auto mb-2 input birthday required">
+					<label for="birthday">生日</label> <input name="member_birthday" class="form-control"
 						maxlength="8" type="text" id="birthday" required="required">
 				</div>
 
-				<div class="input gender required">
+				<div class="row mx-auto mb-2 input gender required">
 					<label for="gender">性別</label>
 					<div>
-						<input name="member_gender" type="radio" id="gender_1" value="1"
-							required="required">生理男
+						<input name="member_gender" type="radio" id="gender_1" value="1" required="required">
+						<label for="gender_1">男</label>
 					</div>
 					<div>
-						<input name="member_gender" type="radio" id="gender_0" value="0"
-							required="required">生理女
+						<input name="member_gender" type="radio" id="gender_0" value="0" required="required">
+						<label for="gender_0">女</label>
 					</div>
 				</div>
 
-				<div class="input height required">
-					<label for="height">身高</label> <input name="member_height"
+				<div class="row mx-auto mb-2 input height required">
+					<label for="height">身高</label> <input name="member_height" class="form-control"
 						maxlength="3" type="text" id="height" required="required">
 				</div>
 
-				<div class="input weight required">
-					<label for="weight">體重</label> <input name="member_weight"
+				<div class="row mx-auto mb-2 input weight required">
+					<label for="weight">體重</label> <input name="member_weight" class="form-control"
 						maxlength="3" type="text" id="weight" required="required">
 				</div>
 
-				<div class="input disease_id required">
+				<div class="row mx-auto mb-2 input disease_id required">
 					<label for="disease_id">疾病</label>
 					<div>
 						<input name="member_disease_id" type="radio" id="disease_id_0"
-							value="0" required="required">無
+							value="0" required="required"><label for="disease_id_0">無</label>
 					</div>
 					<div>
 						<input name="member_disease_id" type="radio" id="disease_id_1"
-							value="1" required="required">先天疾病
+							value="1" required="required"><label for="disease_id_1">先天疾病</label>
 					</div>
 					<div>
 						<input name="member_disease_id" type="radio" id="disease_id_2"
-							value="2" required="required">重大傷病
+							value="2" required="required"><label for="disease_id_2">重大傷病</label>
 					</div>
 					<div>
 						<input name="member_disease_id" type="radio" id="disease_id_3"
-							value="3x" required="required">其他
+							value="3x" required="required"><label for="disease_id_3">其他</label>
 					</div>
 				</div>
 
-				<div class="input phone_number required">
+				<div class="row mx-auto mb-2 input phone_number required">
 					<label for="phone_number">電話</label> <input
-						name="member_phone_number" maxlength="50" type="text"
+						name="member_phone_number" maxlength="50" type="text" class="form-control"
 						id="phone_number" required="required">
 				</div>
 
-				<div class="input address required">
-					<label for="address">地址</label> <input name="member_address"
+				<div class="row mx-auto mb-2 input address required">
+					<label for="address">地址</label> <input name="member_address" class="form-control"
 						maxlength="50" type="text" id="address" required="required">
 				</div>
 
-				<div class="input manager required" id="manager">
+				<div class="row mx-auto mb-2 input manager required" id="manager">
 					<label for="manager">此會員是否有管理員權限？</label>
 					<div>
 						<input name="member_manager" type="radio" id="manager_1" value="1"
-							required="required">是
+							required="required"><label for="manager_1">是</label>
 					</div>
 					<div>
 						<input name="member_manager" type="radio" id="manager_0" value="0"
-							required="required">否
+							required="required"><label for="manager_0">否</label>
 					</div>
 				</div>
 
 
 			</form>
 
-
+			<hr class="mb-4">
 			<!-- 按鈕：取消註冊 / 建立帳戶 -->
 			<form id="form" accept-charset="utf-8">
 
-				<div class="submit">
-					<input type="button" value="取消修改"
-						onclick="javascript:history.go(-1)"> <input
+				<div class="row mx-auto mb-2 submit">
+					<input class="btn btn-outline-primary" type="button" value="取消修改"
+						onclick="javascript:history.go(-1)"> 
+					<input class="btn btn-outline-primary"
 						type="button" value="確定修改" id="submit">
 					<!--onclick=
             			"location.href='member_center.html'" id="submit">-->

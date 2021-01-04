@@ -4,69 +4,65 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>保險新增</title>
-    <link href="statics/icon/favicon.ico" type="image/x-icon" rel="icon">
-    <link href="statics/icon/favicon.ico" type="image/x-icon" rel="shortcut icon">
-    <link rel="stylesheet" type="text/css" href="statics/css/cake.generic.css">
 
-    <script src="statics/js/jquery-3.4.1.min.js" crossorigin="anonymous"></script>
     
     <!-- Bootstrap core CSS -->
-<link href="statics/css/bootstrap.min.css" rel="stylesheet">
-<link href="statics/css/font-awesome.min.css" rel="stylesheet">
-<link href="statics/icon/favicon.ico" type="image/x-icon" rel="icon">
-<link href="statics/icon/favicon.ico" type="image/x-icon"
-	rel="shortcut icon">
+	<link href="statics/css/bootstrap.min.css" rel="stylesheet">
+    <link href="statics/css/insurance.css" rel="stylesheet">
+	<link href="statics/icon/insurance.ico" type="image/x-icon" rel="icon">
+	<link href="statics/icon/insurance.ico" type="image/x-icon" rel="shortcut icon">
 
-<!-- Custom styles for this template -->
-<link href="statics/css/product.css" rel="stylesheet">
-<link href="statics/css/jquery-confirm.css" rel="stylesheet">
-
-<script src="statics/js/jquery-3.4.1.min.js"></script>
-<script src="statics/js/jquery-confirm.js"></script>
+	<script src="statics/js/jquery-3.4.1.min.js"></script>
+	<script src="statics/js/jquery-confirm.js"></script>
     
 </head>
 
 <body>
-    <div id="container">
+
+ 
+		
+<div
+		class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom shadow-sm"
+		style="background-color: rgb(214, 236, 243);">
+		<img src="./statics/img/insurance.png"
+			style="width: 40px; height: 40px;">
+		<h5 class="my-0 mr-md-auto font-weight-normal">OOO保險公司</h5>
+		<nav class="my-2 my-md-0 mr-md-3">
+			<a  class="p-2 text-dark" href="memberIndex.html">會員管理</a> <a
+				class="p-2 text-dark" href="insuranceIndex.html">保險管理</a> <a
+				class="p-2 text-dark" href="insurancePolicyIndex.html">保單管理</a>
+			<a class="btn btn-outline-primary" href="login.html">登出</a>
+		</nav>
+</div>
+		
         
-        <div
-			class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom shadow-sm"
-			style="background-color: LightGray; " >
-			<img src="./statics/img/youtbue.png"
-				style="width: 40px; height: 30px;">
-			<h5 class="my-0 mr-md-auto font-weight-normal">OOO保險公司</h5>
-			<nav class="my-2 my-md-0 mr-md-3">
-				<a  class="p-2 text-dark" href="memberIndex.html">會員管理</a> <a
-					class="p-2 text-dark" href="insuranceIndex.html">保險管理</a> <a
-					class="p-2 text-dark" href="insurancePolicyIndex.html">保單管理</a>
-				<a class="btn btn-outline-primary" href="login.html">登出</a>
-			</nav>
-		</div>
+
         
-        <div id="content">
-            <h2>新增保險品項</h2>
-            
-            <div id="flashMessage" class="message" style="display: none;"></div>
+        <div class="col-md-12 order-md-1">
+		<h2 class="mb-4">新增保險品項</h2>
+		<hr class="mb-4">
+        
+            <div id="flashMessage" class="message" style = "font-family: DFKai-sb;"></div>
 
             <form id="form" accept-charset="utf-8">
-                <div style="display:none;"><input type="hidden" name="_method" value="POST"></div>
-                <div class="input insurance_name required">
+                <div style = "font-family: DFKai-sb;"><input type="hidden" name="_method" value="POST"></div>
+                <div class="row mx-auto mb-2 input insurance_name required">
                     <label for="insurance_name">保險名稱</label>
-                    <input name="name" maxlength="10" type="text" id="insurance_name" required="required">
+                    <input class="form-control" name="name" maxlength="10" type="text" id="insurance_name" required="required">
                 </div>
-                <div class="input email required">
+                <div class="row mx-auto mb-2 input email required">
                     <label for="duration_period">有效期間(年)</label>
-                    <input name="duration" maxlength="2" type="number" id="duration_period" min="0" required="required">
+                    <input class="form-control" name="duration" maxlength="2" type="number" id="duration_period" min="0" required="required">
                 </div>
-                <div class="input amount_insured required">
+                <div class="row mx-auto mb-2 input amount_insured required">
                     <label for="amount_insured">保額(元)</label>
-                    <input name="amount" maxlength="7" type="number" id="amount_insured" min="0" required="required">
+                    <input class="form-control" name="amount" maxlength="7" type="number" id="amount_insured" min="0" required="required">
                 </div>
-                <div class="input details required">
+                <div class="row mx-auto mb-2 input details required">
                     <label for="details">保險資訊</label>
-                    <input name="insurance_details" type="text" id="details" required="required">
+                    <input class="form-control" name="insurance_details" type="text" id="details" required="required">
                 </div>
-                <div class="submit"><input type="button" value="新增" id="submit"></div>
+                <div class="submit"><input class="btn btn-outline-primary" type="button" value="新增" id="submit"></div>
             </form>
             
             <script type="text/javascript">
@@ -138,7 +134,7 @@
             </script>
 
         </div>
-    </div>
+
 
 
 </body>
