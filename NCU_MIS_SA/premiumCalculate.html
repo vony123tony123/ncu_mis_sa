@@ -49,17 +49,17 @@
   			
 			<div class="row mx-auto mb-2">
 				<label for="birth_year">生日</label>
-	            <input type="text" class="form-control" id="birthday" maxlength="10" value="" required="required">
+	            <input type="text" placeholder="YYYY-MM-DD" class="form-control" id="birthday" maxlength="10" value="" required="required">
 			</div>
 	        
 	        <div class="row mx-auto mb-2">
 	            <label for="height">身高</label>
-	            <input type="text" class="form-control" id="height" maxlength="10" value="" required="required">
+	            <input type="text" placeholder="請輸入身高(公分)" class="form-control" id="height" maxlength="10" value="" required="required">
 			</div>
 
 			<div class="row mx-auto mb-4">
 	            <label for="weight">體重</label>
-	            <input type="text" class="form-control" id="weight" maxlength="10" value="" required="required">
+	            <input type="text" placeholder="請輸入體重(公斤)" class="form-control" id="weight" maxlength="10" value="" required="required">
 			</div>
 	        
       			<div class="row mx-auto mb-4 disease_id">
@@ -126,7 +126,7 @@
     			})
     		}
             
-
+			
             function submit() {
             	if ($('#birthday').val()==""|$('#height').val()==""|$('#weight').val()=="") {
                     alert("不得有空值");
@@ -153,44 +153,96 @@
     	            	var disease_id = 3;
     	            }       
 					
-					var risk_level = {
-    				"status": 1,
-    				"birthday": birthday,
-    				"height": height,
-    				"weight": weight,
-    				"gender": gender,
-    				"disease_id": disease_id,
-    				"amount_insured": amount_insured};
-					
-					var data_string = JSON.stringify(risk_level);
-					
-					console.log(risk_level);
-					
-					// 發出POST的AJAX請求
-					$.ajax({
-						type: "POST",
-						url: "api/insurancePolicy.do",
-						data: data_string,
-						crossDomain: true,
-						cache: false,
-						dataType: 'json',
-						timeout: 5000,
-						success: function (response) {
-							if(response.status == 200){
-								document.getElementById("premium").innerHTML="年繳保費為"+response.response+"新台幣(元)";
-							}
-							
-						},
-						error: function (XMLHttpRequest, textStatus, errorThrown) {
-							alert(XMLHttpRequest.status);
-							alert(XMLHttpRequest.readyState);
-							alert(textStatus);
-								}
-					});
+    				birthday = checkDate(birthday);
+    				if(birthday == false){
+                    	alert("生日日期錯誤");}
+    				else if(amount_insured==""){
+    					alert("請到保險列表選擇險種");
+    					window.location ="insurance.html";
+    				}
+    				else{
+    					var risk_level = {
+    	    				"status": 1,
+    	    				"birthday": birthday,
+    	    				"height": height,
+    	    				"weight": weight,
+    	    				"gender": gender,
+    	    				"disease_id": disease_id,
+    	    				"amount_insured": amount_insured};
+    					var data_string = JSON.stringify(risk_level);
+    					
+    					console.log(risk_level);
+    					
+    					// 發出POST的AJAX請求
+    					$.ajax({
+    						type: "POST",
+    						url: "api/insurancePolicy.do",
+    						data: data_string,
+    						crossDomain: true,
+    						cache: false,
+    						dataType: 'json',
+    						timeout: 5000,
+    						success: function (response) {
+    							if(response.status == 200){
+    								document.getElementById("premium").innerHTML="年繳保費為"+response.response+"新台幣(元)";
+    							}
+    							
+    						},
+    						error: function (XMLHttpRequest, textStatus, errorThrown) {
+    							alert(XMLHttpRequest.status);
+    							alert(XMLHttpRequest.readyState);
+    							alert(textStatus);
+    								}
+    					});
+    				
+    				}
 					
                 };
 				
             }})
+            		/// 檢查輸入的日期是否是一個正確的日期格式:
+                      /// 支援 yyyy-M-d、yyyy-MM-dd、yyyy/M/d、yyyy/MM/dd 四種輸入格式。
+
+                      function checkDate(strInputDate) {
+                        // 定義一個月份天數常量陣列
+                        var DA = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+                        // 統一日期格式
+                        strDate = strInputDate.replace(/-/g, "/");
+
+                        //判斷日期是否是預期的格式
+                        if (strDate.indexOf("/") == -1) {
+                          alert("請輸入 yyyy-M-d、yyyy-MM-dd、yyyy/M/d、yyyy/MM/dd 格式。")
+                          return false;
+                        }
+
+                        // 分解出年月日
+                        arrD = strDate.split("/");
+                        if (arrD.length != 3) return false;
+                        y = parseInt(arrD[0], 10);
+                        m = parseInt(arrD[1], 10);
+                        d = parseInt(arrD[2], 10);
+
+                        //判斷年月日是否是數字
+                        if (isNaN(y) || isNaN(m) || isNaN(d)) return false;
+
+                        // 判斷月份是否在1-12之間
+                        if (m > 12 || m < 1) return false;
+                        //判斷是否是閏年
+                        if (isLoopYear(y)) DA[2] = 29;
+
+                        //判斷輸入的日是否超過了當月月份的總天數。
+                        if (d > DA[m]) return false;
+
+                        //各種條件都驗證了,則應該是一個合法的日期了。
+                        // 如果要對日期進行一次格式化,則可以在這裡進行處理了,下面格式化成資料庫識別的日期格式 yyyy-MM-dd
+                        // str = y + "-" + (m<10?"0":"") + m + "-" + (d<10?"0":"") + d;
+                        str = y + "-" + (m < 10 ? "0" : "") + m + "-" + (d < 10 ? "0" : "") + d;
+                        return str;
+                      }
+                      function isLoopYear(theYear) {
+                        return (new Date(theYear, 1, 29).getDate() == 29);
+                      }
 
 
 

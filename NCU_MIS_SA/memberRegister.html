@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Member_Register</title>
+    <title>會員註冊</title>
   <!-- Bootstrap core CSS -->
   <link href="statics/css/bootstrap.min.css" rel="stylesheet">
   <link href="statics/css/insurance.css" rel="stylesheet">
@@ -23,9 +23,9 @@
 		<div
 			class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom shadow-sm"
 			style="background-color:rgb(214, 236, 243);">
-			<img src="./statics/img/insurance.png"
-				style="width: 40px; height: 30px;">
-			<h5 class="my-0 mr-md-auto font-weight-normal">OOO保險公司</h5>
+			<a class="mr-1" href="home.html">
+			<img src="./statics/img/insurance.png" style="width: 40px; height: 40px;"></a> 
+			<h5 class="my-0 mr-md-auto font-weight-normal"> 西阿哇些人壽</h5>
 			<nav class="my-2 my-md-0 mr-md-3">
 				<a class="p-2 text-dark" href="myMember.html">我的資訊</a> <a
 					class="p-2 text-dark" href="insurance.html">保險列表</a> <a
@@ -83,37 +83,37 @@
                 
                 <div class="row mx-auto mb-2 input id required">
                     <label for="member_id">身分證字號</label>
-                    <input name="id" class="form-control" maxlength="10" type="text" id="member_id" required="required">
+                    <input name="id" placeholder="AXXXXXXXXX" class="form-control" maxlength="10" type="text" id="member_id" required="required">
                 </div>
                 
                 <div class="row mx-auto mb-2 input name required">
                     <label for="member_name">姓名</label>
-                    <input name="name" class="form-control" maxlength="50" type="text" id="member_name" required="required">
+                    <input name="name" placeholder="王小明" class="form-control" maxlength="50" type="text" id="member_name" required="required">
                 </div>
                 
                 <div class="row mx-auto mb-2 input email required">
                     <label for="member_email">電郵</label>
-                    <input name="email" class="form-control" maxlength="50" type="email" id="member_email" required="required">
+                    <input name="email" placeholder="happy@happy.com" class="form-control" maxlength="50" type="email" id="member_email" required="required">
                 </div>
                 
                 <div class="row mx-auto mb-2 input password required">
                     <label for="member_password">密碼</label>
-                    <input name="password" class="form-control" maxlength="50" type="password" id="member_password" required="required">
+                    <input name="password" placeholder="請再次輸入密碼" class="form-control" maxlength="50" type="password" id="member_password" required="required">
                 </div>
                 
                 <div class="row mx-auto mb-2 input password_check required">
                     <label for="member_password_check">密碼確認</label>
-                    <input name="password_check" class="form-control" maxlength="50" type="password" id="member_password_check" required="required">
+                    <input name="password_check" placeholder="請再次輸入密碼" class="form-control" maxlength="50" type="password" id="member_password_check" required="required">
                 </div>
                 
                 <div class="row mx-auto mb-2 input bank_account required">
                     <label for="member_bank_account">銀行帳號</label>
-                    <input name="bank_account" class="form-control" maxlength="16" type="text" id="member_bank_account" required="required">
+                    <input name="bank_account" placeholder="請輸入16位銀行帳號" class="form-control" maxlength="16" type="text" id="member_bank_account" required="required">
                 </div>
                 
                 <div class="row mx-auto mb-2 input birthday required">
                     <label for="member_birthday">生日</label>
-                    <input name="birthday" class="form-control" maxlength="15" type="text" id="member_birthday" required="required">
+                    <input name="birthday" placeholder="YYYY-MM-DD" class="form-control" maxlength="15" type="text" id="member_birthday" required="required">
                 </div>
                 
 
@@ -131,12 +131,12 @@
 
                 <div class="row mx-auto mb-2 input height required">
                     <label for="member_height">身高</label>
-                    <input name="height" class="form-control" maxlength="3" type="text" id="member_height" required="required">
+                    <input name="height" placeholder="請輸入身高(公分)" class="form-control" maxlength="3" type="text" id="member_height" required="required">
                 </div>
                 
                 <div class="row mx-auto mb-2 input weight required">
                     <label for="member_weight">體重</label>
-                    <input name="weight" class="form-control" maxlength="3" type="text" id="member_weight" required="required">
+                    <input name="weight" placeholder="請輸入體重(公斤)" class="form-control" maxlength="3" type="text" id="member_weight" required="required">
                 </div>
                 
                 
