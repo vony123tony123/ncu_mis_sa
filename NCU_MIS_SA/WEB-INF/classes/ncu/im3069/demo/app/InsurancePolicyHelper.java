@@ -20,6 +20,16 @@ public class InsurancePolicyHelper {
 	public JSONObject create(InsurancePolicy insurancePolicy) {
 		String exexcute_sql = "";
 		int id = -1;
+		
+		if(checkDuplicateInsurancePolicy(insurancePolicy.getMember_id(), insurancePolicy.getInsurance_id()))
+		{
+			JSONObject response = new JSONObject();
+			response.put("error_message", "同一個會員無法重複投保同一個保險");
+			response.put("order_id", id);
+
+			return response;
+		}
+		
 		try {
 			/** 取得資料庫之連線 */
 			conn = DBMgr.getConnection();
@@ -429,6 +439,38 @@ public class InsurancePolicyHelper {
 
         return response;
         
+	}
+	
+	public boolean checkDuplicateInsurancePolicy(String member_id, int insurance_id) {
+		int row = 0;
+		/** 儲存JDBC檢索資料庫後回傳之結果，以 pointer 方式移動到下一筆資料 */
+        ResultSet rs = null;
+        try {
+        	conn = DBMgr.getConnection();
+    		String sql = "SELECT * FROM `insurance_policy` WHERE `member_id` =? AND `insurance_id`=? AND `delete_key` = 0";
+    		/** 將參數回填至SQL指令當中 */
+            pres = conn.prepareStatement(sql);
+			pres.setString(1, member_id);
+			pres.setInt(2,insurance_id);
+		    /** 執行刪除之SQL指令並記錄影響之行數 */
+			rs = pres.executeQuery();
+			
+			System.out.println(pres.toString());
+			
+			while(rs.next()) {
+				row++;
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        if(row>0) {
+        	return true;
+        }else {
+        	return false;
+        }
 	}
 	
 	

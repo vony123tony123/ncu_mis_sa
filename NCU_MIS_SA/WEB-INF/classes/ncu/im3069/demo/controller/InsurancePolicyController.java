@@ -118,12 +118,18 @@ public class InsurancePolicyController extends HttpServlet {
 			}
 			JSONObject data = iph.create(ip);
 			JSONObject resp = new JSONObject();
+			if(data.has("error_message")) {
+				resp.put("status", 201);
+				resp.put("message", "同一個會員無法重複投保");
+				jsr.response(resp, response);
+			}else {
+				resp.put("status", 200);
+				resp.put("message", "成功建立保單...");
+				resp.put("response", data);
 
-			resp.put("status", 200);
-			resp.put("message", "成功建立保單...");
-			resp.put("response", data);
-
-			jsr.response(resp, response);
+				jsr.response(resp, response);
+			}
+			
 		} else {
 			/** 以字串組出JSON格式之資料 */
 			String resp = "{\"status\": \'400\', \"message\": \'inputstatus error:並非1or2\', \'response\': \'\'}";

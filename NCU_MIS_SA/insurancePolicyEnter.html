@@ -141,6 +141,9 @@
 					if (response.status == 200) {
 						alert("成功建立保單!")
 						window.location = "insurancePolicyView_Member.html";
+					}else{
+						alert("投保失敗!\n同一個會員無法重複投保同一個保險");
+						window.location = "insurance.html";
 					}
 				},
 				error : function() {
