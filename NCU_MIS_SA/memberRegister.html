@@ -164,7 +164,7 @@
                     <label for="member_phone_number">電話</label>
                     <input name="phone_number" class="form-control" maxlength="50" type="text" id="member_phone_number" required="required" placeholder="09xx-xxx-xxx">
                 </div>
-                
+
                 <div class="row mx-auto mb-2 input address required">
                     <label for="member_address">地址</label>
                     <input name="address" class="form-control" maxlength="50" type="text" id="member_address" required="required">
@@ -243,6 +243,8 @@
                         	alert("電話格式必須為09xx-xxx-xxx");
                         }else if(birthday == false){
                         	alert("生日日期錯誤");
+                        }else if (!phone_rule.test(phone_number)) {
+                				alert("手機格式不符（應為09XX-XXX-XXX）！");
                         }else {
                             // 將資料組成JSON格式
                             var data_object = {
