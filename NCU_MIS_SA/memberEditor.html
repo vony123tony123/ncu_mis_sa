@@ -168,15 +168,12 @@
 							required="required"><label for="manager_0">否</label>
 					</div>
 				</div>
-
-
 			</form>
-
 
 			<!-- 按鈕：取消註冊 / 建立帳戶 -->
 			<form id="form" accept-charset="utf-8">
 
-				<div class="row mx-auto mb-2 submit">
+				<div class="submit">
 					<input class="btn btn-outline-primary" type="button" value="取消修改"
 						onclick="javascript:history.go(-1)"> 
 					<input class="btn btn-outline-primary"
@@ -242,6 +239,7 @@
                     
                     var email_rule = /^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z]+$/;
                     var password_rule = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+                    var phone_rule = /^09\d{2}-\d{3}-\d{3}$/;
                     
                     
                     if (!email_rule.test(member_email)) {
@@ -249,8 +247,8 @@
                     }
                     else if(!password_rule.test(member_password)) {
                         alert("密碼格式不符，長度至少8，且至少包含一個數字和英文字母！");
-                    }else if(member_birthday == false){
-                    	alert("生日格式錯誤");
+                    }else if(!phone_rule.test(member_phone_number)){
+                    	alert("電話格式必須為09xx-xxx-xxx");
                     }else {
                         // 將資料組成JSON格式
                         var data_object = {
