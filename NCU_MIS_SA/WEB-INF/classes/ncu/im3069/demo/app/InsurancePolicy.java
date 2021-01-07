@@ -54,8 +54,6 @@ public class InsurancePolicy {
 		this.beneficiary_relationship = beneficiary_relation;
 		this.beneficiary_phone_number = beneficiary_phone_number;
 		this.beneficiary_address = beneficiary_address;
-		getMemberFromDB();
-		getInsuranceFromDB();
 	}
 
 	public InsurancePolicy(String id, String member_id, int insurance_id,

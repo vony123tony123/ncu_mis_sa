@@ -87,11 +87,6 @@
 						type="password" id="password" required="required">
 				</div>
 
-				<div class="row mx-auto mb-2 input password_check required">
-					<label for="member_password_check">密碼確認</label> <input
-						name="password_check" maxlength="50" type="password" class="form-control"
-						id="member_password_check" required="required">
-				</div>
 
 				<div class="row mx-auto mb-2 input bank_account required">
 					<label for="bank_account">銀行帳號</label> <input
@@ -308,7 +303,6 @@
                             	document.getElementById('name').value = response['response']['data'][0]['name'];
                             	document.getElementById('email').value = response['response']['data'][0]['email'];
                             	document.getElementById('password').value = response['response']['data'][0]['password'];
-                            	document.getElementById('member_password_check').value = response['response']['data'][0]['password'];
                             	document.getElementById('bank_account').value = response['response']['data'][0]['bank_account'];
                             	document.getElementById('birthday').value = response['response']['data'][0]['birthday'];
                             	document.getElementById('gender_'+response['response']['data'][0]['gender']).checked = true;
