@@ -24,7 +24,7 @@
 <body>
 <div
 		class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom shadow-sm"
-		style="background-color: rgb(214, 236, 243);">
+		style="background-color: rgb(214, 236, 243); font-family: Merriweather;">
 		<a class="mr-1" href="home.html">
 		<img src="./statics/img/insurance.png" style="width: 40px; height: 40px;"></a> 
 		<h5 class="my-0 mr-md-auto font-weight-normal"> 西阿哇些人壽</h5>
@@ -36,13 +36,13 @@
 		<a class="btn btn-outline-primary" href="login.html" id = "login">登出</a>
 </div>
 
-  <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+  <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center" style = "font-family: Merriweather;">
     <h1 class="display-4">保險列表</h1>
     <p class="lead">以下是所有保險包含其ID、名稱、要保年限、保額與資訊細節</p>
   </div>
 
   <div class="album py-5 bg-light">
-    <div class="container" style = "font-family: DFKai-sb;">
+    <div class="container" style = "font-family: Merriweather;">
       <div id="insurance_panel" class="row">
       </div>
     </div>
@@ -88,7 +88,7 @@
 		inner_html += '<p class="card-text">' + '保額 : $' + data.amount_insured + '</p>';
 		inner_html += '<p class="card-text">' + '有效期間 : ' + data.duration_period + '年' + '</p>';
 		inner_html += '<div class="d-flex justify-content-around align-items-center">';
-		inner_html += '<a id="calculation_'+ data.insurance_id +'" name = "calculation" class = "btn btn-primary" href = "premium_calculate.html?insurance_id='+data.insurance_id+'" type = "button">我要試算</a>';
+		inner_html += '<a id="calculation_'+ data.insurance_id +'" name = "calculation" class = "btn btn-primary" href = "premiumCalculate.html?insurance_id='+data.insurance_id+'" type = "button">我要試算</a>';
 		inner_html += '<a id="insurancePolicy_'+ data.insurance_id +'" name = "insurancePolicy" class = "btn btn-primary" href = "insurancePolicyCheck.html?insurance_id='+data.insurance_id+'" type = "button">我要投保</a>';
 		inner_html += '</div></div></div>';
     	
